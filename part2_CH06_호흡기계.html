@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 호흡기계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 호흡기계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">호흡기계 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 호흡기계 (CHAPTER 6).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q01">문 01</a></li>
+  <li><a href="#q02">문 02</a></li>
+  <li><a href="#q03">문 03</a></li>
+  <li><a href="#q04">문 04</a></li>
+  <li><a href="#q05">문 05</a></li>
+  <li><a href="#q06">문 06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13">문 13</a></li>
+  <li><a href="#q14">문 14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19">문 19</a></li>
+  <li><a href="#q20">문 20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+  <li><a href="#q34">문 34</a></li>
+  <li><a href="#q35">문 35</a></li>
+  <li><a href="#q36">문 36</a></li>
+  <li><a href="#q37">문 37</a></li>
+  <li><a href="#q38">문 38</a></li>
+  <li><a href="#q39">문 39</a></li>
+  <li><a href="#q40">문 40</a></li>
+  <li><a href="#q41">문 41</a></li>
+  <li><a href="#q42">문 42</a></li>
+  <li><a href="#q43">문 43</a></li>
+  <li><a href="#q44">문 44</a></li>
+  <li><a href="#q45">문 45</a></li>
+  <li><a href="#q46">문 46</a></li>
+  <li><a href="#q47">문 47</a></li>
+  <li><a href="#q48">문 48</a></li>
+  <li><a href="#q49">문 49</a></li>
+  <li><a href="#q50">문 50</a></li>
+</ul>
+<ul>
+  <li><a href="#q51">문 51</a></li>
+  <li><a href="#q52">문 52</a></li>
+  <li><a href="#q53">문 53</a></li>
+  <li><a href="#q54">문 54</a></li>
+  <li><a href="#q55">문 55</a></li>
+  <li><a href="#q56">문 56</a></li>
+  <li><a href="#q57">문 57</a></li>
+  <li><a href="#q58">문 58</a></li>
+  <li><a href="#q59">문 59</a></li>
+  <li><a href="#q60">문 60</a></li>
+  <li><a href="#q61">문 61</a></li>
+  <li><a href="#q62">문 62</a></li>
+  <li><a href="#q63">문 63</a></li>
+  <li><a href="#q64">문 64</a></li>
+  <li><a href="#q65">문 65</a></li>
+  <li><a href="#q66">문 66</a></li>
+  <li><a href="#q67">문 67</a></li>
+  <li><a href="#q68">문 68</a></li>
+  <li><a href="#q69">문 69</a></li>
+  <li><a href="#q70">문 70</a></li>
+  <li><a href="#q71">문 71</a></li>
+  <li><a href="#q72">문 72</a></li>
+  <li><a href="#q73">문 73</a></li>
+  <li><a href="#q74">문 74</a></li>
+  <li><a href="#q75">문 75</a></li>
+  <li><a href="#q76">문 76</a></li>
+  <li><a href="#q77">문 77</a></li>
+  <li><a href="#q78">문 78</a></li>
+  <li><a href="#q79">문 79</a></li>
+  <li><a href="#q80">문 80</a></li>
+  <li><a href="#q81">문 81</a></li>
+  <li><a href="#q82">문 82</a></li>
+  <li><a href="#q83">문 83</a></li>
+  <li><a href="#q84">문 84</a></li>
+  <li><a href="#q85">문 85</a></li>
+  <li><a href="#q86">문 86</a></li>
+  <li><a href="#q87">문 87</a></li>
+  <li><a href="#q88">문 88</a></li>
+  <li><a href="#q89">문 89</a></li>
+  <li><a href="#q90">문 90</a></li>
+  <li><a href="#q91">문 91</a></li>
+  <li><a href="#q92">문 92</a></li>
+  <li><a href="#q93">문 93</a></li>
+  <li><a href="#q94">문 94</a></li>
+  <li><a href="#q95">문 95</a></li>
+  <li><a href="#q96">문 96</a></li>
+  <li><a href="#q97">문 97</a></li>
+  <li><a href="#q98">문 98</a></li>
+  <li><a href="#q99">문 99</a></li>
+  <li><a href="#q100">문 100</a></li>
+</ul>
+<ul>
+  <li><a href="#q101">문 101</a></li>
+  <li><a href="#q102">문 102</a></li>
+  <li><a href="#q103">문 103</a></li>
+  <li><a href="#q104">문 104</a></li>
+  <li><a href="#q105">문 105</a></li>
+  <li><a href="#q106">문 106</a></li>
+  <li><a href="#q107">문 107</a></li>
+  <li><a href="#q108">문 108</a></li>
+  <li><a href="#q109">문 109</a></li>
+  <li><a href="#q110">문 110</a></li>
+  <li><a href="#q111">문 111</a></li>
+  <li><a href="#q112">문 112</a></li>
+  <li><a href="#q113">문 113</a></li>
+  <li><a href="#q114">문 114</a></li>
+  <li><a href="#q115">문 115</a></li>
+  <li><a href="#q116">문 116</a></li>
+  <li><a href="#q117">문 117</a></li>
+  <li><a href="#q118">문 118</a></li>
+  <li><a href="#q119">문 119</a></li>
+  <li><a href="#q120">문 120</a></li>
+  <li><a href="#q121">문 121</a></li>
+  <li><a href="#q122">문 122</a></li>
+  <li><a href="#q123">문 123</a></li>
+  <li><a href="#q124">문 124</a></li>
+  <li><a href="#q125">문 125</a></li>
+  <li><a href="#q126">문 126</a></li>
+  <li><a href="#q127">문 127</a></li>
+  <li><a href="#q128">문 128</a></li>
+  <li><a href="#q129">문 129</a></li>
+  <li><a href="#q130">문 130</a></li>
+  <li><a href="#q131">문 131</a></li>
+  <li><a href="#q132">문 132</a></li>
+  <li><a href="#q133">문 133</a></li>
+  <li><a href="#q134">문 134</a></li>
+  <li><a href="#q135">문 135</a></li>
+  <li><a href="#q136">문 136</a></li>
+  <li><a href="#q137">문 137</a></li>
+  <li><a href="#q138">문 138</a></li>
+  <li><a href="#q139">문 139</a></li>
+  <li><a href="#q140">문 140</a></li>
+  <li><a href="#q141">문 141</a></li>
+  <li><a href="#q142">문 142</a></li>
+  <li><a href="#q143">문 143</a></li>
+  <li><a href="#q144">문 144</a></li>
+  <li><a href="#q145">문 145</a></li>
+  <li><a href="#q146">문 146</a></li>
+  <li><a href="#q147">문 147</a></li>
+  <li><a href="#q148">문 148</a></li>
+  <li><a href="#q149">문 149</a></li>
+  <li><a href="#q150">문 150</a></li>
+</ul>
+<ul>
+  <li><a href="#q151">문 151</a></li>
+  <li><a href="#q152">문 152</a></li>
+  <li><a href="#q153">문 153</a></li>
+  <li><a href="#q154">문 154</a></li>
+  <li><a href="#q155">문 155</a></li>
+  <li><a href="#q156">문 156</a></li>
+  <li><a href="#q157">문 157</a></li>
+  <li><a href="#q158">문 158</a></li>
+  <li><a href="#q159">문 159</a></li>
+  <li><a href="#q160">문 160</a></li>
+  <li><a href="#q161">문 161</a></li>
+  <li><a href="#q162">문 162</a></li>
+  <li><a href="#q163">문 163</a></li>
+  <li><a href="#q164">문 164</a></li>
+  <li><a href="#q165">문 165</a></li>
+  <li><a href="#q166">문 166</a></li>
+  <li><a href="#q167">문 167</a></li>
+  <li><a href="#q168">문 168</a></li>
+  <li><a href="#q169">문 169</a></li>
+  <li><a href="#q170">문 170</a></li>
+  <li><a href="#q171">문 171</a></li>
+  <li><a href="#q172">문 172</a></li>
+  <li><a href="#q173">문 173</a></li>
+  <li><a href="#q174">문 174</a></li>
+  <li><a href="#q175">문 175</a></li>
+  <li><a href="#q176">문 176</a></li>
+  <li><a href="#q177">문 177</a></li>
+  <li><a href="#q178">문 178</a></li>
+  <li><a href="#q179">문 179</a></li>
+  <li><a href="#q180">문 180</a></li>
+  <li><a href="#q181">문 181</a></li>
+  <li><a href="#q182">문 182</a></li>
+  <li><a href="#q183">문 183</a></li>
+  <li><a href="#q184">문 184</a></li>
+  <li><a href="#q185">문 185</a></li>
+  <li><a href="#q186">문 186</a></li>
+  <li><a href="#q187">문 187</a></li>
+  <li><a href="#q188">문 188</a></li>
+  <li><a href="#q189">문 189</a></li>
+  <li><a href="#q190">문 190</a></li>
+  <li><a href="#q191">문 191</a></li>
+  <li><a href="#q192">문 192</a></li>
+  <li><a href="#q193">문 193</a></li>
+  <li><a href="#q194">문 194</a></li>
+  <li><a href="#q195">문 195</a></li>
+  <li><a href="#q196">문 196</a></li>
+  <li><a href="#q197">문 197</a></li>
+  <li><a href="#q198">문 198</a></li>
+  <li><a href="#q199">문 199</a></li>
+  <li><a href="#q200">문 200</a></li>
+</ul>
+</nav>
+
+<section class="card" id="q01">
+  <h3><span class="num">문 01</span> <span class="en">대엽폐렴 청진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>대엽폐렴(lobar pneumonia)을 진단 받은 환자의 병변이 있는 폐 부위를 청진했을 때 예상되는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>건성수포음(rhonchi)</li>
+    <li>협착음(stridor)</li>
+    <li>공명음(resonance)</li>
+    <li>둔탁음(dullness)</li>
+    <li>염소울음소리(egophony)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q02">
+  <h3><span class="num">문 02</span> <span class="en">COPD 흉부검진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>65세 남자가 호흡곤란으로 응급실에 왔다. 50갑년의 흡연력이 있으며 운동 시 호흡곤란이 있고 발열이나 오한은 없다. 최근 감기 걸린 사람과 접촉한 적은 없다고 한다. 이 환자의 흉부 검진 시 예상되는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>오목가슴</li>
+    <li>함몰 흉곽</li>
+    <li>흉곽의 전후직경 증가</li>
+    <li>흉곽의 좌우직경 증가</li>
+    <li>흉곽의 전후직경 : 좌우직경 = 1 : 2</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q03">
+  <h3><span class="num">문 03</span> <span class="en">촉각진동감</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>48세 여자가 운동 시 호흡곤란이 있어 내원하였다. 지난 3일간 38.9°C 이상의 발열과 오한이 있었고 녹색 가래가 동반된 기침을 하였다고 한다. 왼쪽 폐하엽에서 수포음이 들리고 단순흉부촬영상에서 왼쪽 하엽에 경화가 있다. 왼쪽 흉부 촉진 시 예상되는 촉각진동감(tactile fremitus)에 대한 검진 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>감소</li>
+    <li>증가</li>
+    <li>변화 없음</li>
+    <li>흡기 시 소실</li>
+    <li>호기 시 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q04">
+  <h3><span class="num">문 04</span> <span class="en">횡격막 운동범위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부 검진 시 건강한 성인의 횡격막 운동(diaphragmatic excursion) 범위는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>1~2 cm</li>
+    <li>2~3 cm</li>
+    <li>5~6 cm</li>
+    <li>9~10 cm</li>
+    <li>10~11 cm</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q05">
+  <h3><span class="num">문 05</span> <span class="en">기흉 청진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기흉이 의심되는 환자의 호흡음 청진 시 예상되는 검진 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>공명음</li>
+    <li>수포음</li>
+    <li>씩씩거림</li>
+    <li>건성수포음</li>
+    <li>호흡음 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q06">
+  <h3><span class="num">문 06</span> <span class="en">기흉 타진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>21세 남자가 갑작스러운 호흡곤란으로 내원하였다. 키 175 cm 체중 54 kg이었고 발열, 기침, 오한, 인후통은 없으며, 담배는 피우지 않는다고 한다. 이 환자의 흉부 타진 시 예상되는 검진 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침범된 부위의 둔탁음</li>
+    <li>침범된 부위의 공명음 감소</li>
+    <li>침범된 부위의 공명음 증가</li>
+    <li>침범된 부위의 촉각진동감 증가</li>
+    <li>침범되지 않은 부위의 공명음 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">발관 후 흉부검진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>75세 남자가 왼쪽 폐하엽절제술 후 기관내관을 발관하고 호흡곤란과 흉통을 호소한다. 이 환자의 흉부 검진 시 나타날 수 있는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>왼쪽 폐 타진 시 둔탁음</li>
+    <li>왼쪽 폐의 씩씩거림</li>
+    <li>왼쪽 폐의 호흡음 증가</li>
+    <li>오른쪽으로의 기관 편위</li>
+    <li>왼쪽 폐의 촉각진동감 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">술통형 가슴</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 환자에게서 술통형 가슴이 나타나는 원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>척추의 뒤틀림</li>
+    <li>폐의 탄력성 상실</li>
+    <li>하부 흉골의 함몰</li>
+    <li>흉곽의 전방 돌출</li>
+    <li>늑간근의 신축성 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">청색증 검진 부위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>저산소증이 의심되는 환자에게 청색증 여부를 확인하려고 할 때 적절한 검진 부위는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>코</li>
+    <li>귀</li>
+    <li>손톱</li>
+    <li>얼굴 피부</li>
+    <li>구강 점막과 혀</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">촉각진동감 감소</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부 뒷면을 검진했을 때 오른쪽 상엽 부위의 촉각진동감이 감소되었다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐렴</li>
+    <li>폐종양</li>
+    <li>폐기종</li>
+    <li>기관지확장증</li>
+    <li>만성 기관지염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">촉각진동감 검사법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부 검진 시 촉각진동감을 확인하기 위한 적절한 방법은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>조용히 속삭이게 한다.</li>
+    <li>호흡을 빠르게 하게 한다.</li>
+    <li>청진기의 종형을 사용한다.</li>
+    <li>심호흡을 하고 멈추게 한다.</li>
+    <li>대칭적으로 흉부를 촉진한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">흉막마찰음</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 남자가 호흡곤란으로 내원하였다. 숨 쉴 때마다 가슴 통증이 있고 흡기와 호기 시 거칠고 낮은 음이 들릴 때 이 호흡음은 무엇인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>협착음</li>
+    <li>수포음</li>
+    <li>씩씩거림</li>
+    <li>흉막마찰음</li>
+    <li>건성수포음</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13">
+  <h3><span class="num">문 13</span> <span class="en">폐경화</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>왼쪽 폐 하부에서 둔탁음이 타진되고 청진 시 흡기 말에 수포음이 들린다. 기관은 편위되지 않았으나 촉각진동감과 전도되는 목소리가 모두 증가되었다면 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉</li>
+    <li>무기폐</li>
+    <li>폐경화</li>
+    <li>흉막삼출</li>
+    <li>이물질 흡인</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q14">
+  <h3><span class="num">문 14</span> <span class="en">호흡음 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 호흡음에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐포음(vesicular sound)은 대부분 폐 전체에서 들린다.</li>
+    <li>폐포음(vesicular sound)은 호기음이 흡기음보다 길게 들린다.</li>
+    <li>씩씩거림(wheeze)은 큰 기도에 분비물이 있음을 의미한다.</li>
+    <li>기관지폐포음(bronchovesicular sound)은 폐의 말단에서 주로 들린다.</li>
+    <li>수포음(crackle)은 폐쇄되어 좁아진 기관지로 공기가 빠르게 지나갈 때 나는 소리이다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">긴장성 기흉</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>40세 남자가 호흡곤란으로 방문하였다. 흉부 타진 시 오른쪽 폐 상부에서 과다공명음이 들리고 촉각진동감과 호흡음이 왼쪽에 비해 현저히 감소되었으며, 기관이 왼쪽으로 편위되어 있을 때 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>기흉</li>
+    <li>폐경화</li>
+    <li>기관지염</li>
+    <li>만성폐쇄폐질환</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">흉부 타진법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부 타진에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>손가락 패드를 이용하여 두드린다.</li>
+    <li>흉벽 표면에 타진판 손가락 전체를 완전히 닿도록 덮는다.</li>
+    <li>타진추 손가락과 타진판 손가락의 각도는 45°가 되게 한다.</li>
+    <li>손목을 이완시킨 상태에서 민첩하고 탄력 있게 움직인다.</li>
+    <li>한쪽 폐 전체를 타진한 다음 다른 쪽 폐를 타진한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">기관지소리</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>35세 폐렴을 앓고 있는 환자에게 '하나-둘-셋'을 속삭이듯이 말하게 하면서 청진했을 때 소리가 크고 분명하게 들렸다. 이것을 무엇이라고 하는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>씩씩거림</li>
+    <li>정상 호흡음</li>
+    <li>염소울음소리(egophony)</li>
+    <li>기관지소리(bronchophony)</li>
+    <li>속삭임 가슴소리(whispered pectoriloquy)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">비오 호흡</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 호흡의 깊이와 횟수가 일정하게 증가하고 간헐적으로 무호흡이 있는 형태의 호흡은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>무호흡(apnea)</li>
+    <li>과다호흡(hyperpnea)</li>
+    <li>비오 호흡(Biot's respiration)</li>
+    <li>쿠스마울 호흡(Kussmaul's respiration)</li>
+    <li>체인-스토크스 호흡(Cheyne-Stokes respiration)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19">
+  <h3><span class="num">문 19</span> <span class="en">정상 흉부 시진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 흉부 시진 결과 중 정상인 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>40세 남자의 늑골각이 110°이다.</li>
+    <li>24세 여자의 흉추에 척주측만증(scoliosis)이 있다.</li>
+    <li>80세 남자의 흉곽이 전후직경:좌우직경=1:1이다.</li>
+    <li>35세 남자가 호흡 시 늑간 수축(intercostal retraction)이 있다.</li>
+    <li>34세 여자가 호흡 시 흉부의 모순 움직임(paradoxical motion)이 있다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q20">
+  <h3><span class="num">문 20</span> <span class="en">중심정맥관 후 기흉</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중환자실에 입원 중인 53세 환자가 오른쪽 쇄골하정맥에 중심정맥관을 삽입한 후 호흡곤란을 호소하여 오른쪽 폐상엽의 호흡음이 감소되었다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐렴</li>
+    <li>기흉</li>
+    <li>무기폐</li>
+    <li>흉막염</li>
+    <li>기관지확장증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">응급 호흡음</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 즉시 응급조치가 필요한 비정상적인 호흡음은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수포음(crackles)</li>
+    <li>협착음(stridor)</li>
+    <li>씩씩거림(wheezes)</li>
+    <li>건성수포음(rhonchi)</li>
+    <li>속삭임 가슴소리(whispered pectoriloquy)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">흉부 청진법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부를 청진하는 방법으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>전반적으로 청진기의 종형을 이용한다.</li>
+    <li>각 청진 부위마다 흡기 시 호흡음만 청진한다.</li>
+    <li>조용히 청진할 수 있도록 환자에게 숨을 얕게 쉬게 한다.</li>
+    <li>한쪽 폐 전체를 먼저 청진한 다음 다른 쪽 폐를 청진한다.</li>
+    <li>폐 첨부에서 기저부 방향으로 좌우를 비교하여 사다리 형태로 청진한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">흉곽·폐 검진(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉곽과 폐 검진에 대한 내용으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기침이 있는 환자에게 증상 기간, 유발요인, 속쓰림이 있는지 문진한다.</li>
+    <li>흉곽의 모양과 호흡양상을 시진한다.</li>
+    <li>10번째 늑골 높이에 양손가락을 놓고 환자에게 숨을 깊게 쉬게 하여 흉곽 확장의 대칭성을 확인한다.</li>
+    <li>한쪽 흉곽에서 위에서 아래로 타진한 후 반대쪽 흉곽에서 동일하게 시행한다.</li>
+    <li>흉곽의 위에서 아래 방향으로 좌우를 비교하여 청진한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">정상 흉부 소견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>55세 남자가 며칠째 계속되는 기침과 객담이 있어 내원하였다. 다음 흉부 검진 결과 중 정상으로 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡수는 14~16회/분이고, 가끔 한숨을 쉰다.</li>
+    <li>안정된 호흡 시 흉골유돌근과 사각근의 수축이 있다.</li>
+    <li>양쪽 견갑골 사이에서 촉각진동감이 가장 잘 느껴진다.</li>
+    <li>횡격막 운동범위가 5 cm이다.</li>
+    <li>양쪽 폐 타진 시 공명음이 들린다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">엽폐렴</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 남자의 흉부 검진 시 호흡수가 증가되었고 오른쪽 흉곽이 잘 확장되지 않으며 오른쪽 하엽에서 둔탁음과 수포음이 들린다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>폐기종</li>
+    <li>엽폐렴</li>
+    <li>흉막삼출</li>
+    <li>기관지염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">공명음 특징</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 환자의 흉부 타진 시 공명음(resonance)이 들린다. 이 타진음의 특징으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>약한 강도, 높은 음조, 긴 지속시간</li>
+    <li>약한 강도, 높은 음조, 짧은 지속시간</li>
+    <li>중간 강도, 중간 음조, 중간 지속시간</li>
+    <li>큰 강도, 낮은 음조, 긴 지속시간</li>
+    <li>매우 큰 강도, 낮은 음조, 더 긴 지속시간</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">기관지소리 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>왼쪽 하엽의 폐렴이 의심되는 환자에게 기관지소리(bronchophony)를 청진하고자 한다. 이에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>환자에게 "이-이"를 말하게 하였을 때 소리가 "에이"로 들린다.</li>
+    <li>환자에게 "하나-둘-셋"을 말하게 하였을 때 정상인 부위에서 소리가 크고 깨끗하게 들린다.</li>
+    <li>환자에게 "하나-둘-셋"을 말하게 하였을 때 병변이 있는 부위에서 소리가 크고 깨끗하게 들린다.</li>
+    <li>환자에게 "하나-둘-셋"을 말하게 하였을 때 병변이 있는 부위에서 소리가 작고 약하게 들린다.</li>
+    <li>환자에게 "하나-둘-셋"을 속삭이는 목소리로 말하게 하였을 때 병변이 있는 부위에서 소리가 작고 불분명하게 들린다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">호흡생리</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 호흡생리에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>해부학적 사강은 공기의 이동만 있고 실제 가스교환이 이루어지지 않는 영역으로 약 150 mL 정도이다.</li>
+    <li>산증, 고체온, PaCO₂ 상승 시 혈액은 폐에서 쉽게 산소를 얻으나 조직으로의 산소 운반은 감소된다.</li>
+    <li>흡기와 호기는 능동적으로 호흡조절중추에 의해 유발된다.</li>
+    <li>대동맥궁과 경동맥동은 호흡을 조절하는 신경중추이다.</li>
+    <li>환기/관류비가 4/2라면 저환기상태이다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">폐포동맥간 산소분압차</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>저산소증의 폐내 원인과 폐 이외의 원인을 감별하는 데 중요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>동맥혈 산소분압(PaO₂)</li>
+    <li>동맥혈 이산화탄소분압(PaCO₂)</li>
+    <li>염기과잉(BE)</li>
+    <li>동맥혈 산소포화도(SaO₂)</li>
+    <li>폐포동맥간 산소분압차(AaDO₂)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">저환기 지표(ABGA)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 저환기를 명확히 보여주는 지표는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>pO₂ 59 mmHg</li>
+    <li>pCO₂ 55 mmHg</li>
+    <li>pH 7.50</li>
+    <li>HCO₃ 48 mEq/L</li>
+    <li>호흡수 10회/분</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">환기/관류</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐의 환기/관류에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡사강은 저산소증에 의해 발생한다.</li>
+    <li>폐 각 부위의 환기/관류비는 균등하다.</li>
+    <li>폐 첨부는 폐 기저부보다 환기량이 적다.</li>
+    <li>누운 자세는 폐 첨부의 환기 영역을 확장시킨다.</li>
+    <li>환기에 비해 관류가 감소되면 저산소혈증이 유발된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">환기/관류비 0.8 이상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 환기/관류비(V/Q ratio)가 0.8 이상인 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐기종</li>
+    <li>폐색전증</li>
+    <li>기관지확장증</li>
+    <li>만성 기관지염</li>
+    <li>만성폐쇄폐질환</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">적절한 환기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 적절한 환기가 가능한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈혈</li>
+    <li>동요가슴</li>
+    <li>중등도 비만</li>
+    <li>척주뒤후만증</li>
+    <li>횡격막 운동범위 6 cm</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q34">
+  <h3><span class="num">문 34</span> <span class="en">폐렴 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐렴에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>입원 12시간 후에 발생한 폐렴은 병원획득 폐렴으로 간주해야 한다.</li>
+    <li>폐렴 환자에서 균주 감별을 위해 시행하는 객담배양검사는 항생제 사용 후에 시행한다.</li>
+    <li>전형적(typical) 폐렴의 가장 흔한 원인균은 폐렴연쇄구균(Streptococcus pneumoniae)이다.</li>
+    <li>전형적(typical) 폐렴은 비정형(atypical) 폐렴에 비해 열이 덜 나고 아급성으로 발생하는 경우가 많다.</li>
+    <li>기관내삽관하고 인공호흡기 적용 후 24시간째에 발생한 폐렴은 기계환기 폐렴으로 판단하고 치료해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q35">
+  <h3><span class="num">문 35</span> <span class="en">지역사회획득 폐렴 원인균</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>국내 지역사회 획득 폐렴의 가장 흔한 원인균은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Hemophilus influenzae</li>
+    <li>Staphylococcus aureus</li>
+    <li>Streptococcus pneumoniae</li>
+    <li>Mycoplasma pneumoniae</li>
+    <li>Chlamydia pneumoniae</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q36">
+  <h3><span class="num">문 36</span> <span class="en">경험적 항생제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 건강했던 76세 남자가 1주 전부터 열, 기침과 화농성 객담이 지속된다고 한다. 의식은 명료하고 혈압 110/70 mmHg, 맥박 95회/분, 호흡수 32회/분이다. 단순흉부촬영상에서 왼쪽 폐하엽에 침윤이 있다. 이 환자에게 적절한 경험적 항생제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>β-lactam</li>
+    <li>macrolide</li>
+    <li>β-lactam + macrolide</li>
+    <li>macrolide + fluoroquinolone</li>
+    <li>β-lactam + macrolide + fluoroquinolone</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q37">
+  <h3><span class="num">문 37</span> <span class="en">ATS/IDSA CAP 항균제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>미국 흉부학회/감염학회(ATS/IDSA)의 성인 지역사회 획득 폐렴(community acquired pneumonia) 관리지침에 근거하여, 양쪽 자궁관결찰술을 받았고 macrolide계 항생제에 내성이 있는 46세 여자의 지역사회 획득 폐렴 치료를 위한 가장 적절한 항균제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>clarithromycin</li>
+    <li>amoxicillin</li>
+    <li>doxycycline</li>
+    <li>fosfomycin</li>
+    <li>β-lactam</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q38">
+  <h3><span class="num">문 38</span> <span class="en">ATS/IDSA CAP 항균제(동반질환)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>미국 흉부학회/감염학회(ATS/IDSA)의 성인 지역사회 획득 폐렴 관리지침에 근거하여, 심근경색 전단계이며 심부전과 2형 당뇨병이 있는 39세 남자의 지역사회 획득 폐렴 치료를 위한 가장 적절한 항균제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>amoxicillin</li>
+    <li>cephalosporin</li>
+    <li>clarithromycin</li>
+    <li>β-lactam과 macrolide</li>
+    <li>respiratory fluoroquinolone</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q39">
+  <h3><span class="num">문 39</span> <span class="en">예방접종 계획</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지역사회 획득 폐렴으로 오늘 입원한 62세의 환자를 위한 예방접종 계획으로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>금일 인플루엔자와 폐렴 백신 투여</li>
+    <li>항균치료가 끝나면 폐렴 백신 투여</li>
+    <li>2주 후에 인플루엔자와 폐렴 백신 투여</li>
+    <li>금일 폐렴 백신을 투여하고 2주 후에 인플루엔자 백신 투여</li>
+    <li>금일 인플루엔자 백신을 투여하고 2주 후에 폐렴 백신 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q40">
+  <h3><span class="num">문 40</span> <span class="en">흡인 폐렴 위험</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흡인 폐렴이 발생할 수 있는 위험성이 높은 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>연하곤란</li>
+    <li>척추마취</li>
+    <li>하지마비</li>
+    <li>위장관 영양</li>
+    <li>면역억제제 복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q41">
+  <h3><span class="num">문 41</span> <span class="en">진균 폐렴</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 면역이 억제된 환자에게 발생하나 환자와 환자 간에 감염이 되지 않는 폐렴은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>바이러스 폐렴</li>
+    <li>세균 폐렴</li>
+    <li>기관지 폐렴</li>
+    <li>진균 폐렴</li>
+    <li>흡인 폐렴</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q42">
+  <h3><span class="num">문 42</span> <span class="en">병원획득 폐렴</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고관절 치환술(total hip replacement)을 받고 일주일 이상 입원 중인 환자가 산소요구량이 점점 많아지고 진한 녹색의 객담을 동반한 기침을 하여 발열과 호흡곤란을 호소한다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>진균 폐렴</li>
+    <li>흡인 폐렴</li>
+    <li>병원 획득 폐렴</li>
+    <li>인공호흡기 관련 폐렴</li>
+    <li>의료기관 관련 폐렴(healthcare-associated pneumonia)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q43">
+  <h3><span class="num">문 43</span> <span class="en">COPD 소견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 만성폐쇄폐질환에서 볼 수 있는 소견은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐활량 증가</li>
+    <li>기도저항 증가</li>
+    <li>FEV₁/FVC &lt; 0.7</li>
+    <li>환기/관류비 균등</li>
+    <li>강제호기유속(forced expiratory flow rates) 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q44">
+  <h3><span class="num">문 44</span> <span class="en">COPD 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환을 유발하는 가장 큰 원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡연</li>
+    <li>약물 중독</li>
+    <li>계절성 알레르기</li>
+    <li>과다한 알코올 섭취</li>
+    <li>오염된 환경에의 노출</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q45">
+  <h3><span class="num">문 45</span> <span class="en">COPD 일치 소견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환을 진단 받은 대부분의 환자에서 일치되는 소견은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉막염 통증</li>
+    <li>적혈구 증가증</li>
+    <li>흡기 시 호흡곤란</li>
+    <li>단순흉부촬영상 상 횡격막 상승</li>
+    <li>속효성 베타-2 작용제 투여 후에도 FEV₁/FVC &lt; 0.7</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q46">
+  <h3><span class="num">문 46</span> <span class="en">COPD 단순흉부촬영</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 악화된 환자에서 단순흉부촬영이 필요한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡수가 증가할 때</li>
+    <li>객담의 양이 증가할 때</li>
+    <li>호흡보조근을 사용할 때</li>
+    <li>동반되는 폐렴을 배제해야 할 때</li>
+    <li>일상적으로 모든 환자에게 필요</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q47">
+  <h3><span class="num">문 47</span> <span class="en">COPD 급성악화 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 급성으로 악화된 환자가 최소한으로 반응하여 빈호흡과 빈맥이 있다. 동맥혈가스분석 결과가 pH 7.20, PaCO₂ 68 mmHg, PaO₂ 65 mmHg일 때 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기관내삽관</li>
+    <li>흉관 삽입</li>
+    <li>비침습적 인공호흡</li>
+    <li>중탄산나트륨 투여</li>
+    <li>비강캐뉼라를 통한 저농도 산소공급</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q48">
+  <h3><span class="num">문 48</span> <span class="en">COPD 초기 치료제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>30년 동안 하루 1갑의 담배를 피워 온 70세 남자가 만성폐쇄폐질환으로 진단 받았다. 운동 시 호흡곤란이 조금 있으나 일상생활을 하는 데는 별 불편함이 없을 정도일 때 적절한 초기 치료제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡입 fluticasone</li>
+    <li>흡입 albuterol</li>
+    <li>흡입 tiotropium</li>
+    <li>경구 corticosteroid</li>
+    <li>경구 theophylline</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q49">
+  <h3><span class="num">문 49</span> <span class="en">폐심장증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환의 말기 단계에 나타나는 폐혈관의 압력 증가로 인한 우심실 기능 저하를 무엇이라고 하는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐심장증(cor pulmonale)</li>
+    <li>폐동맥 고혈압</li>
+    <li>울혈 심부전</li>
+    <li>경정맥 팽창</li>
+    <li>두방 심장(cor biloculare)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q50">
+  <h3><span class="num">문 50</span> <span class="en">기관내삽관 후 저혈압</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환 환자가 상태가 악화되어 기관내삽관을 하고 기계환기가 적용되었다. 기관내삽관 몇 분 후에 빈맥과 심각한 저혈압이 나타나고 산소포화도가 현저하게 떨어지고 있다. 이 환자에게 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉강천자를 시행한다.</li>
+    <li>기관지확장제를 투여한다.</li>
+    <li>환자의 불안을 진정시킨다.</li>
+    <li>인공호흡기 설정을 재조정한다.</li>
+    <li>높은 호기말양압을 적용한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q51">
+  <h3><span class="num">문 51</span> <span class="en">ipratropium 작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 환자에게 ipratropium bromide (Atrovent®)를 투여할 때 기대하는 약리작용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>염증 완화</li>
+    <li>점액 용해</li>
+    <li>기관지 확장</li>
+    <li>폐포 부피 감소</li>
+    <li>점액 섬모청소율 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q52">
+  <h3><span class="num">문 52</span> <span class="en">COPD 고혈당 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환 환자가 현재 비강캐뉼라를 통해 2 L/분으로 산소 투여와 스테로이드 치료 중으로, 오늘 시행한 동맥혈 가스분석 결과가 pH 7.23, PCO₂ 47 mmHg, PO₂ 90 mmHg, HCO₃ 21 mEq/L, 혈당 278 mg/dL일 때, 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>정맥 수액과 전해질 보충</li>
+    <li>산소 투여량을 3 L/분으로 증가</li>
+    <li>생리식염수에 소량의 인슐린을 섞어 점적 주입</li>
+    <li>중탄산염 용액 50 mL를 정맥으로 일시 주사(IV bolus)</li>
+    <li>속효형인슐린(regular insulin) 6단위를 정맥으로 일시 주사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q53">
+  <h3><span class="num">문 53</span> <span class="en">천식 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기관지 경련과 점액분비 증가, 점막부종으로 인해 발작적 기도폐색이 야기된다.</li>
+    <li>가장 특징적인 병태생리적 변화는 폐포벽 파괴이다.</li>
+    <li>증상으로 객담이 동반된 기침과 흉부압박감이 있다.</li>
+    <li>천식 발작 시 서맥과 수축기 저혈압이 동반된다.</li>
+    <li>주로 낮 동안에 증상이 악화된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q54">
+  <h3><span class="num">문 54</span> <span class="en">급성 천식 단순흉부촬영</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 천식 발작이 있는 환자의 단순흉부촬영상에서 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>무기폐(atelectasis)</li>
+    <li>경화(consolidation)</li>
+    <li>폐 침윤(infiltration)</li>
+    <li>과다팽창(hyperinflation)</li>
+    <li>컬리 B선(Kerley B line)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q55">
+  <h3><span class="num">문 55</span> <span class="en">천식 악화 처치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중등도의 만성 천식이 있는 환자가 3일 전부터 시작된 목의 통증, 맑은 콧물과 마른 기침이 있어 내원하였다. 이전에는 salmeterol (Advair)로 증상이 잘 조절되었고 가끔 씩씩거림이 있으면 주 1-2회 정도 albuterol을 추가적으로 사용했는데, 어제부터는 씩씩거림이 있을 때 albuterol을 3시간마다 2회씩 분무해야만 안정되었다고 한다. 다음으로 시행해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐활량 측정</li>
+    <li>기관지경검사</li>
+    <li>단순흉부촬영</li>
+    <li>산소포화도 측정</li>
+    <li>객담 도말검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q56">
+  <h3><span class="num">문 56</span> <span class="en">급성 천식 약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>30세 여자가 급성으로 천식이 악화되어 입원하였다. 적절한 약물 치료는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>corticosteroids 흡입</li>
+    <li>theophylline 정맥 투여</li>
+    <li>beta-2 작용제 경구 투여</li>
+    <li>corticosteroids 흡입과 theophylline 정맥 투여</li>
+    <li>corticosteroids 경구 투여와 beta-2 작용제 흡입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q57">
+  <h3><span class="num">문 57</span> <span class="en">천식 발작 빈도 감소</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 천식 발작으로 지난 6개월 동안 3차례 입원을 했던 15세 환아에게 천식 발작 빈도를 감소시키기 위한 가장 적절한 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡입 fluticasone</li>
+    <li>흡입 albuterol</li>
+    <li>경구 propranolol</li>
+    <li>경구 corticosteroid</li>
+    <li>경구 theophylline</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q58">
+  <h3><span class="num">문 58</span> <span class="en">중등도 천식 추가약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식 환자에게서 중등도의 증상이 있을 때 추가할 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경구 테오필린</li>
+    <li>비만세포 안정제</li>
+    <li>경구 코르티코스테로이드</li>
+    <li>류코트리엔 길항제</li>
+    <li>속효성 베타-2 작용제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q59">
+  <h3><span class="num">문 59</span> <span class="en">류코트리엔 길항제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식 치료에서 류코트리엔 길항제(leukotriene antagonists)의 사용 목적은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>염증 반응 억제</li>
+    <li>기관지 수축 예방</li>
+    <li>기관지 경련 예방</li>
+    <li>급성 기관지 경련 치료</li>
+    <li>기관지 경련 및 염증 치료</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q60">
+  <h3><span class="num">문 60</span> <span class="en">흡입 ICS 효과 시기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식 환자에서 흡입 코르티코스테로이드 투여 시작한 후 증상 조절 효과를 보이는 시기는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>투여 첫날</li>
+    <li>투여 2~8일 이내</li>
+    <li>투여 약 3~4주 이내</li>
+    <li>투여 약 1~2개월 이내</li>
+    <li>투여 약 3~5개월 이내</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q61">
+  <h3><span class="num">문 61</span> <span class="en">SABA 작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식 환자에서 속효성 베타-2 작용제(SABA)의 약리작용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>염증 완화</li>
+    <li>분비물 억제</li>
+    <li>평활근 이완</li>
+    <li>류코트리엔 변형</li>
+    <li>비만세포 매개물질 억제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q62">
+  <h3><span class="num">문 62</span> <span class="en">천식 PEF/FEV1</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식이 있는 환자가 3일 전부터 시작된 맑은 콧물과 마른기침이 있어 내원하였다. 천식 증상은 그동안 잘 조절되었으며 기침이나 씩씩거림이 있을 때는 budesonide (Pulmicort)와 albuterol을 사용해 왔다고 한다. 열은 없고 내원하기 전 측정한 최대날숨유량(PEF)은 최고 55%이며 병원에서 측정한 1초간 노력성 호기량(FEV₁)은 65% 정도로 예측된다. 이 환자에게 필요한 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>theophylline</li>
+    <li>salmeterol</li>
+    <li>prednisone</li>
+    <li>montelukast</li>
+    <li>ipratropium</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q63">
+  <h3><span class="num">문 63</span> <span class="en">중등도 천식 기본약</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중등도 만성 천식 치료의 기본 주축이 되는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>크로몰린</li>
+    <li>경구 테오필린</li>
+    <li>비만세포 안정제</li>
+    <li>속효성 베타-2 작용제</li>
+    <li>흡입 코르티코스테로이드</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q64">
+  <h3><span class="num">문 64</span> <span class="en">기관내삽관 필요 징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 천식 증상이 악화되어 입원한 환자에게 기관내삽관과 기계환기가 필요함을 보여주는 임상 징후는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡성 알칼리증</li>
+    <li>흉곽의 과다팽창</li>
+    <li>양쪽 폐의 씩씩거림</li>
+    <li>자극에 대한 반응 감소</li>
+    <li>동맥혈 산소포화도 92%</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q65">
+  <h3><span class="num">문 65</span> <span class="en">천식 발작 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>38세 천식 환자가 심한 천식 발작으로 중환자실에 입원하였다. 환자는 점점 더 호흡이 힘들어진다고 하여, 동맥혈 가스분석 결과가 pH 7.25, PCO₂ 68 mmHg, PO₂ 60 mmHg, HCO₃ 24 mEq/L일 때, 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경구 스테로이드 추가</li>
+    <li>류코트리엔 조절제 투여</li>
+    <li>흡입 산화질소 투여</li>
+    <li>즉시 기관내삽관 시행</li>
+    <li>서방형 테오필린 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q66">
+  <h3><span class="num">문 66</span> <span class="en">albuterol 흡입제 교육</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 천식으로 albuterol (Ventolin) 흡입제를 처방 받은 환자에게 사용법을 교육하였다. 다음 중 사용법에 대해 잘 이해했다고 판단되는 환자의 반응은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>한 번 흡입하고 나서 1분 정도 있다가 두 번째 흡입을 할 거예요.</li>
+    <li>숨쉬기 힘들지 않더라도 4시간마다 두 번씩 흡입할 거예요.</li>
+    <li>향후 천식이 재발하는 것을 예방하기 위해 정기적으로 흡입할 거예요.</li>
+    <li>숨쉬기 힘들어질 때마다 두 번씩 흡입할 거예요.</li>
+    <li>아무리 숨쉬기 힘들어도 1번만 흡입할 거예요.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q67">
+  <h3><span class="num">문 67</span> <span class="en">ARDS 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 급성호흡곤란증후군에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>염증 반응으로 폐포 모세혈관 손상과 삼출액이 폐포에 축적되어 중증도의 폐부종이 유발된다.</li>
+    <li>특정 물질의 흡인으로 인해 폐부종이 유발된다.</li>
+    <li>초기부터 호흡곤란, 청색증, 호흡성 산증이 유발된다.</li>
+    <li>잔기량이 증가되어 폐포에 과부하가 유발된다.</li>
+    <li>호흡 시 극심한 통증이 유발된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q68">
+  <h3><span class="num">문 68</span> <span class="en">흡인 후 ARDS</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>25세 여자가 약물과다 복용 후 의식이 저하되어 다량의 위액이 흡인된 상태로 중환자실에 입원하였다. 기관내삽관 후 실시한 동맥혈 가스분석 결과가 pH 7.30, PaCO₂ 30 mmHg, PaO₂ 40 mmHg (FiO₂ 1.0)이고 단순흉부촬영상에서 양쪽 폐에 전반적인 침윤이 나타났을 때, 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐색전증</li>
+    <li>급성 기관지염</li>
+    <li>기관지확장증</li>
+    <li>폐동맥고혈압</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q69">
+  <h3><span class="num">문 69</span> <span class="en">ARDS 특징(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 급성호흡곤란증후군의 임상적 특징에 해당하지 않는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈호흡</li>
+    <li>불응성 저산소혈증</li>
+    <li>단순흉부촬영상 양쪽 폐의 미만성 침윤</li>
+    <li>동맥혈 산소분압:흡입산소농도(&lt;200)</li>
+    <li>폐 사강 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q70">
+  <h3><span class="num">문 70</span> <span class="en">ARDS 단순흉부촬영</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성호흡곤란증후군이 있는 환자의 단순흉부촬영상에서 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>농흉</li>
+    <li>양쪽 흉막삼출</li>
+    <li>왼쪽 하부의 폐허탈</li>
+    <li>과도통기(hyperaeration)</li>
+    <li>고르지 못한 산재성 양쪽 폐 침윤</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q71">
+  <h3><span class="num">문 71</span> <span class="en">ARDS 인공호흡기 판단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>70 kg인 급성호흡곤란증후군 환자가 기계환기 중으로 최고흡기압(peak inspiratory pressure) 55 cmH₂O, 고평부압(plateau pressure) 50 cmH₂O, PaO₂ 60 mmHg이다. 인공호흡기 설정이 보조조절방식(assist-control mode), 호흡수 12회/분, 일회호흡량 700 mL, 흡입산소농도(FiO₂) 1.0, 호기말양압(PEEP) 15 cmH₂O일 때, 올바른 판단은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고평부압은 적절하다.</li>
+    <li>호흡수를 증가시켜야 한다.</li>
+    <li>일회호흡량이 환자에게 적절하지 않다.</li>
+    <li>산소화를 개선하기 위해서 PEEP을 5 cmH₂O로 내려야 한다.</li>
+    <li>지속기도양압(continuous positive airway pressure)으로 환기방식을 변경해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q72">
+  <h3><span class="num">문 72</span> <span class="en">ARDS 저혈압 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>체중 60 kg인 급성호흡곤란증후군 환자가 흡입산소농도(FiO₂) 0.7, 일회호흡량(TV) 420 mL, 호흡수 10회/분, 호기말양압(PEEP) 20 cmH₂O로 기계환기 중이며, 현재 혈압 75/60 mmHg, 맥박 120회/분, 체온 37°C이고 동맥혈 산소분압 70 mmHg이다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡입산소농도를 올린다.</li>
+    <li>호기말양압을 10 cmH₂O로 낮춘다.</li>
+    <li>일회호흡량을 600 mL로 증가시킨다.</li>
+    <li>수축기 혈압을 올리기 위해 도파민을 투여한다.</li>
+    <li>생리식염수 500 mL를 정맥으로 일시 주사(bolus)한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q73">
+  <h3><span class="num">문 73</span> <span class="en">ARDS 생존율 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 기계환기 중인 급성호흡곤란증후군 환자의 생존율을 높이기 위해 강력한 임상적 근거에 의해 추천되는 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>산화질소 흡입</li>
+    <li>고빈도환기</li>
+    <li>저일회호흡량</li>
+    <li>높은 호기말양압</li>
+    <li>글루코코르티코이드 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q74">
+  <h3><span class="num">문 74</span> <span class="en">ARDS 임상양상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성호흡곤란증후군에서 나타나는 임상 양상으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐포 부종</li>
+    <li>폐사강 감소</li>
+    <li>폐동맥압 감소</li>
+    <li>폐내단락 감소</li>
+    <li>폐순응도 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q75">
+  <h3><span class="num">문 75</span> <span class="en">ARDS 입증된 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 남자가 호흡곤란이 심해 기계환기를 위해 중환자실에 입원하였다. 단순흉부촬영상에서 양쪽 폐에 침윤이 보이며 동맥혈 가스분석 결과가 pH 7.29, PaCO₂ 50 mmHg, PaO₂ 72 mmHg, HCO₃ 26 mEq/L, SaO₂ 92% (FiO₂ 0.6)일 때 이 환자에게 필요한 효과가 입증된 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>산화질소 흡입</li>
+    <li>표면활성제 투여</li>
+    <li>저일회호흡량 적용</li>
+    <li>낮은 호기말양압 적용</li>
+    <li>글루코코르티코이드 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q76">
+  <h3><span class="num">문 76</span> <span class="en">불응성 저산소 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기계환기 중인 급성호흡곤란증후군 환자의 동맥혈 가스분석 결과가 FiO₂ 1.0인 상태에서 PaO₂ 58 mmHg일 때, 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고빈도환기 적용</li>
+    <li>스테로이드 투여</li>
+    <li>호기말양압 추가</li>
+    <li>기관지확장제 투여</li>
+    <li>산화질소 흡입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q77">
+  <h3><span class="num">문 77</span> <span class="en">익수 후 ARDS</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>물에 빠져 거의 의사 직전에 구조된 45세 남자가 호흡곤란이 심하고 흡입산소농도 50%로 산소 투여 중인 상태에서 동맥혈 가스분석 결과가 pH 7.22, PaCO₂ 50 mmHg, PaO₂ 65 mmHg, HCO₃⁻ 23 mEq/L, SaO₂ 88%이고 단순흉부촬영상에서 양쪽 폐에 침윤이 있다. 이 환자에게 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복와위</li>
+    <li>스테로이드 투여</li>
+    <li>산화질소 흡입</li>
+    <li>표면활성제 투여</li>
+    <li>기관내삽관과 기계환기</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q78">
+  <h3><span class="num">문 78</span> <span class="en">PEEP 효과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성호흡곤란증후군 환자에게 기계환기를 적용할 때 호기말양압을 설정하였다. 기대되는 효과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉 방지</li>
+    <li>폐단락 증가</li>
+    <li>폐순응도 증가</li>
+    <li>폐포 허탈 방지</li>
+    <li>기능잔기용량 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q79">
+  <h3><span class="num">문 79</span> <span class="en">외상 후 폐부종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 건강했던 35세 남자가 오토바이 사고로 인한 흉부손상으로 응급 수술을 받은 후 호흡곤란을 호소하였다. 호기 시 씩씩거림, 수포음이 들리고 객담에 붉은 거품이 있으며 단순흉부촬영상에서 미만성 폐포 침윤이 보인다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉</li>
+    <li>무기폐</li>
+    <li>폐부종</li>
+    <li>폐색전증</li>
+    <li>흡인 폐렴</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q80">
+  <h3><span class="num">문 80</span> <span class="en">외상 후 불응성 저산소</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>47세 여자가 차량 충돌사고로 가슴을 크게 다친 후 빈호흡, 호흡곤란이 있어 응급실에 왔다. 폐에서 수포음이 들리고 즉시 산소를 공급했으나 저산소혈증이 호전되지 않는다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐암</li>
+    <li>천식</li>
+    <li>폐색전증</li>
+    <li>기관지확장증</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q81">
+  <h3><span class="num">문 81</span> <span class="en">급성호흡부전 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>62세 여자가 급성호흡부전으로 입원하였다. 만성폐쇄폐질환의 과거력이 있으며, 현재 의식은 명료하나 호흡곤란이 심하고 입술 주위 청색증이 있으며 동맥혈 가스분석 결과가 pH 7.22, PaCO₂ 60 mmHg, PaO₂ 53 mmHg, HCO₃ 26 mEq/L, SaO₂ 80% (FiO₂ 0.3)이다. 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체위배액</li>
+    <li>기관내삽관 인공호흡기 적용</li>
+    <li>기관지확장제 투여</li>
+    <li>흡입산소농도(FiO₂) 올림</li>
+    <li>(보기 누락 가능 — 원문 참조)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q82">
+  <h3><span class="num">문 82</span> <span class="en">둔기 흉부손상 ARDS</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>22세 남자가 교통사고로 둔기 흉부손상(blunt chest trauma)과 뇌진탕이 있어 중환자실로 입원하였다. 입원 2일째 환자는 호흡곤란이 있으며, 안절부절 못하고 죽을 것 같아 무섭다고 한다. 호흡수 34회/분, 비재호흡마스크로 100% 산소 투여 중인 상태에서 동맥혈 가스분석 결과가 pH 7.35, PaO₂ 58 mmHg, PaCO₂ 50 mmHg, HCO₃ 26 mEq/L이고 단순흉부촬영상에서 양쪽 폐에 침윤이 있다. 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체위배액</li>
+    <li>흉관 삽입</li>
+    <li>기관지확장제 투여</li>
+    <li>기관내삽관과 기계환기</li>
+    <li>재호흡마스크로 100% 산소 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q83">
+  <h3><span class="num">문 83</span> <span class="en">ARDS 기계환기 고려(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성호흡곤란증후군 환자에게 기계환기를 시작하려고 할 때 고려해야 할 사항으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일회호흡량은 6 mL/kg로 설정한다.</li>
+    <li>기도내압은 최대 30-35 mmHg를 초과하지 않도록 한다.</li>
+    <li>산소포화도는 90%가 유지되도록 한다.</li>
+    <li>흡입산소농도는 1.0으로 시작하여 동맥혈 산소분압이 60 mmHg가 될 때까지 점차 감소시킨다.</li>
+    <li>호기말양압은 가능하면 추가하지 않는다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q84">
+  <h3><span class="num">문 84</span> <span class="en">폐동맥쐐기압 12</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>65세 남자가 저산소증이 있으며 폐동맥관(Swan-Ganz catheter)을 통해 폐동맥쐐기압이 12 cmH₂O로 측정되었다. 이 환자의 저산소증의 원인으로 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성 폐손상</li>
+    <li>급성 심장성 폐울혈</li>
+    <li>기관지 경련으로 인한 환기/관류 불균형</li>
+    <li>모세혈관 폐색으로 인한 호흡사강의 증가</li>
+    <li>급성 폐고혈압으로 인한 폐동맥 폐쇄</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q85">
+  <h3><span class="num">문 85</span> <span class="en">기관지염 초기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관지염의 초기 임상적 특성으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡 시 통증</li>
+    <li>기도 분비물 증가</li>
+    <li>휴식 시 호흡곤란</li>
+    <li>촉각진동감 증가</li>
+    <li>속삭임 가슴소리 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q86">
+  <h3><span class="num">문 86</span> <span class="en">만성 기관지염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>66세 남자가 만성적인 객담과 기침을 호소하여 내원하였다. 잦은 호흡기질환에 감염된 과거력이 있고 객담이 있는 기침과 피부 청색증이 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>폐심장증</li>
+    <li>낭성 섬유증</li>
+    <li>만성 기관지염</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q87">
+  <h3><span class="num">문 87</span> <span class="en">기관지확장증 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 지속되면 최종적으로 기관지확장증을 유발할 수 있는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>객혈</li>
+    <li>폐고혈압</li>
+    <li>IgG 결핍</li>
+    <li>수면성 호흡장애</li>
+    <li>심부전으로 인한 폐울혈</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q88">
+  <h3><span class="num">문 88</span> <span class="en">폐기종 원인(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 폐기종을 유발하는 원인으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡연</li>
+    <li>가족력</li>
+    <li>알레르기</li>
+    <li>상기도 감염</li>
+    <li>오염된 공기 환경</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q89">
+  <h3><span class="num">문 89</span> <span class="en">폐기종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 남자가 기침과 호흡곤란으로 내원하였다. 25갑년의 흡연력이 있고 단순흉부촬영상에서 폐포의 비정상적인 확대가 보인다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>폐렴</li>
+    <li>폐기종</li>
+    <li>만성 기관지염</li>
+    <li>폐쇄수면무호흡</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q90">
+  <h3><span class="num">문 90</span> <span class="en">폐기종 관련</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 폐기종과 관련이 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과다환기</li>
+    <li>폐포 허탈</li>
+    <li>흡기 곤란</li>
+    <li>환기/관류비 균등</li>
+    <li>알파1-항트립신 결핍</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q91">
+  <h3><span class="num">문 91</span> <span class="en">폐기종 기계환기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐기종으로 기계환기 중인 환자에서 기계환기와 관련된 내용으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡입산소농도(FiO₂)를 증가시켜도 산소분압은 올라가지 않을 것이다.</li>
+    <li>무기폐를 예방하기 위해 일회호흡량(tidal volume)을 1 mL/kg까지 증가시킬 수 있다.</li>
+    <li>환기 방식은 압력 조절형 방식(pressure controlled mode)이어야 한다.</li>
+    <li>폐의 과다팽창을 방지하기 위해 호기말양압(PEEP)은 적용하지 말아야 한다.</li>
+    <li>압력손상의 위험이 크므로 기도내압(airway pressure)의 변화 여부를 주의 깊게 감시해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q92">
+  <h3><span class="num">문 92</span> <span class="en">제한성 폐질환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 제한성 폐질환(restrictive lung disease)에 대한 내용으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐조직의 탄력성 증가</li>
+    <li>호흡근육 약화</li>
+    <li>강제폐활량 감소</li>
+    <li>호기 곤란</li>
+    <li>기도저항 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q93">
+  <h3><span class="num">문 93</span> <span class="en">간질성 폐질환 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 미만성 간질성 폐질환(Interstitial lung disease)의 증상에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>객혈</li>
+    <li>씩씩거림</li>
+    <li>곤봉형 손톱</li>
+    <li>객담을 동반한 기침</li>
+    <li>얕은 노력성 호흡</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q94">
+  <h3><span class="num">문 94</span> <span class="en">낭성 섬유증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>20세 남자가 호흡곤란으로 내원하였다. 반복적인 부비동 및 호흡기계 감염이 있었으며, 지방변, 입안에서 짠맛이 나는 증상이 있다고 한다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>폐심장증</li>
+    <li>낭성 섬유증</li>
+    <li>만성 기관지염</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q95">
+  <h3><span class="num">문 95</span> <span class="en">동요가슴</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉부 손상으로 인한 동요가슴(flail chest)에서 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>협착음(stridor)</li>
+    <li>코벌렁임(nasal flaring)</li>
+    <li>교대맥박(pulsus alternans)</li>
+    <li>발작 기침(paroxysmal cough)</li>
+    <li>모순호흡(paradoxical respiration)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q96">
+  <h3><span class="num">문 96</span> <span class="en">수술 후 폐색전증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심근경색증으로 관상동맥우회술을 받은 76세 환자가 급작스러운 흉통과 호흡곤란을 호소하였다. 폐고혈압과 심부전의 과거력이 있는 이 환자에게 발생 가능한 호흡기 문제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡인</li>
+    <li>기흉</li>
+    <li>혈흉</li>
+    <li>폐색전증</li>
+    <li>흉벽 손상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q97">
+  <h3><span class="num">문 97</span> <span class="en">폐색전증 확진검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐색전증을 확진할 수 있는 진단검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐혈관조영술</li>
+    <li>단순흉부촬영</li>
+    <li>폐 환기/관류 스캔</li>
+    <li>동맥혈 가스분석</li>
+    <li>가슴경유심초음파검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q98">
+  <h3><span class="num">문 98</span> <span class="en">대량 폐색전증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 대량의 폐색전증을 나타내는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈압 78/58 mmHg, SpO₂ 88%, 폐모세혈관쐐기압 증가</li>
+    <li>혈압 82/52 mmHg, SpO₂ 85%, 폐포 사강 증가</li>
+    <li>혈압 150/90 mmHg, SpO₂ 88%, 중심정맥압 감소</li>
+    <li>혈압 170/102 mmHg, SpO₂ 86%, 평균 폐동맥압 감소</li>
+    <li>혈압 158/98 mmHg, SpO₂ 89%, 폐혈관저항 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q99">
+  <h3><span class="num">문 99</span> <span class="en">수술 후 폐색전증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>3일 전 고관절 치환술을 받은 90세 환자가 중등도의 호흡곤란을 호소한다. 호흡수 40회/분, 맥박 128회/분, 혈압 80/60 mmHg이며, 폐 기저부의 호흡음이 감소되었고 심음은 정상이다. 심전도에서 심실박동수 130회의 심방세동이 관찰될 때 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐부종</li>
+    <li>폐색전증</li>
+    <li>흡인 폐렴</li>
+    <li>심근경색증</li>
+    <li>수술 후 무기폐</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q100">
+  <h3><span class="num">문 100</span> <span class="en">폐색전증 상태 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐색전증으로 인한 급성 호흡부전으로 입원한 환자가 혈압 88/58 mmHg, 호흡수 28회/분이고 양쪽 폐는 깨끗하다. 비강캐뉼라로 4 L/분으로 산소를 공급하는 상태에서 SpO₂는 88%이다. 이 환자의 상태에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>단락이 크고 호기말양압(PEEP) 적용이 필요하다.</li>
+    <li>색전이 크고 폐포 사강이 증가되었다.</li>
+    <li>산소공급을 위해 기관절개술이 필요하다.</li>
+    <li>기계환기와 노르에피네프린 주입이 필요하다.</li>
+    <li>환자의 D-이합체(D-dimer)는 음성이고 섬유소 용해요법이 필요하다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q101">
+  <h3><span class="num">문 101</span> <span class="en">수술 후 폐색전 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>78세 환자가 왼쪽 대퇴 골절로 수술한 지 3일째에 몹시 불안해하고 호흡곤란을 호소하며, 혈압 125/80 mmHg, 맥박 130회/분, 호흡 35회/분이다. 이 환자에게 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>산소 투여</li>
+    <li>심장초음파 시행</li>
+    <li>혈전용해제 투여</li>
+    <li>대정맥 필터(vena cava filter) 삽입</li>
+    <li>순차적 압박장치(sequential compression device) 적용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q102">
+  <h3><span class="num">문 102</span> <span class="en">폐색전증 진단검사(심전도)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>85세 여자가 왼쪽 발목 골절로 6주간 거의 누운 상태로 지내던 중 갑자기 호흡곤란과 흉통이 발생하여 내원하였다. 혈압 120/80 mmHg, 맥박 125회/분, 호흡 31회/분, 체온 36.8°C이고 심전도가 다음과 같을 때, 진단을 위해 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐기능검사</li>
+    <li>단순흉부촬영</li>
+    <li>동맥혈 가스분석</li>
+    <li>D-dimer</li>
+    <li>관상동맥조영술</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p087.png" alt="문항 원문/심전도" loading="lazy"><figcaption>p.87 원문(심전도 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q103">
+  <h3><span class="num">문 103</span> <span class="en">대사성 산증 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 동맥혈 가스분석 결과가 pH 7.32, PaCO₂ 33 mmHg, HCO₃ 16 mEq/L일 때, 이 결과를 초래할 수 있는 문제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>불안</li>
+    <li>쇼크</li>
+    <li>기흉</li>
+    <li>전해질 불균형</li>
+    <li>마약성 진통제 과다복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q104">
+  <h3><span class="num">문 104</span> <span class="en">조영제 전후 수액</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 조영제를 사용한 흉부 컴퓨터단층촬영 전후로 0.9% 생리식염수 1 mL/kg의 투여가 필요한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식이 있는 30세 남자</li>
+    <li>고혈압이 있는 55세 남자</li>
+    <li>베타 아드레날린 차단제를 복용 중인 40세 남자</li>
+    <li>급성 관상동맥증후군으로 입원한 50세 여자</li>
+    <li>관절염으로 6시간마다 비스테로이드항염증제(NSAIDs)를 복용하는 80세 남자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q105">
+  <h3><span class="num">문 105</span> <span class="en">천식 기관내삽관 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>천식으로 입원한 환자가 호흡수 28회/분이다. 현재 3 L/분의 산소를 비강캐뉼라로 공급받고 있다. 다음 중 기관내삽관이 필요하다고 판단되는 동맥혈 가스분석 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>pH 7.41, PaCO₂ 39 mmHg, PaO₂ 83 mmHg</li>
+    <li>pH 7.50, PaCO₂ 29 mmHg, PaO₂ 72 mmHg</li>
+    <li>pH 7.46, PaCO₂ 33 mmHg, PaO₂ 62 mmHg</li>
+    <li>pH 7.36, PaCO₂ 41 mmHg, PaO₂ 62 mmHg</li>
+    <li>pH 7.44, PaCO₂ 41 mmHg, PaO₂ 80 mmHg</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q106">
+  <h3><span class="num">문 106</span> <span class="en">호흡성 산증+저산소</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 호흡성 산증과 심각한 저산소혈증을 나타내는 동맥혈 가스분석 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>pH 7.56, PaCO₂ 28 mmHg, PaO₂ 38 mmHg, HCO₃ 24 mEq/L</li>
+    <li>pH 7.19, PaCO₂ 78 mmHg, PaO₂ 40 mmHg, HCO₃ 28 mEq/L</li>
+    <li>pH 7.34, PaCO₂ 46 mmHg, PaO₂ 60 mmHg, HCO₃ 21 mEq/L</li>
+    <li>pH 7.21, PaCO₂ 29 mmHg, PaO₂ 48 mmHg, HCO₃ 14 mEq/L</li>
+    <li>pH 7.35, PaCO₂ 38 mmHg, PaO₂ 65 mmHg, HCO₃ 20 mEq/L</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q107">
+  <h3><span class="num">문 107</span> <span class="en">호흡성 알칼리증 ABGA</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 동맥혈 가스분석 결과가 pH 7.47, PaCO₂ 32 mmHg, HCO₃ 23 mEq/L일 때, 이 결과를 초래한 문제로 볼 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>불안</li>
+    <li>쇼크</li>
+    <li>기흉</li>
+    <li>전해질 불균형</li>
+    <li>마약성 진통제 과다복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q108">
+  <h3><span class="num">문 108</span> <span class="en">만성 기침 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>8주 이상 지속되는 기침이 있어 내원한 환자의 단순흉부촬영상이 정상일 때 이 기침의 원인으로 가장 가능성이 적은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>천식</li>
+    <li>후비루</li>
+    <li>위식도역류</li>
+    <li>바이러스성 감기</li>
+    <li>안지오텐신전환효소 억제제(ACEI) 복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q109">
+  <h3><span class="num">문 109</span> <span class="en">신부전 환자 폐색전 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>65세 환자가 폐렴과 패혈증으로 인해 2주 이상 중환자실에 입원 중이다. 울혈심부전, 고혈압, 당뇨, 만성 신부전의 과거력이 있으며 현재 투석을 하고 있다. 환자가 갑자기 빈맥, 저산소증, 빈호흡을 보이며 폐색전증이 의심될 때 적절한 진단검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>조영제를 사용한 흉부 컴퓨터단층촬영</li>
+    <li>폐 환기/관류 스캔</li>
+    <li>단순흉부촬영</li>
+    <li>기관지내시경</li>
+    <li>폐기능검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q110">
+  <h3><span class="num">문 110</span> <span class="en">횡격막 거상 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 여자가 지난 2주 동안 호흡곤란과 피로가 지속되어 내원하였다. 다른 과거력은 없으며 칼슘제와 비타민을 복용하는 것을 제외하고는 다른 투약력도 없다. 전면 단순흉부촬영상에서 오른쪽 격막거상(elevation of right hemidiaphragm)이 보일 때 다음으로 시행해야 할 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>측와위(lateral decubitus) 흉부촬영</li>
+    <li>폐동맥조영술</li>
+    <li>흉부 자기공명영상</li>
+    <li>흉부 컴퓨터단층촬영</li>
+    <li>심초음파</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q111">
+  <h3><span class="num">문 111</span> <span class="en">컬리 B선</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>단순흉부촬영상에서 컬리 B선(Kerley B line)이 보이는 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐렴</li>
+    <li>무기폐</li>
+    <li>폐부종</li>
+    <li>대동맥 협착</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q112">
+  <h3><span class="num">문 112</span> <span class="en">결핵</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>23세 여자가 최근 2주 동안 기침과 혈액이 섞인 가래가 있어 내원하였다. 낮은 발열이 동반되고 최근 5 kg의 체중 감소가 있고 흡연력은 없으며, 몇 개월 전 방학 동안 남미 여행을 다녀온 적이 있다고 한다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐렴</li>
+    <li>결핵</li>
+    <li>폐색전</li>
+    <li>기관지염</li>
+    <li>기관지확장증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q113">
+  <h3><span class="num">문 113</span> <span class="en">결핵 감염 경로</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 결핵에 감염될 가능성이 있는 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>동성애 환자와 접촉 시</li>
+    <li>활동성 결핵이 있는 사람과 접촉 시</li>
+    <li>결핵이 있는 사람의 분비물이나 혈액 접촉 시</li>
+    <li>결핵이 있는 사람과 음식이나 수저를 같이 사용하는 경우</li>
+    <li>피부 결핵 반응검사에서 양성으로 나온 사람과 공기접촉 시</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q114">
+  <h3><span class="num">문 114</span> <span class="en">rifampin 부작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>최근 폐결핵으로 진단되어 isoniazid (Laniazid), rifampin (Rifadin), pyrazinamide를 복용 중인 환자가 소변이 붉은 오렌지색이라고 할 때 적절한 간호사의 반응은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>요로감염의 증상이니 수분을 많이 섭취하세요.</li>
+    <li>rifampin으로 인해 나타난 반응이며, 약물 복용은 중단하지 않아도 됩니다.</li>
+    <li>간독성일 수 있으니 추가검사를 할 때까지 약물 복용을 중지하세요.</li>
+    <li>혈액이 섞여 나오는 것일 수 있으니 즉시 신장검사를 해야 합니다.</li>
+    <li>음식 조절이 필요하니 영양상담을 예약해 드리겠습니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q115">
+  <h3><span class="num">문 115</span> <span class="en">폐결핵 약물 조합</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐결핵 환자를 위한 약물 처방으로 적절한 조합은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>rifampin (Rifadin)과 병행된 montelukast (Singulair) 약물 치료</li>
+    <li>streptomycin, pyrazinamide와 rimantadine (Flumadine)의 병용 치료</li>
+    <li>isoniazid (INH), pyrazinamide와 rifampin (Rifadin)의 병용 치료</li>
+    <li>pyrimethamine (Fansidar)의 단일 약물 치료</li>
+    <li>isoniazid (INH)의 단일 약물 치료</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q116">
+  <h3><span class="num">문 116</span> <span class="en">도말양성 폐결핵 표준처방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>대한결핵 및 호흡기학회(2005)에서 제시한 도말양성 폐결핵 환자의 표준 처방은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Isoniazid+Rifampicin+Ethambutol 6개월</li>
+    <li>Isoniazid+Rifampicin+Pyrazinamide 9개월</li>
+    <li>Isoniazid+Rifampicin+Pyrazinamide 2개월, Isoniazid+Rifampicin+Streptomycin 4개월</li>
+    <li>Isoniazid+Rifampicin 4개월, Isoniazid+Rifampicin+Ethambutol+Streptomycin 2개월</li>
+    <li>Isoniazid+Rifampicin+Ethambutol+Pyrazinamide 2개월, Isoniazid+Rifampicin+Ethambutol 4개월</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q117">
+  <h3><span class="num">문 117</span> <span class="en">항결핵제 간독성</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐결핵으로 6개월 단기치료 중인 32세 여자 환자가 항결핵약 복용 전의 간기능은 정상이었으나 복용 2주 후 시행한 간기능검사 결과가 아스파르테이트아미노전이효소(AST) 65 U/L, 알라닌아미노전이효소(ALT) 70 U/L이며 황달 등의 증상은 없을 때, 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비타민 B를 투여한다.</li>
+    <li>현재 복용 중인 약들을 계속 복용하게 한다.</li>
+    <li>간 독성이 악화될 수 있어 모든 약의 복용을 중단하게 한다.</li>
+    <li>간 독성을 유발하는 Isoniazid를 제외한 나머지 약들은 계속 복용하게 한다.</li>
+    <li>간 독성을 유발하는 Ethambutol을 제외한 나머지 약들은 계속 복용하게 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q118">
+  <h3><span class="num">문 118</span> <span class="en">결핵 화학적 예방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>요양시설에서 활동성 결핵을 진단 받은 환자와 같은 병실에 있는 환자에게 화학적 예방법을 시작하려고 할 때 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>PPD 피부검사 결과가 양성일 때만 시작한다.</li>
+    <li>PPD 피부검사 결과를 얻은 후 72시간 이내에 시작한다.</li>
+    <li>반복된 피부검사가 양성일 때 3개월 이내에 시작한다.</li>
+    <li>PPD 피부검사가 음성이면 1년 이내에 재검사를 실시하고 시작한다.</li>
+    <li>가능한 한 빨리 PPD 피부검사를 하고 화학적 예방법을 시작한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q119">
+  <h3><span class="num">문 119</span> <span class="en">폐결핵 수술 적응증(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐결핵의 수술 적응증에 해당하지 않는 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소아 암과의 감별이 어려운 경우</li>
+    <li>지속되는 다량의 재발성 객혈이 있는 경우</li>
+    <li>중하엽의 결핵성 기관지확장증이 있는 경우</li>
+    <li>6개월간의 화학요법 후에도 객담검사 결과가 양성인 경우</li>
+    <li>(보기 누락 가능 — 원문 참조)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q120">
+  <h3><span class="num">문 120</span> <span class="en">폐고혈압 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐 고혈압으로 유발될 수 있는 문제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐동맥 협착</li>
+    <li>좌심실 부전</li>
+    <li>삼첨판 역류</li>
+    <li>승모판 협착</li>
+    <li>폐 순응도 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q121">
+  <h3><span class="num">문 121</span> <span class="en">PEEP 효과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐렴, 급성 폐손상 또는 급성호흡곤란증후군 환자의 치료 시 호기말양압(PEEP)의 적용 효과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐동맥 단락 감소</li>
+    <li>모세혈관 누출 감소</li>
+    <li>최고기도압 상승</li>
+    <li>폐포 동원(alveolar recruitment) 증가</li>
+    <li>사강환기(dead space ventilation) 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q122">
+  <h3><span class="num">문 122</span> <span class="en">산소 투여 필요 판단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 폐손상과 패혈 쇼크가 있는 환자에게서 가장 많은 산소 투여가 필요한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>PO₂ 50 mmHg, SvO₂ 50 %</li>
+    <li>PO₂ 80 mmHg, SvO₂ 80 %</li>
+    <li>PO₂ 50 mmHg, SvO₂ 85 %</li>
+    <li>PO₂ 55 mmHg, SvO₂ 50 %</li>
+    <li>PO₂ 85 mmHg, SvO₂ 60 %</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q123">
+  <h3><span class="num">문 123</span> <span class="en">심부전 의심 치료계획</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지난 며칠 동안 호흡곤란, 기침, 피로감, 체위 의존 부종을 호소하는 50세 환자의 치료 계획 시 고려해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>스트렙토키나아제(streptokinase) 치료</li>
+    <li>심장 기능 평가를 위한 입원 의뢰</li>
+    <li>furosemide 40 mg 경구 투여</li>
+    <li>칼슘통로차단제 추가 투여</li>
+    <li>흉관 삽입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q124">
+  <h3><span class="num">문 124</span> <span class="en">면역손상 유발약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 50세 환자가 호흡곤란이 심해지고 체온 39°C, 맥박 104회/분, 호흡수 44회/분, 산소포화도 84%이며, 양쪽 폐 기저부에서 수포음이 들려 폐렴이 의심된다. 이 환자는 현재 Tenormin 25 mg PO, qd; prednisone 10 mg PO, qd; Lovastatin 20 mg PO, qd; ipratropium bromide 18 μg 1-2 puffs, qid prn; fluticasone propionate 100/50, 2 puffs, bid로 약물치료 중이다. 이 중 면역 손상을 초래할 수 있는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Tenormin</li>
+    <li>Lovastatin</li>
+    <li>Prednisone</li>
+    <li>Ipratropium bromide</li>
+    <li>Fluticasone propionate</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q125">
+  <h3><span class="num">문 125</span> <span class="en">폐농양</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>68세 남자가 3일 동안 38.9°C의 발열, 권태감, 오한, 피로감, 호흡곤란이 있어 입원하였다. 최근 2주간 폐렴막대균(Klebsiella pneumonia)을 치료하다가 퇴원하였고 고혈압, 관절염, 당뇨병의 과거력이 있으며, 매일 반 갑~한 갑 정도 흡연하고 소주 1~2병을 주 2회 마신다고 한다. 단순흉부촬영상에서 오른쪽 폐상엽의 경화가 보인다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐결핵</li>
+    <li>폐농양</li>
+    <li>폐출혈</li>
+    <li>폐색전증</li>
+    <li>재발성 폐렴</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q126">
+  <h3><span class="num">문 126</span> <span class="en">기흉 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 기흉에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐동맥압이 30 mmHg를 초과한다.</li>
+    <li>병변 부위에서 씩씩거림이 청진된다.</li>
+    <li>빈맥, 호흡곤란, 저혈압이 동반된다.</li>
+    <li>병변 부위의 촉각진동감이 증가된다.</li>
+    <li>갑작스럽게 날카로운 흉막 통증이 유발된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q127">
+  <h3><span class="num">문 127</span> <span class="en">흉부 CT 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음은 오토바이 사고로 내원한 30세 남자환자의 흉부 컴퓨터단층촬영 사진이다. 흉통을 호소하는 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉</li>
+    <li>폐렴</li>
+    <li>폐색전</li>
+    <li>폐좌상</li>
+    <li>공기가슴증</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p093.png" alt="문항 원문/흉부 CT" loading="lazy"><figcaption>p.93 원문(흉부 CT 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q128">
+  <h3><span class="num">문 128</span> <span class="en">자발 기흉(흉부촬영)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>키가 크고 마른 20대 남자가 오른쪽 흉부의 통증과 호흡곤란이 있어 내원하였다. 환자는 숨을 들이마실 때 칼로 찌르는 듯한 통증이 갑자기 생겼다고 하며 통증이 사라졌다가 다시 나타나는 것이 반복된다고 한다. 오른쪽 흉부의 촉각진동감과 호흡음이 감소되었고 단순흉부촬영상이 다음과 같을 때 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>자발 기흉</li>
+    <li>만성 기관지염</li>
+    <li>흉막염</li>
+    <li>기관지확장증</li>
+    <li>폐렴</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p093.png" alt="문항 원문/단순흉부촬영" loading="lazy"><figcaption>p.93 원문(단순흉부촬영 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q129">
+  <h3><span class="num">문 129</span> <span class="en">기계환기 고압알람 긴장성기흉</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>36세 환자가 폐렴으로 인해 호흡곤란이 있어 기계환기 중이다. 갑자기 인공호흡기의 고압 경고음(high-pressure alarm)이 계속 울리고, 환자는 안절부절 못하고 빈호흡, 빈맥과 혈압 저하가 있으며 산소포화도가 82%이고 오른쪽 폐의 호흡음이 감소되고 왼쪽으로 기관이 편위되었다. 가장 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>PEEP 올림</li>
+    <li>단순흉부촬영</li>
+    <li>morphine 투여</li>
+    <li>흉강천자 시행</li>
+    <li>혈압상승제 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q130">
+  <h3><span class="num">문 130</span> <span class="en">기흉 흉관 삽입</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>3 m 높이에서 추락하여 응급실에 온 40세 남자가 호흡곤란을 호소하여 단순흉부촬영상에서 오른쪽 폐에 절반 정도의 기흉이 있을 때 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>단순 관찰</li>
+    <li>고농도산소 투여</li>
+    <li>기관내삽관</li>
+    <li>흉관 삽입</li>
+    <li>응급 개흉술(thoracotomy)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q131">
+  <h3><span class="num">문 131</span> <span class="en">기흉 중재(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>키가 크고 마른 20세 남자가 오늘 오후 안정 시 발생한 흉통이 있어 응급실에 왔다. 단순흉부촬영상에서 왼쪽 폐에 기흉이 있을 때 고려할 중재로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>단순 관찰</li>
+    <li>고농도산소 투여</li>
+    <li>기관내삽관</li>
+    <li>단순 흉강천자</li>
+    <li>흉관 삽입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q132">
+  <h3><span class="num">문 132</span> <span class="en">기흉 필요 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>24세 남자가 갑자기 발생한 흉통이 있어 응급실에 왔다. 혈압 110/80 mmHg, 맥박 100회/분, 호흡수 27회/분이고 왼쪽 폐 타진 시 과다공명음이 들리고 호흡음이 감소되어 있다. 이 환자에게 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심전도</li>
+    <li>심초음파</li>
+    <li>기관지경술</li>
+    <li>단순흉부촬영</li>
+    <li>흉부 컴퓨터단층촬영</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q133">
+  <h3><span class="num">문 133</span> <span class="en">혈흉 우선 처치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>55세 남자가 달리던 오토바이에 치여 왼쪽 가슴 전체가 멍이 들었고 숨 쉴 때마다 가슴 통증이 심해 응급실에 왔다. 왼쪽 폐 타진 시 둔탁음이 있고 호흡음이 잘 들리지 않으며, 혈압 100/70 mmHg, 맥박 110회/분, 호흡수 25회/분, 체온 36.8°C이다. 이 환자에게 우선적으로 시행해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심초음파</li>
+    <li>흉관 삽입</li>
+    <li>기관내삽관</li>
+    <li>흉부 컴퓨터단층촬영</li>
+    <li>개흉술(thoracotomy)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q134">
+  <h3><span class="num">문 134</span> <span class="en">흉부외상(흉부촬영)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>24세 남자가 날아온 야구공에 오른쪽 가슴을 맞은 후 가슴 통증과 호흡곤란이 있다고 한다. 오른쪽 가슴에 반상출혈이 보이고 혈압 120/70 mmHg, 맥박 105회/분, 호흡수 26회/분, 체온 36.7°C이다. 단순흉부촬영상이 다음과 같을 때, 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉관 삽입</li>
+    <li>이뇨제 투여</li>
+    <li>고농도산소 투여</li>
+    <li>기관내삽관과 기계환기</li>
+    <li>응급 개흉술(thoracotomy)</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p095.png" alt="문항 원문/단순흉부촬영" loading="lazy"><figcaption>p.95 원문(단순흉부촬영 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q135">
+  <h3><span class="num">문 135</span> <span class="en">폐절제술 전 확인(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>68세 남자가 폐암으로 진단되어 폐절제술을 시행하려고 한다. 이 환자의 수술을 위해 확인할 사항으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈혈이 없는가?</li>
+    <li>소세포암이 분명한가?</li>
+    <li>전해질 이상이 없는가?</li>
+    <li>병변의 완전 절제가 가능한가?</li>
+    <li>1초간 노력성 호기량(FEV₁)이 1 L는 되는가?</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q136">
+  <h3><span class="num">문 136</span> <span class="en">비소세포폐암 수술불가 병기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 비소세포폐암의 병기 중 수술이 불가능한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Stage I</li>
+    <li>Stage IIA</li>
+    <li>Stage IIB</li>
+    <li>Stage IIIA</li>
+    <li>Stage IIIB</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q137">
+  <h3><span class="num">문 137</span> <span class="en">수술 불가 폐암</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 수술이 불가능한 폐암은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>선암</li>
+    <li>대세포암</li>
+    <li>소세포암</li>
+    <li>편평상피암</li>
+    <li>기관지폐포암</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q138">
+  <h3><span class="num">문 138</span> <span class="en">폐암 수술 전 검사(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 폐암 수술 전 반드시 시행해야 할 검사가 아닌 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐기능검사</li>
+    <li>흉부 컴퓨터단층촬영</li>
+    <li>양전자방출단층촬영</li>
+    <li>뇌 자기공명영상</li>
+    <li>대장내시경검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q139">
+  <h3><span class="num">문 139</span> <span class="en">수술 가능 폐암</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 폐암 환자 중 수술이 가능한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>T4N2M0</li>
+    <li>소세포암</li>
+    <li>수술 전 FEV₁ 2.2 L</li>
+    <li>2개월 전 심근경색증 발생</li>
+    <li>폐확산능(DLco)의 수술 후 예측치 75%</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q140">
+  <h3><span class="num">문 140</span> <span class="en">비소세포폐암 T2N1M0 치료</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>65세 남자가 비소세포폐암으로 진단 받았으며 병기는 T2N1M0이다. 현재 다른 전신상태는 양호하다. 폐기능검사 상 1초간 노력성 호기량(FEV₁)이 2.6 L일 때, 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐절제술</li>
+    <li>방사선 치료</li>
+    <li>항암화학요법</li>
+    <li>항암화학요법과 방사선 치료</li>
+    <li>항암화학요법, 폐절제술, 방사선 치료</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q141">
+  <h3><span class="num">문 141</span> <span class="en">누출액 흉수 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>간경화증으로 복수가 있는 50세 남자가 심한 호흡곤란과 기침을 호소하여 시행한 단순흉부촬영상에서 오른쪽 폐 기저부에 흉수가 관찰되었다. 흉수를 분석한 결과가 누출액(transudate)일 때 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉강 천자</li>
+    <li>흉관 배액</li>
+    <li>항생제 투여</li>
+    <li>흉막복막 션트</li>
+    <li>간경화증과 복수 치료</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q142">
+  <h3><span class="num">문 142</span> <span class="en">흉막삼출 분석(누출액)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉통을 호소하는 환자의 단순흉부촬영상에서 심장비대와 폐의 양쪽에 소량의 흉막삼출(pleural effusion)이 관찰되었고, 흉강천자를 하여 흉수를 분석한 결과가 단백질 3.0 g/dL, 유산탈수소효소(LDH) 100 U/L이었다. 이 환자의 혈청 단백질이 7.0 g/dL, LDH가 250 U/L일 때 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉관 배액</li>
+    <li>항생제 투여</li>
+    <li>항결핵제 투여</li>
+    <li>치료적 흉강천자 시행</li>
+    <li>심장 수축촉진제(inotropics) 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q143">
+  <h3><span class="num">문 143</span> <span class="en">농흉 흉관 배액</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>38세 남자가 3일 전부터 열이 나고 호흡 시 오른쪽 가슴에 통증이 있다고 한다. 단순흉부촬영상에서 오른쪽 폐에 흉막삼출이 있어 흉강천자를 하여 흉수를 분석한 결과 농이 보이며, 단백질 4.1 g/dL, 포도당 35 mg/dL이었고 이 환자의 혈청 단백질 6.5 g/dL, 포도당 110 mg/dL일 때 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흉관 배액</li>
+    <li>항암제 투여</li>
+    <li>흉막성형술</li>
+    <li>항결핵제 투여</li>
+    <li>종격동 방사선 치료</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q144">
+  <h3><span class="num">문 144</span> <span class="en">상대정맥증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>55세 남자가 호흡곤란으로 내원하였다. 단순흉부촬영상에서 오른쪽 폐상엽에 덩어리가 있으며, 얼굴과 팔이 많이 부어 있고 목의 정맥이 확장되어 있을 때 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐농양</li>
+    <li>결핵종</li>
+    <li>폐색전증</li>
+    <li>심장눌림증</li>
+    <li>상대정맥증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q145">
+  <h3><span class="num">문 145</span> <span class="en">상대정맥증후군 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>비소세포암으로 진단 받은 73세 남자가 호흡곤란과 얼굴이 붓고 충혈되어 내원하였다. 목의 정맥이 확장되어 있고 다리 부종은 없다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>염분 공급</li>
+    <li>이뇨제 투여</li>
+    <li>산소공급 제한</li>
+    <li>화학요법(chemotherapy)</li>
+    <li>바로 누운 자세로 침상 안정</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q146">
+  <h3><span class="num">문 146</span> <span class="en">VAP 예방 근거중심실무</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐절제술 후 기계환기 중인 환자의 간호에 있어 인공호흡기 관련 폐렴(ventilator associated pneumonia)을 예방하기 위한 근거중심실무는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상머리를 30~45° 올린다.</li>
+    <li>매 8시간마다 구강간호를 시행한다.</li>
+    <li>매일 인공호흡기 회로를 교환한다.</li>
+    <li>환자의 구강점막을 건조하게 유지한다.</li>
+    <li>장기간 기관내관이 필요하면 비강으로 배치한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q147">
+  <h3><span class="num">문 147</span> <span class="en">기관내관 위치 확인(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기계환기를 위해 기관내삽관을 시행하였다. 기관내관의 위치가 적절한지 확인하는 방법으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>단순흉부촬영</li>
+    <li>상복부 청진</li>
+    <li>호기말 이산화탄소분압 측정</li>
+    <li>대칭적인 흉곽 움직임 관찰</li>
+    <li>위관 삽입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q148">
+  <h3><span class="num">문 148</span> <span class="en">기관내삽관 정확 소견(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관내삽관이 정확하게 되었음을 알 수 있는 소견이 아닌 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일회용 이산화탄소 감지기를 통해 색깔의 변화가 확인된다.</li>
+    <li>상복부 청진 시 공기 흐름이나 콸콸하는 소리(gurgling)가 들린다.</li>
+    <li>양쪽 폐의 첨부와 기저부에서 동일한 호흡음이 들린다.</li>
+    <li>기관내관 안에 호기 시 수증기가 생긴다.</li>
+    <li>대칭적인 흉내의 움직임이 관찰된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q149">
+  <h3><span class="num">문 149</span> <span class="en">폐엽절제술 후 간호(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐엽절제술 후 아직 기관내관을 가지고 있는 환자의 간호로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>정기적인 기도 흡인</li>
+    <li>적절한 전신 수분 공급</li>
+    <li>1일 2회 이상 칫솔을 이용한 구강 간호</li>
+    <li>2~4시간마다 구강 세척제를 이용한 구강 소독</li>
+    <li>주기적으로 기관내관의 커프 압력 측정</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q150">
+  <h3><span class="num">문 150</span> <span class="en">흉부물리요법(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>1일 전 폐엽절제술을 받은 환자에게 흉부물리요법을 시행하려고 할 때 사용할 수 있는 방법으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체위배액</li>
+    <li>흉부 타진</li>
+    <li>횡격막 호흡</li>
+    <li>기침 유발을 위해 고장성 식염수 흡입</li>
+    <li>고빈도흉벽진동(high-frequency chest wall oscillation) 조끼 적용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q151">
+  <h3><span class="num">문 151</span> <span class="en">수술 후 무반응 중재(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>오른쪽 폐상엽절제술을 받은 환자가 중환자실로 왔다. 입실 당시 통증에 반응이 없고 자발호흡이 없으며, SIMV 방식, 호흡수 10회/분, 일회호흡량 10 mL/kg, PEEP 5 cmH₂O, FiO₂ 0.4로 기계환기를 시작했다. 15분 후 시행한 동맥혈 가스분석 결과가 pH 7.38, PaCO₂ 41 mmHg, PaO₂ 72 mmHg, HCO₃ 24 mEq/L일 때, 적절한 중재가 아닌 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>산소농도를 올린다.</li>
+    <li>마취제의 종류를 확인한다.</li>
+    <li>수술 시 진정제 사용 여부를 확인한다.</li>
+    <li>수술 시 신경근육차단제의 사용 여부를 확인한다.</li>
+    <li>뇌 컴퓨터단층촬영을 시행한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q152">
+  <h3><span class="num">문 152</span> <span class="en">수분 제한으로 예방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐절제술 후 나타날 수 있는 합병증 중 수분을 제한함으로써 예방할 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐부종</li>
+    <li>흡인 폐렴</li>
+    <li>심근경색증</li>
+    <li>수술 후 무기폐</li>
+    <li>폐쇄후 폐부종</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q153">
+  <h3><span class="num">문 153</span> <span class="en">수술로 인한 폐 변화</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술로 인한 폐의 변화에 관한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>마취 후 저하된 폐 기능이 정상으로 회복되기 위해서는 평균 72시간 정도 소요된다.</li>
+    <li>총폐활량(TLC)과 폐활량(VC)이 모두 감소한다.</li>
+    <li>마취로 인해 정상 기도 방어 기전이 소실되어 무기폐의 위험이 높다.</li>
+    <li>수술 시 마취로 인한 호흡 자극의 약화 또는 소실로 인해 저산소증이나 고탄산혈증이 초래된다.</li>
+    <li>환기/관류비 불균형(V/Q mismatching)으로 인해 호흡성 산증이 초래된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q154">
+  <h3><span class="num">문 154</span> <span class="en">수술 후 저산소증 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술 후 저산소증을 초래할 수 있는 원인에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>분당 환기량 감소</li>
+    <li>호흡일(WOB) 증가</li>
+    <li>기능잔기용량(FRC) 감소</li>
+    <li>마취로 인한 호흡근 약화</li>
+    <li>점액섬모청소율(mucociliary clearance) 저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q155">
+  <h3><span class="num">문 155</span> <span class="en">무기폐 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술 후 폐합병증인 무기폐를 유발하는 가장 큰 원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심박출량 감소</li>
+    <li>고농도 산소 적용</li>
+    <li>반복적인 얕은 호흡</li>
+    <li>중추신경계의 과도한 자극</li>
+    <li>조절되지 않는 고열증(hyperpyrexia)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q156">
+  <h3><span class="num">문 156</span> <span class="en">체위배액(우하엽)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>오른쪽 폐 하엽에 가래로 인한 무기폐가 발생하였을 경우 체위배액 방법으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>두부 거상 30° 이상</li>
+    <li>왼쪽으로 돌아누워 하지 거상 18인치</li>
+    <li>왼쪽으로 돌아누워 하지 거상 15인치</li>
+    <li>오른쪽으로 돌아누워 하지 거상 18인치</li>
+    <li>오른쪽으로 돌아누워 하지 거상 15인치</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q157">
+  <h3><span class="num">문 157</span> <span class="en">흉부물리요법 부적절</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 수술 전후 흉부물리요법 시행이 적절하지 않은 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성 악화로 입원한 천식 환자</li>
+    <li>낭성섬유증으로 수술대기 중인 소아 환자</li>
+    <li>대장암 수술 후 괴사성 폐렴이 발생한 환자</li>
+    <li>폐절제술 후 오른쪽 상엽의 무기폐가 발생한 폐암 환자</li>
+    <li>고관절 수술 후 양쪽 폐 침윤으로 인한 저산소증이 있는 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q158">
+  <h3><span class="num">문 158</span> <span class="en">유발폐활량측정법 계산</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>유발폐활량측정법(incentive spirometry) 적용 시 500 mL/초의 속도로 볼을 올려 3초 정도 숨을 멈추었다면 실제 흡입된 공기량은 얼마인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>1 L</li>
+    <li>1.5 L</li>
+    <li>2 L</li>
+    <li>2.5 L</li>
+    <li>3 L</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q159">
+  <h3><span class="num">문 159</span> <span class="en">과환기 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술 후 유발폐활량측정법(incentive spirometry) 적용 후 환자가 입 주위가 저리고 어지럼증을 호소한다. 이 증상의 원인으로 생각되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>피로</li>
+    <li>과환기</li>
+    <li>복부팽만</li>
+    <li>폐 압력손상</li>
+    <li>호흡성 산증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q160">
+  <h3><span class="num">문 160</span> <span class="en">객담 채취 방법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술 후 폐 합병증이 발생하여 객담을 검사하려고 한다. 하기도에서 객담을 채취하기 위한 적절한 방법은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비강 흡인</li>
+    <li>기관지 흡인</li>
+    <li>기관지내시경</li>
+    <li>구강 인후두 흡인</li>
+    <li>하기도 내 경침 흡인</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q161">
+  <h3><span class="num">문 161</span> <span class="en">고탄산혈증 ABGA 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 75세 남자가 대장암 수술 후 기관내관을 가진 상태에서 중환자실에 입실하였다. 흡입산소농도(FiO₂) 0.6, 공기 유량(flow) 10 L로 기관내관을 통해 산소를 공급하고 2시간 후 환자의 의식이 회복되면서 시행한 동맥혈 가스분석 결과가 pH 7.20, PaCO₂ 93.7 mmHg, PaO₂ 155.3 mmHg, HCO₃ 36.7 mEq/L, Base excess 5.6, SaO₂ 99.1%일 때, 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기관내관 발관</li>
+    <li>흡입산소농도 감소</li>
+    <li>산소 유량 증가</li>
+    <li>인공호흡기 연결</li>
+    <li>흉부물리요법 시행</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q162">
+  <h3><span class="num">문 162</span> <span class="en">호흡재활 목적(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 호흡재활의 목적으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>증상 경감</li>
+    <li>폐기능 향상</li>
+    <li>삶의 질 향상</li>
+    <li>폐기능의 최대화</li>
+    <li>호흡곤란의 예방과 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q163">
+  <h3><span class="num">문 163</span> <span class="en">호흡재활 적절 환자</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 호흡재활 환자로 적절한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>맹장염 수술을 받은 치매 환자</li>
+    <li>최근 불안정협심증으로 치료받은 환자</li>
+    <li>낭성섬유증으로 폐 이식이 예정된 환자</li>
+    <li>무릎에 만성 관절염이 있어 서 있기 힘든 환자</li>
+    <li>왼쪽 폐절제술을 받은 지적 능력이 저하되어 학습이 불가능한 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q164">
+  <h3><span class="num">문 164</span> <span class="en">호흡근 훈련</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>호흡근 훈련에 관한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복부 근육이 흡기 근육의 주 역할을 담당한다.</li>
+    <li>호흡근의 근력이 정상치의 30% 정도로 약해진 경우에 효과적이다.</li>
+    <li>제한성 폐질환인 경우 호기근 훈련이 호흡근력 향상에 도움이 된다.</li>
+    <li>최대흡기압(maximal negative inspiratory pressure)과 동일한 압력에서 시작한다.</li>
+    <li>유량 저항성(flow resistive) 호흡운동 기구와 역치 저항성(threshold resistive) 호흡운동 기구 방법이 일반적이다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q165">
+  <h3><span class="num">문 165</span> <span class="en">폐엽절제술 후 호흡재활</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐암으로 폐엽절제술을 시행한 환자의 호흡재활에 관한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기저 폐질환이 없으면 최소 2주 전에 금연하게 한다.</li>
+    <li>수술 후 섬망 증세가 심하면 억제대를 적용하고 시행한다.</li>
+    <li>혈압 저하가 있는 경우에는 조기 재활을 위해 침대에 걸터앉기를 시행한다.</li>
+    <li>호흡곤란 시 개구리 호흡법(glossopharyngeal breathing 또는 frog breathing)이 효과적이다.</li>
+    <li>수술 전 FEV₁&lt;1 L 또는 수술 후 DLco&lt;40% 미만, VO₂ max&lt;15 mL/kg인 경우 조기 재활을 시행한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q166">
+  <h3><span class="num">문 166</span> <span class="en">COPD 호흡재활</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 60세 환자에게 호흡재활을 시행하려고 할 때 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>횡격막 호흡이나 입술 오무리기 호흡법 등을 교육한다.</li>
+    <li>호흡근 강화를 위해 개구리 호흡법을 시행하도록 한다.</li>
+    <li>호흡곤란 시 공기 누적 훈련(air-stacking)으로 폐활량을 증진시킨다.</li>
+    <li>폐기능 개선을 위해 유발폐활량계(incentive spirometer)에 대해 교육한다.</li>
+    <li>폐용적 감소로 인해 산소화 장애가 발생할 수 있어 재활 시행 시 산소를 제공해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q167">
+  <h3><span class="num">문 167</span> <span class="en">척추손상 호흡재활</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>척추 손상이 있는 75세 환자가 재발성 폐렴으로 입원하였다. 호흡재활을 시행하기 위해 우선적으로 고려되어야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>무기폐 예방을 위한 심호흡 교육</li>
+    <li>폐 확장을 위한 공기 누적(air-stacking) 훈련 시행</li>
+    <li>호기 시 분비물 배출을 위한 진동 유발 기기(flutter breathing) 사용</li>
+    <li>혈액가스 상태 개선과 호흡수 감소를 위한 입술 오무리기 호흡법 권장</li>
+    <li>호흡근의 근력과 지구력 증가를 위한 흡기근 훈련 보조 장비(inspiratory muscle trainer) 사용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q168">
+  <h3><span class="num">문 168</span> <span class="en">운동능력 평가(아닌 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>호흡재활 평가 중 운동능력 평가에 해당되지 않는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>보그 스케일(Borg scale)</li>
+    <li>걷기검사(Walking tests)</li>
+    <li>운동부하검사(Incremental exercise tests)</li>
+    <li>최대하 운동검사(Submaximal exercise tests)</li>
+    <li>1초간 노력 호기 폐활량 / 강제 폐활량의 비율(FEV₁/FVC)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q169">
+  <h3><span class="num">문 169</span> <span class="en">EtCO2 설명(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>호기말 이산화탄소분압(EtCO₂) 측정과 관련된 설명으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>EtCO₂ 파형으로 폐포 산소화의 적절성을 사정할 수 있다.</li>
+    <li>기관내관이 기도 내로 정확하게 삽입되었는지를 확인하는 방법이다.</li>
+    <li>PaCO₂는 EtCO₂와 같으나 정상적인 경우 2~5 mmHg 이하의 차이를 보이기도 한다.</li>
+    <li>소아의 경우 빠른 호흡수로 인해 EtCO₂가 PaCO₂를 반영하지 못해 차이가 있을 수 있다.</li>
+    <li>심폐소생술 시 EtCO₂가 40 mmHg로 상승하면 순환이 회복되었음을 의미한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q170">
+  <h3><span class="num">문 170</span> <span class="en">capnography EtCO2 상승</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>호기말 이산화탄소분압측정술(capnography)에서 정상적인 파형을 보이면서 EtCO₂ 수치가 상승하는 것이 의미하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과환기</li>
+    <li>폐포 환기 감소</li>
+    <li>심박출량 감소</li>
+    <li>기관내관 발관</li>
+    <li>완전 기도폐쇄</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q171">
+  <h3><span class="num">문 171</span> <span class="en">EtCO2 파형 분석(파형)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기계환기 중인 환자의 호기말 이산화탄소분압(EtCO₂) 감시 중 다음과 같은 파형이 나타났다. 이 파형의 원인을 파악하기 위한 방법으로 옳지 않은 것은? (그래프: CO₂ mmHg 50~37, Real-Time / Trend)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체온 확인</li>
+    <li>기도폐쇄 여부 확인</li>
+    <li>기관내관의 커프 압력 재측정</li>
+    <li>감시장치의 보정(calibration) 시행</li>
+    <li>인공호흡기 회로의 연결 부위 재확인</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p103.png" alt="문항 원문/EtCO2 파형" loading="lazy"><figcaption>p.103 원문(EtCO₂ 파형 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q172">
+  <h3><span class="num">문 172</span> <span class="en">맥박산소측정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>맥박산소측정(pulse oximetry)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈혈(헤모글로빈 5 g/dL) 시 정확도가 감소한다.</li>
+    <li>혈액순환 저하 시 센서의 위치를 코로 이동한다.</li>
+    <li>메트헤모글로빈 증가 시 산소포화도가 실제보다 높게 측정된다.</li>
+    <li>피부가 검게 색소침착이 되는 경우 산소포화도가 낮게 나타날 수 있다.</li>
+    <li>손가락 탐색자(finger probe)가 귀 탐색자(ear probe)보다 반응 시간이 빨라 주로 손가락 탐색자를 선택한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q173">
+  <h3><span class="num">문 173</span> <span class="en">맥박산소측정 관류저하</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>45세 남자가 교통사고로 응급실로 이송되었다. 도착 시 안색은 창백하고 복부에서 다량의 출혈이 있으며 맥박은 매우 약하게 측지되었다. 맥박산소측정 시 불규칙한 파형을 보이면서 측정값이 일정하지 않을 때, 그 원인으로 생각되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈혈</li>
+    <li>측정 오류</li>
+    <li>메트헤모글로빈 증가</li>
+    <li>관류(perfusion) 저하</li>
+    <li>동맥혈 산소분압 저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q174">
+  <h3><span class="num">문 174</span> <span class="en">급성 호흡성 산증 상황</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 급성 호흡성 산증을 일으킬 수 있는 상황은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>불안</li>
+    <li>폐부종</li>
+    <li>이뇨제 투여</li>
+    <li>과도한 제산제 복용</li>
+    <li>바르비투르산염(barbiturate) 중독</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q175">
+  <h3><span class="num">문 175</span> <span class="en">산-염기 상태 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>30세 여자가 5일간 심한 복통과 구토가 지속되어 식사나 음료를 전혀 섭취하지 못해 입원하였다. 과거력은 없고 입원하기 4일 전에 생리가 끝났으며 투여 중인 약물도 없다. 체온 37.8°C, 맥박 120회/분, 호흡수 20회/분, 혈압 100/60 mmHg이고 혈장 Na 138, K 3.0, Cl 87, bicarbonate 34, BUN 40, Ccr 1.6이며, 산소를 공급하지 않은 상태에서 동맥혈 가스분석 결과가 pH 7.5, PaCO₂ 45 mmHg, PaO₂ 80 mmHg이었다. 이 환자의 산-염기 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>대사성 산증</li>
+    <li>대사성 알칼리증</li>
+    <li>호흡성 산증</li>
+    <li>호흡성 알칼리증</li>
+    <li>호흡성 알칼리증과 대사성 산증 혼합</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q176">
+  <h3><span class="num">문 176</span> <span class="en">산-염기 상태 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 55세 광부가 세균성 폐렴으로 입원하였다. 혈장 Na 135, Cl 95, bicarbonate 24, Cr 1.0, 포도당 80이었고 동맥혈 가스분석 결과는 pH 7.15, PaCO₂ 60 mmHg이었다. 이 환자의 산-염기 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡성 산증</li>
+    <li>호흡성 알칼리증</li>
+    <li>호흡성 산증과 대사성 알칼리증</li>
+    <li>호흡성 알칼리증과 대사성 산증</li>
+    <li>음이온차이(anion gap)가 큰 상태의 대사성 산증과 만성 호흡성 산증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q177">
+  <h3><span class="num">문 177</span> <span class="en">COPD 산소요법 관찰</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>70세 남자가 일주일 전부터 호흡곤란, 기침과 가래가 증가하고 내원 하루 전부터 고열을 동반한 의식저하가 있어 입원하였다. 50세 때부터 만성폐쇄폐질환으로 진단받고 지속적으로 기관지확장제를 사용 중이다. 이 환자에게 산소요법을 시행하려고 할 때 주의 깊게 관찰해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저환기</li>
+    <li>의식 저하</li>
+    <li>체온 상승</li>
+    <li>대사성 산증</li>
+    <li>산소독성으로 인한 무기폐</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q178">
+  <h3><span class="num">문 178</span> <span class="en">산소공급 장치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 산소공급 장치에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비강캐뉼라(nasal cannula)는 가습장치가 필요하다.</li>
+    <li>고유량 비강캐뉼라는 5 cmH₂O 정도의 일정한 호기말양압을 제공할 수 있다.</li>
+    <li>단순마스크(simple mask)는 100% 이상의 흡입산소농도를 공급할 수 있다.</li>
+    <li>벤튜리마스크(venturi mask)는 고농도 산소를 정확하게 공급할 수 있다.</li>
+    <li>벤튜리마스크는 베르누이의 원리를 이용한 것이다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q179">
+  <h3><span class="num">문 179</span> <span class="en">열가습 교환장치 주의</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>인공호흡기 이탈 시행 3일째로 기관절개관을 통해 FiO₂ 0.28, 유량 5 L로 산소를 투여하고 있던 환자가 상태가 호전되어 산소 투여를 중지하려고 한다. 이 환자에게 인공기도의 가습을 위해 열가습 교환장치(heat and moisture exchangers)를 적용할 때 주의해야 할 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체온 37°C</li>
+    <li>호흡수 &lt;10회/분</li>
+    <li>환기량 6~7 L/분</li>
+    <li>묽은 객담 배출</li>
+    <li>붉은 가래 배출</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q180">
+  <h3><span class="num">문 180</span> <span class="en">기계환기 분무약물 효과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기계환기 중 분무약물의 효과를 증대시키기 위한 가장 적절한 방법은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡기시간 연장</li>
+    <li>호기시간 단축</li>
+    <li>기도저항 감소</li>
+    <li>일회호흡량 증가</li>
+    <li>호기 최고유량 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q181">
+  <h3><span class="num">문 181</span> <span class="en">공기유입 분무기 총유량 계산</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>인공호흡기 이탈 후 공기유입 분무기(air entrainment nebulizer)로 가습과 산소를 공급하려고 한다. FiO₂ 0.4, 유량 10 L로 공급 시 실제 환자에게 제공되는 총 유량은 얼마인가? (FiO₂ 0.4일 때 대기와 산소의 비율 = 3:1)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>10 L</li>
+    <li>20 L</li>
+    <li>30 L</li>
+    <li>40 L</li>
+    <li>50 L</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q182">
+  <h3><span class="num">문 182</span> <span class="en">COPD 산소요법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성폐쇄폐질환이 있는 환자의 산소요법에 관한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>하루 8시간 이상의 산소 투여가 생존율을 높인다.</li>
+    <li>장기 산소요법 사용의 결정은 수면 시간의 PaO₂로 한다.</li>
+    <li>저농도 산소를 공급하기 위해 벤튜리마스크를 이용한다.</li>
+    <li>호흡 여부와 상관없이 PaO₂&lt;45 mmHg이거나 SaO₂&lt;90%인 경우에 산소를 투여한다.</li>
+    <li>산소에 대한 저항성을 증가시키기 위해 음식 섭취나 운동 시 산소는 공급하지 않는다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q183">
+  <h3><span class="num">문 183</span> <span class="en">수동 소생백</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수동 소생백(bag-valve mask system; ambu bag)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저유량법 산소 전달방식이다.</li>
+    <li>성인인 경우 500~1000 mL의 용량을 측정할 수 있다.</li>
+    <li>산소를 연결하지 않은 경우 제공되는 산소 농도는 40% 이상이다.</li>
+    <li>산소포화도를 적절히 유지하기 위해서는 가능한 빨리 소생백으로 공기 주입(ambu-bagging)을 한다.</li>
+    <li>고농도 산소를 제공하기 위하여 반드시 보유주머니(reservoir bag)를 연결해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q184">
+  <h3><span class="num">문 184</span> <span class="en">머피눈 기능</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관내관에 있는 머피눈(Murphy eye)의 기능으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>흡인 예방</li>
+    <li>기관내관의 위치 적절성 사정</li>
+    <li>기관내삽관 시 산소 공급 통로</li>
+    <li>기관내삽관 시 기도 점막 손상 최소화</li>
+    <li>기관내관이 막혔을 때 가스 유량(gas flow) 확보</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q185">
+  <h3><span class="num">문 185</span> <span class="en">기관내관 용골 거리</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관내삽관 시행 후 기관내관의 위치를 확인하기 위해 단순흉부촬영을 하였다. 기관내관의 위치는 용골(carina)로부터 어느 정도 거리에 위치해야 하는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>1~2 cm</li>
+    <li>2~4 cm</li>
+    <li>3~6 cm</li>
+    <li>6~8 cm</li>
+    <li>8~10 cm</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q186">
+  <h3><span class="num">문 186</span> <span class="en">기관절개관 이탈 의심</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관절개술 시행 후 10일이 경과된 환자로 기관절개관의 이탈이 의심될 때 가장 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>청진을 통해 호흡음 유무 확인</li>
+    <li>커프를 팽창시켜 공기 누출 확인</li>
+    <li>수동 소생백으로 폐의 확장 확인</li>
+    <li>흡인 카테터를 진입하여 기도 폐색 여부 확인</li>
+    <li>단순흉부촬영으로 기관절개관 위치의 부적절성 확인</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q187">
+  <h3><span class="num">문 187</span> <span class="en">발관 후 고음조 잡음</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관내관을 발관한 후 흡기 시 고음조의 잡음이 들리는 경우 가장 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>6시간 정도 환자의 호흡양상 관찰</li>
+    <li>에피네프린 분무 흡입</li>
+    <li>스테로이드 정맥주사</li>
+    <li>비강을 통한 기관내삽관</li>
+    <li>따뜻한 식염수 분무 흡입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q188">
+  <h3><span class="num">문 188</span> <span class="en">기관절개관 교환 후 고압</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관절개술 후 3일째인 환자가 용적 보조조절방식(assist volume control)으로 기계환기 중이다. 기관절개관 교환 후 갑자기 최고 흡기압(peak inspiratory pressure)이 50 cmH₂O 이상 증가하면서 알람이 울리기 시작했고 청진 시 양쪽 폐의 호흡음이 감소되어 있다. 가장 먼저 의심해야 할 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉</li>
+    <li>폐부종</li>
+    <li>폐색전증</li>
+    <li>기관절개관의 부분 폐쇄</li>
+    <li>점액마개(mucus plug)로 인한 주 기관지 폐쇄</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q189">
+  <h3><span class="num">문 189</span> <span class="en">기관절개 후 24시간 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>기관절개술 후 첫 24시간 이내에 가장 많이 발생하는 합병증은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>출혈</li>
+    <li>기흉</li>
+    <li>폐하기종</li>
+    <li>흡인 폐렴</li>
+    <li>절개 부위 감염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q190">
+  <h3><span class="num">문 190</span> <span class="en">폐렴 악화 다음 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50갑년의 흡연력이 있는 환자가 폐렴으로 입원하여 항생제 치료와 흉부물리요법을 시행 중이다. 2일 경과 후 단순흉부촬영상에서 폐 침윤이 더 악화되었을 경우 다음 단계의 중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기관지확장제 투여</li>
+    <li>흉부 컴퓨터단층촬영 시행</li>
+    <li>경직성(rigid) 기관지내시경 시행</li>
+    <li>굴곡성(flexible) 기관지내시경 시행</li>
+    <li>기침 유발을 위해 고장성 식염수 흡입</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q191">
+  <h3><span class="num">문 191</span> <span class="en">짧은 호기시간 결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>인공호흡기 설정 시 호기 시간이 부적절하게 짧은 경우에 발생할 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>기흉</li>
+    <li>폐부종</li>
+    <li>흉수 생성</li>
+    <li>기관지경련</li>
+    <li>자가 호기말양압(auto-PEEP)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q192">
+  <h3><span class="num">문 192</span> <span class="en">고평부압 45 우선중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>호흡부전 환자에게 강제 용적조절방식(volume control mode), 일회호흡량(VT) 10 mL/kg, 고평부압(plateau pressure) 45 cmH₂O의 설정으로 인공호흡기를 적용하였다면 가장 먼저 시행되어야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡수 증가</li>
+    <li>일회호흡량 감소</li>
+    <li>호기말양압 추가</li>
+    <li>기관지확장제 투여</li>
+    <li>흡기유량(inspiratory flow) 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q193">
+  <h3><span class="num">문 193</span> <span class="en">인공호흡기 파형 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흡인 폐렴으로 입원한 75세 환자의 인공호흡기 그래프 파형이 다음과 같다. 환자는 지속적으로 30회 이상 빈호흡이 있으며, P0.1은 ~5로 측정되고 있다. 이 환자에게 적절한 중재는? (그래프: time축 파형)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>압력 감소</li>
+    <li>흡기시간 단축</li>
+    <li>일회호흡량 증가</li>
+    <li>호기말양압 증가</li>
+    <li>유발 민감도(trigger sensitivity) 감소</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p108.png" alt="문항 원문/인공호흡기 파형" loading="lazy"><figcaption>p.108 원문(인공호흡기 파형 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q194">
+  <h3><span class="num">문 194</span> <span class="en">인공호흡기 파형 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>폐암으로 수술 후 중환자실로 입실하여 인공호흡기를 적용 중인 환자의 그래프 파형이 다음과 같을 때 적절한 중재는? (그래프: 압력 45 cmH₂O, 유량 70/-70 L/min, 일회호흡량 500 mL)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일회호흡량 감소</li>
+    <li>용적의 변화 감시</li>
+    <li>흡입산소농도 감소</li>
+    <li>최고흡기압의 변화 감시</li>
+    <li>객담 배출이 용이한 체위 유지</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p109.png" alt="문항 원문/인공호흡기 파형" loading="lazy"><figcaption>p.109 원문(인공호흡기 파형 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q195">
+  <h3><span class="num">문 195</span> <span class="en">공기걸림 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수술 후 호흡부전이 발생한 환자에게 용적조절방식, 일회호흡량 850 mL, 호흡수 20회/분으로 인공호흡기를 적용하던 중 공기걸림(air trapping)이 발생하였다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡수 증가</li>
+    <li>호기시간 감소</li>
+    <li>일회호흡량 감소</li>
+    <li>분당 환기량 증가</li>
+    <li>흡기 유량속도 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q196">
+  <h3><span class="num">문 196</span> <span class="en">압력조절 흡기시간 유지</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>강제 압력조절방식(pressure controlled mode)으로 인공호흡기를 적용하려고 할 때 흡기 시간을 충분히 유지해야 할 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐색전증</li>
+    <li>양측성 폐렴</li>
+    <li>중증 폐섬유증</li>
+    <li>만성폐쇄폐질환</li>
+    <li>급성호흡곤란증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q197">
+  <h3><span class="num">문 197</span> <span class="en">최적 PEEP 표 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>인공호흡기 적용 시 흡입산소농도(FiO₂) 0.6에서 가장 적절한 호기말양압(PEEP)은? (표: 호기말양압 0~25에 따른 동맥혈 산소분압, 폐 순응도, 수축기혈압, 확장기혈압 측정값이 제시됨 — 원문 표 참조)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>0</li>
+    <li>5</li>
+    <li>10</li>
+    <li>15</li>
+    <li>20</li>
+    <li>25</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p110.png" alt="문항 원문/PEEP 측정값 표" loading="lazy"><figcaption>p.110 원문(PEEP별 측정값 표 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q198">
+  <h3><span class="num">문 198</span> <span class="en">유발민감도 증가 결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>인공호흡기 적용 시 유발 민감도(trigger sensitivity)를 증가시키는 경우 발생할 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일회호흡량 증가</li>
+    <li>호흡일(WOB) 증가</li>
+    <li>압력손상(barotrauma)</li>
+    <li>자동유발(auto-triggering)</li>
+    <li>유량 비동시성(flow dyssynchrony)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q199">
+  <h3><span class="num">문 199</span> <span class="en">NIPPV 적용 대상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>비침습적 인공호흡기(NIPPV) 적용을 고려해 볼 수 있는 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>가래가 많은 환자</li>
+    <li>급성호흡곤란증후군 환자</li>
+    <li>혈역학적으로 불안정한 환자</li>
+    <li>급성으로 악화된 만성폐쇄폐질환자</li>
+    <li>비계획적인 발관 후 의식저하가 있는 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q200">
+  <h3><span class="num">문 200</span> <span class="en">흉관 관리(틀린 것)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉관 관리에 관한 설명으로 옳지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>물기둥의 높이는 일정하게 음압을 적용하기 위한 것으로 보통 15~20 cmH₂O로 설정한다.</li>
+    <li>필요시 흡인기에 연결한다. 과도한 흡인 압력은 통증을 유발할 수 있다.</li>
+    <li>흉관 제거 시 흡인을 멈추고 환자에게 기침을 시켜 밀봉배액병(water seal bottle)에 공기방울이 보이지 않으면 흉관을 제거한다.</li>
+    <li>흉관 제거는 환자의 흡기말 또는 호기말에 발살바조작(valsalva maneuver)을 하는 동안 시행한다.</li>
+    <li>기흉 발생 시 흉관은 오른쪽 또는 왼쪽 5번째 또는 6번째 늑간을 통해 후방으로 삽입한다.</li>
+  </ol></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>병태생리·약리 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>병태생리·약리</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: 국시 정리</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">병태생리·약리</h2>
+<p class="sys-desc">세포의 적응·손상·사멸, 염증과 상처치유, 종양·발암, 혈전·면역 등 병태생리 핵심과 자율신경계·심혈관·신경계 약물을 중심으로 한 약리 핵심을 정리한다.</p>
+
+<nav class="toc"><strong>이 계통의 질환·주제</strong>
+<ul>
+  <li><a href="#d1">세포 적응(비대·증식·화생·위축·이형성)</a></li>
+  <li><a href="#d2">세포손상·괴사 vs 세포자멸사</a></li>
+  <li><a href="#d3">괴사의 4가지 종류</a></li>
+  <li><a href="#d4">염증의 화학매개체</a></li>
+  <li><a href="#d5">염증의 혈관반응·세포·형태학적 분류</a></li>
+  <li><a href="#d6">상처치유(수복·일차/이차유합)</a></li>
+  <li><a href="#d7">양성 vs 악성 신생물·발암 단계</a></li>
+  <li><a href="#d8">종양 분화도(grade)·표지자·억제유전자</a></li>
+  <li><a href="#d9">혈전·경색</a></li>
+  <li><a href="#d10">면역(능동/수동, 림프구, 면역글로불린)</a></li>
+  <li><a href="#d11">과민반응 4형</a></li>
+  <li><a href="#d12">이식거부반응</a></li>
+  <li><a href="#d13">약리 기본개념(P-당단백질·생체이용률·치료지수)</a></li>
+  <li><a href="#d14">자율신경계(교감 vs 부교감)</a></li>
+  <li><a href="#d15">콜린성·아드레날린성 수용체와 약물</a></li>
+  <li><a href="#d16">신경계 약물(파킨슨·알츠하이머·항경련)</a></li>
+  <li><a href="#d17">통증 경로와 아편유사제</a></li>
+  <li><a href="#d18">심혈관 약물(RAAS·ACEI/ARB·CCB)</a></li>
+  <li><a href="#d19">고지혈증·혈액작용 약물</a></li>
+  <li><a href="#d20">COX-1 vs COX-2, NSAIDs vs AAP</a></li>
+  <li><a href="#d21">항히스타민·기타 약물·항생제 상호작용</a></li>
+</ul></nav>
+
+<section class="card" id="d1">
+  <h3><span class="num">1</span> 세포 적응 <span class="en">Cellular Adaptation</span></h3>
+  <div class="field"><div class="label">비대 (Hypertrophy)</div><div class="body"><p>세포가 외부로부터 지속적인 자극을 받을 때 세포의 크기와 기능이 증가하는 적응반응으로, 결국 장기의 크기도 커진다. 원인에 따라 <mark>생리적 비대</mark>와 <mark>병적 비대</mark>로 분류된다.</p></div></div>
+  <div class="field"><div class="label">증식 (Hyperplasia)</div><div class="body"><p>조직과 장기가 용적을 늘리는 경우로, 세포의 비대와 동시에 일어나는 경우가 많다. 간절제 후 간세포의 재생은 <mark>대상성 증식</mark>에 속한다(성장인자 자극으로 일어나며, 원래 크기가 되면 억제인자에 의해 멈춤). 세포 교체가 잦은 피부·장상피·골수에서는 증식이 꾸준하나, 분열하지 않는 신경·심장근·골격근에서는 증식이 일어나지 않는다. 자궁내막 증식증 같은 병적 증식은 자궁내막암 위험을 높이는 악성화 전단계이다. 외부자극이 소실되면 원상태로 돌아갈 수 있다.</p></div></div>
+  <div class="field"><div class="label">화생 (Metaplasia)</div><div class="body"><p>일정 자극이 장기간 작용하여 정상 조직이 본래와 다른 조직으로 대치되는 현상으로, 성숙세포가 특정 자극에 내성을 갖는 다른 종류의 성숙세포로 바뀌는 것이다. 담배연기에 장기간 노출되거나 비타민 A 부족 시 기관지의 섬모성 원주상피가 자극에 강한 <mark>편평상피</mark>로 변한다. 형태뿐 아니라 세포 고유의 기능도 상실한다. 일반적으로 가역적이며 자극이 제거되면 정상상피로 돌아오나, <mark>화생상피는 암 발생 위험이 높다</mark>(위점막의 장상피화생 등).</p></div></div>
+  <div class="field"><div class="label">위축 (Atrophy)</div><div class="body"><p>세포의 자가포식 현상이 증가하여 세포자멸사가 일어나며, 아미노산 섭취·단백질 합성·산소소비가 감소한다. 주로 실질조직 세포성분이 위축·감소하고 기능이 저하되며 세포 사이 결합조직 증가로 섬유화가 나타난다. 간세포·심장근·골격근·부신피질·세뇨관 상피·신경세포 등에서 볼 수 있다. <mark>흉선의 위축</mark>은 사춘기 이후 발생하는 생리적 위축이다. <mark>압박위축</mark>은 종양·동맥류에 의한 위축, 욕창 등이 해당한다.</p></div></div>
+  <div class="field"><div class="label">이형성 (Dysplasia)</div><div class="body"><p>세포의 크기·모양·핵 구조가 비정상적인 <mark>전암병변</mark>으로, 다단계 암 발생 과정의 필수 단계이다. 암세포와 모양이 거의 비슷하여 초기암과 고등급 이형성의 구별이 어렵다. 기관지·자궁경부 등 화생이 잘 나타나는 편평상피에서 흔히 관찰되며, 지속적 손상성 자극(흡연·HPV 등)을 제거하면 가역적이다.</p></div></div>
+  <div class="field"><div class="label">기타 변성</div><div class="body"><ul><li>지방변성: 세포에 트리글리세리드가 축적되어 일어남(가역성, 괴사 주위 조직에서 흔함).</li><li>유리질 변성: 주로 단백질 축적에 의해 발생.</li><li>세포종창(공포 변성): 자극이 약하고 짧을 때 수분·이온이 손상된 막을 통해 세포 내로 유입되는 가역적 손상으로, 세포질에 작은 공포가 나타남.</li></ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 화생=편평상피화·기능 상실·암 위험↑ / 이형성=전암병변·필수 단계 / 영구세포(신경·심장근·골격근)는 증식·재생 안 됨.</div>
+</section>
+
+<section class="card" id="d2">
+  <h3><span class="num">2</span> 세포손상·괴사 vs 세포자멸사 <span class="en">Necrosis vs Apoptosis</span></h3>
+  <div class="field"><div class="label">세포손상의 기전</div><div class="body"><p>세포손상의 가장 흔한 원인은 <mark>저산소증</mark>이다. 산소 공급이 중단·감소하면 산화적 인산화가 억제되어 손상이 일어난다. 가장 먼저 <mark>사립체(미토콘드리아)</mark>가 손상되어 ATP 생성이 저하되고 <mark>나트륨-칼륨 펌프</mark>가 정지한다. 그 결과 세포 내 나트륨이 축적·칼륨이 상실되어 세포가 팽창하며, 포도당 사용으로 젖산이 축적되어 세포 내 pH가 저하된다.</p></div></div>
+  <div class="field"><div class="label">세포의 재생능력 분류</div><div class="body"><ul><li>불안정세포: 피부 편평상피세포, 혈관내피세포</li><li>안정세포: 간·췌장의 실질세포</li><li>영구세포: 심장근세포(세포주기를 벗어나 생후 분열 없음 → 한번 손상되면 재생 불가)</li></ul></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>괴사 vs 세포자멸사</caption>
+    <thead><tr><th></th><th>괴사(Necrosis)</th><th>세포자멸사(Apoptosis)</th></tr></thead>
+    <tbody>
+      <tr><th>원인</th><td>산소 결핍·외상·염증 등 치명적·외인성 손상</td><td>회복 불능 손상세포 제거(계획된 세포사), 성장인자 결핍·DNA 손상·이상단백질 축적·자가반응 림프구 제거</td></tr>
+      <tr><th>가역성</th><td>비가역적 손상 후 발생</td><td>정상적 생리·병리 과정(증식 억제 목적)</td></tr>
+      <tr><th>염증반응</th><td><mark>동반함</mark></td><td><mark>일으키지 않음</mark>(효소에 의한 DNA·단백질 분해)</td></tr>
+      <tr><th>막 손상</th><td>세포막 손상 후 내용물 유출</td><td>세포막 손상보다 핵 DNA·단백질 파괴가 선행</td></tr>
+      <tr><th>형태</th><td>육안·현미경적 소견</td><td>염색질이 핵막 주변 응집, 자멸사체 형성 → 대식세포·이웃세포가 포식·분해(관찰 어려움)</td></tr>
+      <tr><th>관련 질환</th><td>경색 등</td><td>조절 이상 시 악성종양(자멸사 기전 미작동)</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">참고</div><div class="body"><ul><li>자가용해: 조직·기관 전체 파괴 후 용해소체의 소화효소가 죽은 세포를 분해.</li><li>세포자멸사 예: 호르몬에 의한 퇴화(월경주기 자궁내막세포·폐경기 난포 퇴화), 증식성 세포 제거, 급성염증·면역반응 종료 후 중성구·림프구 제거, 세포독성 T세포에 의한 세포사, 방사선 손상세포 제거 등.</li><li><b>염증으로 인한 손상 조직·미생물 제거과정은 세포자멸사에 해당하지 않음.</b></li></ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 자멸사=염증無·정상과정 / 괴사=염증有·외인성 / 심장근세포는 영구세포라 한번 손상되면 재생 불가.</div>
+</section>
+
+<section class="card" id="d3">
+  <h3><span class="num">3</span> 괴사의 4가지 종류 <span class="en">Types of Necrosis</span></h3>
+  <div class="field"><div class="label">분류</div><div class="body">
+    <table class="cmp"><caption>괴사 유형 비교</caption>
+    <thead><tr><th>유형</th><th>특징 / 발생 부위</th></tr></thead>
+    <tbody>
+      <tr><th>응고 괴사</th><td>세포·조직 모형 보존, 딱딱한 질감. <mark>산소 결핍</mark>이 가장 큰 원인. 뇌를 제외한 모든 조직(심장 허혈성 괴사 형태)</td></tr>
+      <tr><th>액화 괴사</th><td>크림 같은 질감, 액화 영역. 특정 박테리아 감염 시 호중구 효소가 죽은 조직 액화. <mark>뇌경색</mark>에 특징적(중추신경계 허혈). 백혈구 섞인 노란 농 형성</td></tr>
+      <tr><th>건락 괴사</th><td>치즈 모양, <mark>결핵</mark> 감염 병소. 응고괴사(형태 보존)+액화괴사(감염) 특징 모두 지님. 결핵균 막의 지질다당류 때문 발생, 주위를 육아종성 염증세포가 둘러쌈</td></tr>
+      <tr><th>지방 괴사</th><td>노란 결절 형태. <mark>췌장</mark> 지질분해효소가 지방세포 용해·분해하여 발생, 췌장과 그 주변에 국한. 칼슘염 침착·대식세포 관찰</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">참고</div><div class="body"><p>습성괴사: 괴사조직에 세균 감염으로 액화괴사가 일어나 악취·붉음·차가움(예: 당뇨병 시 다리 동맥 폐쇄).</p></div></div>
+</section>
+
+<section class="card" id="d4">
+  <h3><span class="num">4</span> 염증의 화학매개체 <span class="en">Chemical Mediators</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>염증 부위 세포·백혈구에서 생산되어 순환하며, 평소 비활성 전구체로 존재하다가 염증 부위에서 표적세포 수용체에 결합해 효과를 낸다. <mark>세포유래 매개체</mark>와 <mark>혈장단백유래 매개체</mark>로 구분된다.</p></div></div>
+  <div class="field"><div class="label">세포유래 매개체</div><div class="body"><ul>
+    <li><b>혈관 활성아민</b>: <mark>히스타민</mark>(혈관 확장·투과성 증가로 염증의 핵심), 세로토닌(혈소판 응집 시 분비)</li>
+    <li><b>아라키돈산 대사물</b>: <mark>프로스타글란딘</mark>(혈관반응·혈소판응집·발열·통증 인지), 트롬복산 A2(혈소판 응집), 류코트리엔(기관지 수축·알레르기 천식 반응)</li>
+    <li><b>사이토카인</b>: 인터루킨, 종양괴사인자(TNF) — 초기 면역·염증 반응 관여</li>
+  </ul></div></div>
+  <div class="field"><div class="label">혈장단백유래 매개체</div><div class="body"><ul>
+    <li><b>보체</b>: 미생물 입자를 둘러싸 무력화하는 옵소닌화 작용으로 포식을 돕고, 백혈구 화학주성·혈관 투과성 증가에 기여</li>
+    <li><b>키닌</b>: 하게만 인자(XII)에 의해 활성화, <mark>브라디키닌</mark>으로 혈관 투과성 증가 + 신경 말단 작용으로 통증 유발</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 통증 관여 매개체 = <mark>프로스타글란딘 + 브라디키닌</mark> / 히스타민 = 혈관확장·투과성↑ / 프로스타글란딘은 COX-1·COX-2에 의해 생성, NSAIDs가 억제.</div>
+</section>
+
+<section class="card" id="d5">
+  <h3><span class="num">5</span> 염증의 혈관반응·세포·형태학적 분류 <span class="en">Inflammation</span></h3>
+  <div class="field"><div class="label">5대 징후</div><div class="body"><p>열, 발적, 종창, 통증, 기능장애. 이 중 종창은 혈관벽 투과성 증가로 혈장 성분이 혈관 밖으로 삼출되어 발생한다.</p></div></div>
+  <div class="field"><div class="label">혈관반응 순서</div><div class="body"><p>급성 염증 초기 3~5초간 세동맥이 일시적 수축 → 혈관 확장·혈류 증가로 <mark>발적</mark> → 혈관 투과성 증가·혈류속도 감소 → 백혈구 유주. 백혈구가 혈관벽 내피세포에 모여 달라붙는 것을 <mark>변연화(margination)</mark>, 혈관벽을 빠져나가는 것을 <mark>유주</mark>, 손상 부위로 이동하는 것을 <mark>화학주성</mark>이라 한다.</p></div></div>
+  <div class="field"><div class="label">침윤 세포</div><div class="body"><ul>
+    <li>급성 염증 첫 6~24시간: <mark>중성구</mark>가 가장 먼저 침윤(혈중 수가 가장 많고 화학주성에 빠르게 반응) → 24~48시간 내 단핵구로 대체</li>
+    <li>바이러스 감염: 림프구가 먼저 침윤 / 일부 과민반응: 호산구</li>
+    <li>만성 염증: <mark>대식세포</mark>(이물질 제거, 살균·포식, 면역반응 관여, 신생혈관 형성)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">형태학적 분류</div><div class="body"><p>장액성·섬유소성·화농성·점액성·출혈성·위막성 염증. 화상·바이러스 감염 시 물집은 단백질이 적고 점성이 낮은 <mark>장액성</mark> 삼출. <mark>화농성 염증</mark>은 삼출액이 고름으로, 포도상구균·연쇄상구균·임질균·수막구균 등 화농성 세균이 유발(급성 화농성 충수염이 대표적).</p></div></div>
+</section>
+
+<section class="card" id="d6">
+  <h3><span class="num">6</span> 상처치유(수복·일차/이차유합) <span class="en">Wound Healing</span></h3>
+  <div class="field"><div class="label">수복 과정</div><div class="body"><p>손상 조직은 <mark>24~72시간</mark> 내에 섬유모세포·혈관내피세포가 증식하여 수복의 대표 소견인 <mark>육아조직</mark>(분홍색 부드러운 조직, 신생혈관+증식 섬유모세포)을 형성한다. 2주째 백혈구 침윤·부종·과도한 혈관이 사라지고 아교질 증가로 상처가 희게 변하며, 한 달 경과 시 아교섬유로 완전히 대치되고 표면은 가피를 형성해 치유된다. 단계는 <mark>염증→증식→성숙</mark>의 세 단계이다.</p></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>일차유합 vs 이차유합</caption>
+    <thead><tr><th></th><th>일차유합(primary union)</th><th>이차유합(secondary union)</th></tr></thead>
+    <tbody>
+      <tr><th>상처 상태</th><td>깨끗한 수술부위·봉합부위, 창상면이 붙어 있는 부위</td><td>세포·조직 결손이 심한 상처, 감염·봉합 안 된 상처, 염증성 궤양 상처</td></tr>
+      <tr><th>육아조직</th><td>소량</td><td>다량(더 많이 형성)</td></tr>
+      <tr><th>반흔</th><td>적음</td><td>많음, 상처가 커지고 수축 동반</td></tr>
+      <tr><th>치유속도</th><td>빠름</td><td>느림(염증반응 더 심함)</td></tr>
+    </tbody></table>
+  </div></div>
+</section>
+
+<section class="card" id="d7">
+  <h3><span class="num">7</span> 양성 vs 악성 신생물·발암 단계 <span class="en">Neoplasm / Carcinogenesis</span></h3>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>양성 신생물 vs 악성 신생물</caption>
+    <thead><tr><th></th><th>양성 신생물</th><th>악성 신생물</th></tr></thead>
+    <tbody>
+      <tr><th>분화정도</th><td>기원조직과 유사, 분화도 양호·정상 분화</td><td>분화 미약·미분화, 모양·크기 비정상(세포 이형성)</td></tr>
+      <tr><th>성장속도</th><td>서서히 성장</td><td>보통 빠르게 성장</td></tr>
+      <tr><th>국소적 침윤</th><td>경계 명확, 피막에 쌓임, 침윤 없음</td><td>경계 미약, 주변 정상조직 침범·지속 증식</td></tr>
+      <tr><th>전이</th><td>발생 부위에 국한, 전이 없음</td><td>국소 침습 + 원위부 전이</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">발암의 단계</div><div class="body"><ul>
+    <li><b>개시단계(initiation)</b>: 발암물질에 의해 영구적 DNA 손상 초래</li>
+    <li><b>촉진단계(promotion)</b>: <mark>가역적</mark> 과정, 촉진 원인 제거 시 멈출 수 있음</li>
+    <li><b>진행단계(progression)</b>: 변형된 종양세포가 지속적으로 증식</li>
+    <li>전위(translocation): 염색체 전위 / 암세포는 세포자멸사(apoptosis)에 저항</li>
+  </ul></div></div>
+  <div class="field"><div class="label">암의 전이</div><div class="body"><ul>
+    <li>국소전이: 침윤(infiltration)·침범(invasion)</li>
+    <li>원거리 전이: 림프성 전이·혈관성 전이</li>
+    <li>파종: 악성종양세포가 체강 내로 파종(복강에서 가장 빈번)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">암세포의 특징</div><div class="body"><p>스스로 증식 가능, 증식·종양 억제인자에 무반응, 조직 침윤·전이, 무제한 복제, 지속적 혈관 신생, <mark>세포자멸사 회피</mark>. 종양유전자 활성으로 외부 신호 없이 증식, p53 등 종양억제유전자 불활성화로 자멸사 회피, 신생혈관형성 유도, DNA 복구 장애로 유전적 불안정성 초래.</p></div></div>
+</section>
+
+<section class="card" id="d8">
+  <h3><span class="num">8</span> 종양 분화도(grade)·표지자·억제유전자 <span class="en">Grade / Tumor Markers</span></h3>
+  <div class="field"><div class="label">분화도(Grade)</div><div class="body"><p>정상세포와 닮은 정도와 유사분열 수에 기초해 4단계로 분류. <mark>분화도가 높을수록 생존율 감소·재발률 높음</mark>.</p>
+  <table class="cmp"><caption>암 분화도 등급</caption>
+  <thead><tr><th>등급</th><th>특징</th></tr></thead>
+  <tbody>
+    <tr><th>Grade 1</th><td>75% 정상세포와 닮음(나머지 탈분화)</td></tr>
+    <tr><th>Grade 2</th><td>50% 정상세포와 닮음</td></tr>
+    <tr><th>Grade 3</th><td>25% 정상세포와 닮음</td></tr>
+    <tr><th>Grade 4</th><td>100% 미분화/역분화 — 유래 모조직 식별 곤란</td></tr>
+  </tbody></table></div></div>
+  <div class="field"><div class="label">종양표지자</div><div class="body"><ul>
+    <li><b>AFP</b>(알파태아단백): 간세포암, 고환암</li>
+    <li><b>CA-125</b>: 난소암</li>
+    <li><b>CA 19-9</b>: 대장암, 췌장암</li>
+    <li><b>PSA</b>(전립선특이항원): 전립선암</li>
+    <li><b>CEA</b>: 대장암, 췌장암, 위암, 폐암</li>
+  </ul></div></div>
+  <div class="field"><div class="label">종양억제유전자</div><div class="body"><ul>
+    <li><b>RB</b>: 핵 내 인단백, 혈관내피성장인자 조절</li>
+    <li><b>p53</b>: 인체암의 50% 이상에서 발견되는 가장 흔한 유전자 이상, 세포주기 정지·DNA 손상에 대한 세포자멸사 유도</li>
+    <li><b>APC</b>: 성장추진신호 억제, 유전성·산발성 대장암에서 이상</li>
+    <li><b>TGF-β</b>: 상피·혈관내피·조혈세포의 강력한 증식억제</li>
+  </ul></div></div>
+  <div class="field"><div class="label">암의 증상</div><div class="body"><ul>
+    <li>황달: 췌장암·담관암 / 기침·객혈: 폐암 / 통증: 신경압박·뼈 전이</li>
+    <li>혈변·빈혈: 위암·대장암 / 혈뇨: 방광암</li>
+    <li>전신: 체중감소·발열·피로감·전신쇠약·식욕저하(악액질)</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · AFP=간/고환, CA-125=난소, PSA=전립선, CEA=대장 등 광범위 / p53=가장 흔한 종양억제유전자 이상.</div>
+</section>
+
+<section class="card" id="d9">
+  <h3><span class="num">9</span> 혈전·경색 <span class="en">Thrombosis / Infarction</span></h3>
+  <div class="field"><div class="label">혈전</div><div class="body"><p>혈관 내에 혈액이 응고되는 것으로 백색·적색·혼합·초자혈전으로 구분된다. 큰 혈전은 형성 초기 머리는 백색혈전, 몸통은 혼합혈전, 꼬리는 적색혈전으로 형성된다.</p></div></div>
+  <div class="field"><div class="label">혈전 형성 조건 (Virchow 삼징후)</div><div class="body"><ul>
+    <li><mark>혈관내피세포의 손상</mark>(가장 중요한 요인, 가장 흔한 원인은 동맥경화증/혈관염)</li>
+    <li><mark>혈류의 변화</mark>(혈류 정체·와류 — 동맥류·정맥류·정맥 압박부위)</li>
+    <li><mark>혈액응고능의 변화</mark>(고지혈증·악성종양·신증후군·화상·외상·수술 후·임신·태반조기박리·피임제 복용)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">경색증(infarction)</div><div class="body"><p>연결가지가 없는 종말동맥에서 나타남(드물게 정맥 폐쇄). 동맥경화·동맥염·혈전·색전 등으로 폐색 시 허혈성 괴사 유발. 허혈에 취약한 조직: 신경세포·심근세포·요세관 상피(심·뇌·신장·비장경색). <mark>심장 허혈성 괴사=응고괴사</mark>, <mark>뇌 허혈성 괴사=액화괴사</mark>. 폐·위장관·난소 등은 출혈 동반 적색경색.</p></div></div>
+</section>
+
+<section class="card" id="d10">
+  <h3><span class="num">10</span> 면역(능동/수동, 림프구, 면역글로불린) <span class="en">Immunity</span></h3>
+  <div class="field"><div class="label">체액성 면역</div><div class="body"><p>B 림프구 활동 관련 후천성 면역으로, B 림프구가 항체를 생성하여 이종단백질을 파괴한다.</p></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>능동면역 vs 수동면역</caption>
+    <thead><tr><th></th><th>능동면역</th><th>수동면역</th></tr></thead>
+    <tbody>
+      <tr><th>자연적</th><td>질병을 앓고 난 후 획득(강하고 장기간 지속)</td><td>태반 또는 모유를 통한 항체 전달</td></tr>
+      <tr><th>인위적</th><td>예방접종</td><td>면역혈청(globulin) 또는 항독소</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">T 림프구</div><div class="body"><p>골수 줄기세포에서 생성, <mark>흉선에서 성숙</mark>. 세포매개형 면역반응(제4형) 관여, B 림프구 활성화, 전체 순환림프구의 70~80% 차지.</p><ul>
+    <li>보조 T 림프구(helper): B 림프구 항체 생성 도움, 대식세포 활성화</li>
+    <li>억제 T 림프구(suppressor): B 림프구·일부 T 림프구 작용 억제</li>
+    <li>보강 T 림프구(amplifier): 보조·억제 T 림프구 작용 보강</li>
+    <li>살해 T 림프구(killer)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">면역글로불린(Ig)</div><div class="body"><ul>
+    <li><b>IgG</b>: 인체에 가장 많음, 중화·식균작용 촉진, <mark>태반 통과</mark>(모체-태아 Rh 부적합)</li>
+    <li><b>IgA</b>: 눈물·유즙·타액·기관지·장관 분포, 신체표면 보호</li>
+    <li><b>IgE</b>: 비만세포·호염기구 막 표면, 알레르기 반응</li>
+    <li><b>IgD</b>: B세포 표면 항원 수용체</li>
+    <li><b>IgM</b>: ABO 항원에 대한 항체 형성</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d11">
+  <h3><span class="num">11</span> 과민반응 4형 <span class="en">Hypersensitivity</span></h3>
+  <div class="field"><div class="label">분류</div><div class="body">
+    <table class="cmp"><caption>과민반응 유형</caption>
+    <thead><tr><th>형</th><th>기전</th><th>예</th></tr></thead>
+    <tbody>
+      <tr><th>제1형</th><td>즉시형(아나필락시스). 항원 노출 시 <mark>IgE</mark>가 항원과 결합 → 비만세포 탈과립 → 히스타민·류코트리엔 방출</td><td>아나필락시스(말초혈관 이완·모세혈관 투과성↑·기관지 수축, 저혈압·빈맥)</td></tr>
+      <tr><th>제2형</th><td>세포용해성·세포독성 과민반응</td><td>수혈반응, ABO 부적합, 약물 용혈성 빈혈</td></tr>
+      <tr><th>제3형</th><td>면역복합체성(항원-항체 결합 → 혈관벽 침전 → 보체 활성화 → 조직 파괴)</td><td>전신홍반루푸스, 류마티스성 관절염, 급성사구체신염, 혈청병</td></tr>
+      <tr><th>제4형</th><td>세포매개형·지연형(느린 반응, 감작된 <mark>T세포</mark>에 의해 반응)</td><td>접촉성 피부염, 결핵항원검사반응, 이식대숙주질환, 이식거부반응</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="tip"><b>시험 포인트</b> · 1형=IgE·즉시·아나필락시스 / 2형=세포독성·수혈 / 3형=면역복합체·SLE/사구체신염 / 4형=T세포·지연·이식거부.</div>
+</section>
+
+<section class="card" id="d12">
+  <h3><span class="num">12</span> 이식거부반응 <span class="en">Transplant Rejection</span></h3>
+  <div class="field"><div class="label">단계</div><div class="body"><ul>
+    <li><b>초급성 반응</b>: 수혜자가 기증자 항원에 대한 항체를 이미 형성 → 주로 수술 중 발생</li>
+    <li><b>급성 반응</b>: 항체매개+세포매개성 면역반응, 항체는 주로 혈관 손상</li>
+    <li><b>만성 반응</b>: 조직 관류 저하·만성 허혈로 고혈압·체중증가·소변량 감소·고질소혈증</li>
+  </ul></div></div>
+  <div class="field"><div class="label">참고</div><div class="body"><ul>
+    <li>이종이식 가능 조직: 각막·심장판막 등 <mark>무혈관 조직</mark></li>
+    <li>심장이식: ABO + 몸무게 적합성 검사 / 신장이식: ABO + <mark>HLA</mark> 적합성 검사</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d13">
+  <h3><span class="num">13</span> 약리 기본개념 <span class="en">Pharmacokinetics</span></h3>
+  <div class="field"><div class="label">P-당단백질 (P-glycoprotein)</div><div class="body"><p>간·신장·전신 조직에서 발현, 약물을 세포막을 가로질러 <mark>세포 밖으로 이동</mark>시키는 수송체. P-당단백질이 많아지면 약물 흡수가 저하되고 약물 내성이 생긴다.</p></div></div>
+  <div class="field"><div class="label">생체이용률·초회통과 대사</div><div class="body"><p>생체이용률(bioavailability)은 전신순환에 도달하는 투여 약물의 비율. 영향 인자 중 하나가 <mark>간의 초회통과 대사(일차통과효과)</mark>로, 경구 약물이 위장관 흡수 후 전신순환 전에 portal vein을 통해 간에서 대사되는 것. 예) NG는 경구 투여 시 90%가 초회통과 대사로 제거되므로 생체이용률을 높이려 <mark>설하정</mark>으로 투여. 약물대사는 phase 1(oxidation, Cytochrome P450 관여)과 phase 2로 구성.</p></div></div>
+  <div class="field"><div class="label">치료지수(TI)·효력·효능</div><div class="body"><p>치료지수(therapeutic index) = <mark>LD50/ED50</mark>. LD50=50% 개체를 죽이는 용량, ED50=50% 개체에서 효과가 나타나는 용량. <mark>치료지수가 클수록 안전성이 크다</mark>(치료범위가 넓을수록 안전). 효력(potency)=용량 기준 효과, 효능(efficacy)=용량과 무관한 최대 효과.</p></div></div>
+  <div class="field"><div class="label">분포·반감기</div><div class="body"><ul>
+    <li>분포: 알부민과 결합한 약물은 약물-단백 복합체를 이루며, 분리된 <mark>유리 약물만 표적세포로 이동</mark>. 알부민(체내 단백질) 부족 시 분포에 가장 크게 영향.</li>
+    <li>반감기: 혈장 농도가 반으로 떨어지는 시간. 짧을수록 자주 투여. 디곡신은 반감기가 길어(약 36시간) 하루 1회 투여. 간·신기능 장애·노인은 반감기가 길어져 주의.</li>
+    <li>치료적 약물 모니터링(TDM): 약물 농도가 조금만 변해도 효과가 크게 변하는 경우 중요.</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 치료지수 = LD50/ED50, 클수록 안전 / 효력 vs 효능 구분 / 일차통과효과는 생체이용률에 직접 영향.</div>
+</section>
+
+<section class="card" id="d14">
+  <h3><span class="num">14</span> 자율신경계(교감 vs 부교감) <span class="en">Autonomic Nervous System</span></h3>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>교감신경계 vs 부교감신경계</caption>
+    <thead><tr><th></th><th>교감신경계</th><th>부교감신경계</th></tr></thead>
+    <tbody>
+      <tr><th>기원</th><td>흉추·요추 뉴런</td><td>뇌신경·천수(sacral) 뉴런(90%는 뇌신경 10번 미주신경)</td></tr>
+      <tr><th>절전뉴런 전달물질</th><td>아세틸콜린(콜린성 수용체)</td><td>아세틸콜린(콜린성 수용체)</td></tr>
+      <tr><th>절후뉴런 전달물질</th><td>대부분 NE(아드레날린성 수용체)</td><td>아세틸콜린(콜린성 수용체)</td></tr>
+      <tr><th>뉴런 길이</th><td>절전 짧고, 절후 긺</td><td>절전 길고, 절후 짧음</td></tr>
+      <tr><th>연결</th><td>1개 절전뉴런 → 여러 절후뉴런(동시·빠른 반응)</td><td>대부분 1:1 절전-절후뉴런</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="tip"><b>시험 포인트</b> · 교감 절후만 NE/아드레날린성, 나머지 절전·부교감 전부 ACh/콜린성 / 미주신경(CN X)이 부교감의 90%.</div>
+</section>
+
+<section class="card" id="d15">
+  <h3><span class="num">15</span> 콜린성·아드레날린성 수용체와 약물 <span class="en">Cholinergic / Adrenergic</span></h3>
+  <div class="field"><div class="label">무스카린성 수용체</div><div class="body"><p>아세틸콜린 수용체는 니코틴성과 무스카린성(M1~M5). M1·M3·M5는 Gq 단백질 결합→Ca²⁺ 활성화. M2·M4는 Gi 단백질 결합→AC 감소·cAMP 감소.</p><ul>
+    <li><b>M2</b>(심장): cAMP 감소 → HR 감소·심장 수축 감소</li>
+    <li><b>M3</b>(외분비선·평활근): Ca²⁺ 활성화로 평활근 수축(위장관 수축), 혈관내피 NO 활성화로 혈관 이완(혈압↓·맥박↑), 외분비선 분비↑</li>
+  </ul></div></div>
+  <div class="field"><div class="label">콜린성·항콜린성 약물</div><div class="body"><ul>
+    <li>콜린성 약물(부교감신경흥분제): ACh 작용 증강. 콜린성효현제(무스카린 수용체 작용↑)와 항콜린에스테라아제(ACh 파괴 억제)로 나뉨.</li>
+    <li><b>콜린성 위기</b>: 콜린성효현제 과용량으로 근육약화·호흡근 마비·설사 → 해독제 <mark>atropine 0.4~0.6mg IV</mark>. 유기인계 농약 중독(서맥·저혈압·과도한 땀·침, 동공 축소) 시 우선 atropine 투여.</li>
+    <li>콜린성 봉쇄제(항콜린약물): 무스카린성 수용체 차단. 위장관 경련·분비 감소, 내시경·수술 전 분비 감소, 산동제로 사용. 유해반응: 구강건조·시력장애·변비·배뇨곤란.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">아드레날린성 수용체</div><div class="body"><ul>
+    <li><b>α1</b>(Gq→Ca²⁺): 말초혈관 수축, 말초저항↑·혈압 상승, 방광조임근 수축</li>
+    <li><b>α2</b>(Gi): 심장 cAMP 감소, NE 분비 저해, 인슐린 분비 저해(혈당 상승)</li>
+    <li><b>β1</b>(Gs→AC·cAMP↑): 심근 작용(빈맥·심근수축), 레닌 분비↑·혈압 상승</li>
+    <li><b>β2</b>(Gs): 기관지평활근·골격근 혈관 분포, 혈관·기관지 이완, 글루카곤 분비↑(혈당 상승)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">아드레날린성 약물·봉쇄제</div><div class="body"><ul>
+    <li>카테콜라민계: 말초혈관 수축·심수축력·HR↑·기관지 확장. MAO·COMT에 분해되어 경구 불가. 당뇨 환자 에피네프린 투여 시 고혈당.</li>
+    <li>비카테콜라민계: COMT 분해 회피 위해 개발, MAO 분해는 못 막음 → MAO억제제 병용 시 심한 고혈압·사망 위험.</li>
+    <li>α 봉쇄제: 혈관 이완·확장·혈압↓. <mark>first dose effect</mark>(첫 투약 시 강한 체위성 저혈압) → 첫 용량 1/3~1/4로 또는 자기 전 투약.</li>
+    <li>β 봉쇄제: β1 차단(심장 흥분 차단), β2 차단(기관지 수축). 비선택적 β차단제는 COPD 환자에서 기관지연축 유발 가능.</li>
+  </ul></div></div>
+  <div class="warn"><b>주의/금기</b> · 비선택적 베타차단제는 COPD·천식 환자에서 기관지연축 위험 / 비카테콜라민계 + MAO억제제 병용 시 심한 고혈압·사망.</div>
+</section>
+
+<section class="card" id="d16">
+  <h3><span class="num">16</span> 신경계 약물(파킨슨·알츠하이머·항경련) <span class="en">CNS Drugs</span></h3>
+  <div class="field"><div class="label">시냅스 흥분성/억제성</div><div class="body"><ul>
+    <li>흥분성 뉴런: glutamate·ACh 분비 → Na⁺ 투과성↑</li>
+    <li>억제성 뉴런: GABA·glycine 분비 → K⁺·Cl⁻ 투과성↑</li>
+    <li>GABA(진정 관련): GABA 수용체 결합 시 염소통로 열림 → 과분극 → 신경활동 억제</li>
+  </ul></div></div>
+  <div class="field"><div class="label">파킨슨병·레보도파</div><div class="body"><p>기저신경절(흑질·선조체)에서 도파민 뉴런 활성 감소로 발생, <mark>도파민-아세틸콜린 불균형</mark>. 도파민은 BBB를 통과 못 해 전구체 <mark>levodopa</mark> 사용. 몇 년 후 도파민 뉴런이 거의 없어지면 약효가 지속되지 않는 <mark>마모효과(wearing-off effect)</mark> 발생. levodopa 단독 투여 시 말초에서 도파민으로 전환되어 빈맥·저혈압 유발 → <mark>carbidopa 병용</mark>(DOPA decarboxylase 차단으로 말초 전환 방지, CNS 이용률↑). levodopa는 음식과 함께 섭취 시 흡수 느려져 공복 투여.</p></div></div>
+  <div class="field"><div class="label">도파민성 약물</div><div class="body"><ul>
+    <li>비타민 B6는 levodopa의 말초 분해 증가(주의)</li>
+    <li>MAO type B 억제제(selegiline): 도파민 분해 차단, levodopa 작용 증강·필요용량 감소</li>
+    <li>도파민 수용체 작용제(bromocriptine): 작용지속 김, 파동성 환자에 유효</li>
+    <li>amantadine: 항바이러스제로 개발, 도파민 유리↑·콜린 수용체 차단, 부작용 적음</li>
+    <li>COMT 억제제: 마모효과 환자에 부가 사용(carbidopa/levodopa와 반드시 병용)</li>
+    <li>항콜린성약물: 부작용으로 추체외로 증상 가능, levodopa보다 효과 낮음</li>
+  </ul></div></div>
+  <div class="field"><div class="label">파킨슨 Lewy body 기전</div><div class="body"><p>시냅스 단백질 <mark>α-synuclein</mark>이 뭉쳐 축적된 덩어리가 Lewy body로, 뉴런에서 형성되며 활성산소 생성·시냅스 기능이상을 일으켜 파킨슨병 유발(주로 brain stem·spinal cord·cortical region).</p></div></div>
+  <div class="field"><div class="label">알츠하이머 약제·발병 이론</div><div class="body"><ul>
+    <li>약물 타깃: 소실된 콜린성 뉴런. 항콜린에스테라아제(콜린성 신경전달 개선), NMDA 수용체 길항제(과도한 흥분독성 차단, 항콜린에스테라아제와 병용)</li>
+    <li>amyloid 가설: senile plaque에 amyloid β 축적 → amyloid plaque 형성 → nerve cell death → dementia. APP가 크게 잘릴수록(AB42 등) 위험↑</li>
+    <li>tau 가설: tau protein 축적으로 neurofibrillary tangle 형성, 인산화 시 PHF 형성 → tau와 microtubule 분리</li>
+  </ul></div></div>
+  <div class="field"><div class="label">항경련제</div><div class="body"><ul>
+    <li>작용 기전: Na⁺·Ca²⁺ 채널 차단, 억제성 GABA 전도 증가, 흥분성 glutamate 신경전달 방해</li>
+    <li>실신발작 1차 치료제: <mark>ethosuximide</mark>(low voltage activated calcium channel blocker) — 혈중 phenytoin 수치 증가시킴</li>
+    <li>phenobarbital: 과다 투여 시 심한 호흡억제·CNS 억제·혼수·사망 / 반복 투여 시 약물대사효소 촉진으로 효과 감소</li>
+    <li>phenytoin: 부작용으로 치은 증식·치아 우식</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d17">
+  <h3><span class="num">17</span> 통증 경로와 아편유사제 <span class="en">Pain / Opioids</span></h3>
+  <div class="field"><div class="label">통증 경로</div><div class="body"><p>말초 통각수용기(nociceptor)에서 통증 인지 → <mark>프로스타글란딘·브라디키닌·세로토닌</mark> 분비로 신호 전달 → 척수에서 substance P 분비 → 상행성 통로로 통증 인지 → 하행성 통각억제계로 억제. 내인성 아편유사물질(<mark>endorphin·enkephalin·dynorphin</mark>)이 통증 완화.</p></div></div>
+  <div class="field"><div class="label">진통제 작용 부위</div><div class="body"><ul>
+    <li>비스테로이드소염제(NSAIDs): 말초 프로스타글란딘 억제</li>
+    <li>아편유사진통제: 뇌·척수에서 작용</li>
+  </ul></div></div>
+  <div class="field"><div class="label">아편유사체 수용체</div><div class="body"><p>CNS의 아편유사체 수용체에 결합, <mark>Gi coupled 수용체</mark>(AC·cAMP 감소). 시냅스전 칼슘 채널 저해·glutamate 활성화 저해 → substance P 등 신경펩티드 분비 억제, 시냅스후 칼륨 유출↑→IPSP로 흥분 감소.</p><ul>
+    <li><b>μ 수용체</b>: 가장 진통효과 큼, 부작용 많음(호흡억제·행복감·진정)</li>
+    <li><b>δ·κ 수용체</b>: μ보다 진통효과 적음</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 내인성 아편물질 3종(엔도르핀·엔케팔린·다이노르핀) / μ 수용체 = 최대 진통+최대 부작용(호흡억제) / opioid 중독 해독제 = naloxone.</div>
+</section>
+
+<section class="card" id="d18">
+  <h3><span class="num">18</span> 심혈관 약물(RAAS·ACEI/ARB·CCB) <span class="en">Cardiovascular Drugs</span></h3>
+  <div class="field"><div class="label">레닌-안지오텐신-알도스테론 시스템(RAAS)</div><div class="body"><p>혈류량 부족 시 신장 juxtaglomerular apparatus가 인지 → <mark>renin</mark> 분비 → 간 생성 angiotensinogen을 angiotensin I로 전환 → 폐·신장의 <mark>ACE</mark>가 angiotensin II로 전환. Angiotensin II 작용: ①교감신경 활성화(혈관수축·심근수축력↑·혈압↑) ②세뇨관에서 Na·Cl 재흡수·K 배출(수분 축적) ③알도스테론 분비 ④소동맥 수축으로 혈압↑ ⑤뇌하수체 후엽 ADH 분비(집합관 물 흡수↑). 결론적으로 수분·염분 retention·volume 증가.</p></div></div>
+  <div class="field"><div class="label">ACEI·ARB</div><div class="body"><ul>
+    <li>ACEI는 신장 수출세동맥 확장 → 사구체내압 감소 → <mark>당뇨병성 신증</mark>에 사용</li>
+    <li>ACEI가 ARB보다 강력한 혈압저하: ACE가 bradykinin을 분해하는데 ACEI가 이를 억제 → bradykinin 활성화·NO 분비로 강력한 혈관확장. 단, bradykinin이 폐기관지에 쌓여 <mark>마른기침</mark>·혈관부종 유발 → 기침/혈관부종 있는 환자는 ARB 사용</li>
+    <li>angiotensin II 수용체: AT1(혈관수축·Na/수분 축적·레닌억제·SNS 활성·pro-fibrotic/thrombotic), AT2(혈관확장·tissue repair·허혈 예방)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">CCB</div><div class="body"><p>CCB는 베타차단제와 달리 천식·당뇨·말초혈관질환이 있는 고혈압 환자 치료에 유용(베타차단제·β2 차단은 기관지 수축 작용 → 이런 환자에 CCB가 일차 약제).</p></div></div>
+</section>
+
+<section class="card" id="d19">
+  <h3><span class="num">19</span> 고지혈증·혈액작용 약물 <span class="en">Lipid / Hematologic Drugs</span></h3>
+  <div class="field"><div class="label">고지혈증 약물</div><div class="body"><ul>
+    <li><b>statin</b>(HMG-CoA 환원효소 억제제): 콜레스테롤 합성 첫 단계 효소 억제 → 콜레스테롤 합성↓·<mark>LDL↓</mark>. 부작용: 간독성·근병증·GI upset·백내장·횡문근융해·당뇨 위험↑. 콜레스테롤 생합성이 밤에 활발하므로 <mark>저녁 복용</mark>.</li>
+    <li><b>Gemfibrozil</b>: 혈청 트리글리세리드·VLDL이 높은 중증 고중성지방혈증에 선호</li>
+  </ul></div></div>
+  <div class="field"><div class="label">혈액응고 경로</div><div class="body"><p>외인성 경로(혈관손상으로 막단백질·조직인자 노출로 시작)와 내인성 경로(응고인자 XII에 의해 촉발)가 <mark>공통경로</mark>에서 합류. 외인성은 VIIa가 인자 X→Xa, 내인성은 XII→XI→IX→X→Xa로 진행. Xa가 프로트롬빈→트롬빈, 트롬빈이 피브리노겐→피브린으로 전환.</p></div></div>
+  <div class="field"><div class="label">아스피린·H1/H2</div><div class="body"><ul>
+    <li>아스피린: COX inhibitor로 <mark>thromboxane A2 합성 억제</mark>. COX-1 활성화 시 thromboxane이 혈소판 응집 촉진 → 이 단계를 저해</li>
+    <li>H2 수용체: 위산분비 증가 → H2 inhibitor가 위보호제</li>
+    <li>H1 수용체: 기관지 수축·모세혈관 투과성↑(발적·가려움·발진 등 알레르기). H1 길항제 1세대(효과 크고 저렴·널리 사용하나 CNS 침투로 진정), 2세대(BBB 미통과로 진정 적음)</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d20">
+  <h3><span class="num">20</span> COX-1 vs COX-2, NSAIDs vs AAP <span class="en">COX / NSAIDs</span></h3>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>COX-1 vs COX-2</caption>
+    <thead><tr><th></th><th>COX-1</th><th>COX-2</th></tr></thead>
+    <tbody>
+      <tr><th>발현</th><td>항상 유지(house keeping), 자극 시 2~4배 증가</td><td>유도적, 염증성 반응에 의해 발현(TNFα·LPS 등에 1~3시간 내 20~80배 증가)</td></tr>
+      <tr><th>기능</th><td>위점막 보호 등 세포 보호, 트롬복산 생성으로 혈소판 응집 촉진(출혈 방지)</td><td>proinflammatory 작용, 염증·암에서 작용</td></tr>
+      <tr><th>억제</th><td>NSAIDs에 억제 → 위장관 부작용</td><td>Glucocorticoid·NSAIDs·COX-2 inhibitor에 억제</td></tr>
+    </tbody></table>
+    <p>COX-2만 선택적으로 차단하면 염증반응만 억제 가능하나 심혈관계 부작용으로 현재 임상에서 매우 적은 약물만 사용.</p>
+  </div></div>
+  <div class="field"><div class="label">NSAIDs vs AAP</div><div class="body"><p>NSAIDs는 항염증·진통·해열 작용이 모두 강한 반면, AAP(아세트아미노펜)는 진통·해열은 강하나 <mark>항염증 작용은 약함</mark>. 6세 이하 소아에 아스피린 계통 NSAID는 <mark>라이증후군</mark> 유발 가능 → 해열진통제로 AAP 사용.</p></div></div>
+  <div class="field"><div class="label">프로스타글란딘 생리 효과·아스피린</div><div class="body"><ul>
+    <li>NSAIDs는 위점막 프로스타글란딘 생성 억제 → 위궤양 촉진 → 프로스타글란딘 유도체 <mark>misoprostol</mark> 복용 또는 COX-2 선택적 억제제 celecoxib로 대체</li>
+    <li>프로스타글란딘은 신장 혈류량 유지에 필요 → PGE2·PGI2 합성 감소 시 Na·수분 저류·부종·고칼륨혈증, 신기능 저하 환자에 급성 신손상 가능</li>
+    <li>아스피린의 가장 중요한 약리작용: <mark>혈소판 응집 억제</mark>(COX-1 트롬복산 생성 억제) → 심근경색 재발 방지에 사용</li>
+  </ul></div></div>
+  <div class="field"><div class="label">AAP 주의사항</div><div class="body"><p>심한 간독성 가능 → 하루 총 투여량 <mark>4000mg 초과 금지</mark>. 과량 섭취 시 간독성 방지를 위해 <mark>N-acetylcysteine</mark> 사용.</p></div></div>
+  <div class="warn"><b>주의/금기</b> · 6세 이하 소아 아스피린 → 라이증후군 / AAP 일일 4000mg 초과 금지·과량 시 N-acetylcysteine.</div>
+</section>
+
+<section class="card" id="d21">
+  <h3><span class="num">21</span> 항히스타민·기타 약물·항생제 상호작용 <span class="en">Misc Drugs</span></h3>
+  <div class="field"><div class="label">항히스타민제</div><div class="body"><ul>
+    <li>Diphenhydramine: 1세대 항히스타민제이자 항무스카린제. BBB 통과로 졸음 유발(복용 후 운전 금지). scopolamine(멀미약, 항콜린제) 병용 시 항콜린 효과 증대로 졸음·눈부심·구강건조</li>
+    <li>Fexofenadine(2세대): H1 수용체 길항제, BBB 미통과로 졸음 없음</li>
+    <li>oxymetazoline: 알레르기 비염에 비강 분무·점적, 수분 내 효과. 반동성 충혈 위험으로 <mark>3~5일 이상 사용 금지</mark></li>
+  </ul></div></div>
+  <div class="field"><div class="label">기타 약물</div><div class="body"><ul>
+    <li>소변 산성화 시 약산성 약물 이온화 억제 → A⁻ 형태로 흡수되어 배설 느려짐</li>
+    <li>lithium 중독: 소변량 증가·설사·떨림·현기증·피로·단기기억상실·오심·구토·식욕상실·복통·구강건조·근쇠약</li>
+    <li>opioid 중독: opioid antagonist <mark>naloxone</mark> 투여</li>
+    <li>Succinylcholine: 기관삽관 시 투여, 작용시간이 짧아 단시간 근이완 필요한 위·기관지 내시경 삽입에 사용</li>
+    <li>스트레스로 인한 빈맥 치료제: 베타차단제 <mark>propranolol</mark></li>
+  </ul></div></div>
+  <div class="field"><div class="label">항생제 상호작용·부작용</div><div class="body"><ul>
+    <li>정균제+살균제 병용 시 길항작용 가능. 예) 페니실린(세균 증식 왕성 시 세포벽 합성 억제하는 살균제)+tetracycline(단백 합성 억제 정균제) 병용 시 페니실린 살균효과 저하</li>
+    <li>aminoglycoside(gentamicin): 대표 부작용 <mark>이독성·신독성</mark>. 임산부 사용 시 태아 청각손상</li>
+    <li>ciprofloxacin: 어린이 연골 손상·관절병증 → 18세 이하 미승인</li>
+    <li>tetracycline: 9세 미만 치아 영구 변색 → 투여 금지</li>
+    <li>magnesium hydroxide: 설사·오심·구토·위경련·고마그네슘혈증 → 간호사정 항목은 설사</li>
+  </ul></div></div>
+  <div class="field"><div class="label">영양제·기타</div><div class="body"><ul>
+    <li>철분제: 2개월 이상 복용으로 헤모글로빈 정상화, 저장량 정상화엔 6개월 이상 필요. 공복(식후 2시간) 흡수 최선. 부작용(오심·구토·설사·속쓰림) 시 식후 복용. 검은 대변 흔함. 제산제·칼슘·마그네슘 병용 피하고 비타민 C와 함께 시 흡수 도움</li>
+    <li>Niacin(비타민 B3): 콜레스테롤 저하(HDL↑·LDL↓). 과다 복용 시 어지러움·빈맥·가려움·오심·구토·복통·설사·통풍·간손상</li>
+  </ul></div></div>
+  <div class="warn"><b>주의/금기</b> · ciprofloxacin은 18세 이하, tetracycline은 9세 미만 금기 / aminoglycoside는 이독성·신독성(임산부 태아 청각손상) / oxymetazoline 3~5일 초과 금지.</div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

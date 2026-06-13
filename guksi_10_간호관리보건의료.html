@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>간호관리·보건의료 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>간호관리·보건의료</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: 국시 정리</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">간호관리·보건의료</h2>
+<p class="sys-desc">전문간호사의 마케팅·법적 의무, 관리과정(기획·조직·인력·통제), 조직·전문직 윤리, 보건의료자원과 진료비 지불제도, 국내·외 전문간호사 제도, 질 향상·환자안전, 환자교육과 건강행동 이론을 다루는 관리·법·제도·교육 영역이다.</p>
+
+<nav class="toc"><strong>이 계통의 질환·주제</strong>
+<ul>
+  <li><a href="#d1">마케팅(내부·관계 마케팅)</a></li>
+  <li><a href="#d2">전문간호사의 법적 의무·책임</a></li>
+  <li><a href="#d3">전단적 의료와 설명·동의 의무</a></li>
+  <li><a href="#d4">윤리원리·전문직 통합·권력</a></li>
+  <li><a href="#d5">관리과정(기획·조직·인력·통제)</a></li>
+  <li><a href="#d6">전문간호사 프로그램 도입·팀 운영</a></li>
+  <li><a href="#d7">보건의료자원·보건의료체계</a></li>
+  <li><a href="#d8">진료비 지불제도</a></li>
+  <li><a href="#d9">미국 전문간호사 제도</a></li>
+  <li><a href="#d10">한국 전문간호사 제도·교육과정</a></li>
+  <li><a href="#d11">질 평가지표·질향상·근거기반실무</a></li>
+  <li><a href="#d12">전문간호사 역할(사례관리·상담자문·협력실무)</a></li>
+  <li><a href="#d13">환자교육·학습목표</a></li>
+  <li><a href="#d14">교육방법(e-learning·m-learning 등)</a></li>
+  <li><a href="#d15">교육평가</a></li>
+  <li><a href="#d16">건강행동 이론(범이론적 모형·건강신념모델)</a></li>
+  <li><a href="#d17">프리셉터·간호이론·간호연구</a></li>
+</ul></nav>
+
+<section class="card" id="d1">
+  <h3><span class="num">1</span> 마케팅 <span class="en">Internal / Relationship Marketing</span></h3>
+  <div class="field"><div class="label">내부마케팅</div><div class="body"><p>내부자인 직원을 잘 관리하여 더 좋은 성과를 내도록 <mark>동기를 부여</mark>하는 마케팅 활동.</p></div></div>
+  <div class="field"><div class="label">관계마케팅</div><div class="body"><p>서비스 제공자가 소비자 등 이해관계자와 강한 이해관계를 형성·유지·발전시키는 과정으로, 장기간의 이익을 확보하기 위해 소비자와 대화하고 더 좋은 서비스를 제공하고자 하는 것.</p><p>예) 대한간호협회가 일반 대중을 상대로 공모를 통해 전문간호사의 이미지를 상징하는 로고에 투표하게 하고, 투표 참여자에게 추첨을 통해 선물을 준다.</p></div></div>
+  <div class="field"><div class="label">역할 마케팅</div><div class="body"><p>전문간호사의 역할을 마케팅할 때 고려할 사항 중 하나는 <mark>전문간호사임을 밝히는 것</mark>. 내가 누구이고 무슨 일을 하는가를 전달하는 것이 기본이다. 자신을 전문간호사로 밝히고 대상자를 위해 무슨 일을 하는지를 설명한다.</p></div></div>
+</section>
+
+<section class="card" id="d2">
+  <h3><span class="num">2</span> 전문간호사의 법적 의무·책임</h3>
+  <div class="field"><div class="label">확인 의무</div><div class="body"><p>간호사에게 자신의 역할을 위임한 전문간호사가 해당 간호사의 업무 수행 중 과정과 결과를 살펴보아야 하는 의무. 위임하였더라도 간호의 내용 및 그 행위가 정확하게 이루어지는가를 확인해야 할 의무가 있다.</p></div></div>
+  <div class="field"><div class="label">민사책임(사용자 배상책임)</div><div class="body"><p>피고용인의 고용범위에서 발생한 과실에 대하여 고용주가 직접적인 책임을 지는 <mark>사용자의 배상책임</mark>이 있다.</p></div></div>
+</section>
+
+<section class="card" id="d3">
+  <h3><span class="num">3</span> 전단적 의료와 설명·동의 의무</h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>전단적 의료란 의료인이 어떤 위험성이 있는 의료행위를 실시하기 전에 환자로부터 동의를 얻지 않고 의료행위를 하는 것, 즉 <mark>설명 및 동의의 의무를 다하지 않은 것</mark>이다. 따라서 전단적 의료가 발생하지 않도록 전문간호사가 준수해야 할 의무는 <mark>설명과 동의 의무</mark>이다.</p></div></div>
+  <div class="field"><div class="label">설명의 의무가 면제되는 경우</div><div class="body"><ul>
+    <li>환자가 설명 청취를 포기한 경우(알 권리를 가진 자가 그 권리를 유효하게 포기한 경우)</li>
+    <li>위험이 중대하거나 시간적으로 급한 경우(응급환자인 경우)</li>
+    <li>설명이 환자에게 악영향을 끼칠 것이 우려되는 경우</li>
+    <li>발생할 위험이 매우 비전형적이고 발생 개연성이 아주 희박한 경우</li>
+    <li>가정적인 승낙이 전제된 경우</li>
+  </ul></div></div>
+  <div class="warn"><b>주의</b> · 환자가 처치 및 검사를 거부하는 경우라도 <mark>설명의 의무는 있다</mark>.</div>
+</section>
+
+<section class="card" id="d4">
+  <h3><span class="num">4</span> 윤리원리·전문직 통합·권력</h3>
+  <div class="field"><div class="label">안락사 관련 윤리원리·규칙</div><div class="body"><ul>
+    <li>평등의 원칙</li>
+    <li>정직의 원칙</li>
+    <li>정의의 원칙</li>
+    <li>선행의 원칙</li>
+  </ul></div></div>
+  <div class="field"><div class="label">전문직 통합</div><div class="body"><p>전문직 통합은 윤리적 행위의 기초인 기본적 가치이다. 전문간호사는 환자·동료·고용인·본인의 전문직, 그리고 본인 등 다양한 대상자의 의무 사이에서 <mark>균형을 유지</mark>해야 한다. 고용인에 대한 의무가 있기는 하나 대상자(및 환자 가족)의 요구를 옹호할 의무도 가진다.</p></div></div>
+  <div class="field"><div class="label">권력의 유형</div><div class="body"><ul>
+    <li><mark>전문적 권력</mark>: 특수한 능력·기술·지식을 내보임으로써 생기는 권력. 예) 새로 배치된 병동에서 오랜 기간 근무한 간호사의 말을 구성원이 잘 따르는 것 → 전문적 권력을 가진 <mark>비공식적 지도자</mark>.</li>
+    <li><mark>합법적 권력</mark>: 어떠한 프로젝트의 팀 지도자로 공식 임명을 받으면 소유하게 되는 권력.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">변화 추진력</div><div class="body"><p>각 병동에 전문간호사를 배치하는 것과 관련하여 발생할 수 있는 저항에 대응하며 변화를 계획할 때, 고려할 변화 추진력은 <mark>전문간호사 관련 법</mark>이다.</p></div></div>
+</section>
+
+<section class="card" id="d5">
+  <h3><span class="num">5</span> 관리과정(기획·조직·인력·통제) <span class="en">Management Process</span></h3>
+  <div class="field"><div class="label">관리(개요)</div><div class="body"><p>전문간호사의 역할 중 관리는 조직의 목적 달성에 필요한 <mark>인적·물적 자원을 조달하고 조정</mark>하는 행위.</p></div></div>
+  <table class="cmp"><caption>관리과정의 주요 기능</caption>
+    <thead><tr><th>기능</th><th>내용·예시</th></tr></thead>
+    <tbody>
+      <tr><th>기획(Planning)</th><td>특정 부서·분야의 이익을 위한 가장 효과적인 행동·사업을 결정하거나 영향을 예측·의사결정하는 과정. 시간·자원의 소비를 효과적으로 관리하여 원하는 산출(성과)을 얻도록 함. 예) 부서 운영예산 확보, 중환자실 인력·물품 관리. 안위간호수행 향상 책임을 경력간호사에게 위임, 새 통증조절법 거부감에 대한 다학제적 토의 마련.</td></tr>
+      <tr><th>조직/지휘</th><td>예) 병동 운영에 필요한 예산 확보, 제안된 임상실험연구가 기관 자원에 미칠 영향 평가, 중환자 인권 위원회 구성 제안.</td></tr>
+      <tr><th>인력관리(Staffing)</th><td>조직·구성원의 목적 달성에 필요한 인적 자원을 효율적으로 배치. 직원 채용·업무 분담 체계·구조를 설립하고 근무 스케줄을 결정·수정. 예) 병동 간호 조정자 직위 업무 규정 개발, 기계환기 환자 담당 간호사의 역량 열거.</td></tr>
+      <tr><th>통제(Controlling)</th><td>수행 측정 기준을 설정하고, 결과를 보고하고, 교정 행위를 취하며, 임상적·재정적 결과를 감독. 예) 전문간호사의 항암 투약행위가 기관 표준에 부합하는지 관찰.</td></tr>
+    </tbody>
+  </table>
+  <div class="field"><div class="label">인력 산정·팀 사정</div><div class="body"><ul>
+    <li>소아병동 운영에 필요한 직원 수 판단 시 필요한 자료: <mark>환자의 유형·수, 중증도, 제공할 간호의 복잡성</mark>.</li>
+    <li>새로운 팀 형성 시 방해를 최소화하기 위해 반드시 사정할 내용: <mark>팀 내 개인 구성원의 역할과 상호관계 유형</mark>.</li>
+    <li>새로운 세팅의 장비·소모품 확인 방법: 전문간호사의 전문성, 가이드라인, 매뉴얼, 표준장비 목록, 타 의료진과의 협조. (과거 경험 의존은 적절치 않음)</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · MBO(목표관리)는 프로그램의 효과·목적 달성도를 평가할 때 가장 적합한 방식으로, 설정한 목적이 성취되었는지에 초점을 둔다.</div>
+</section>
+
+<section class="card" id="d6">
+  <h3><span class="num">6</span> 전문간호사 프로그램 도입·팀 운영</h3>
+  <div class="field"><div class="label">공식 구조 확인·계획 첫 단계</div><div class="body"><ul>
+    <li>프로그램 첫 도입 시 병원의 공식적 구조를 확인하는 가장 좋은 방법: 조직의 <mark>철학·미션·가치</mark> 등을 검토.</li>
+    <li>프로그램 계획의 첫 단계: 새 프로그램이 적용되거나 기존 프로그램이 수정될 환경에 대한 정보를 수집하여 필요한 점을 결정하는 <mark>상황평가(요구사정)</mark> 실시.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">병원 간 연계 프로그램 조정</div><div class="body"><p>책임자로서 초기에 취해야 할 조정 행위는 참여 병원의 전문의·전문간호사·병동 직원들과 <mark>인간적 관계를 형성</mark>하는 것. 변화의 성공적 정착을 위해 주요 관계자를 확인하고 개인적 관계를 형성하여 이들이 적극 참여하도록 이끈다.</p></div></div>
+  <div class="field"><div class="label">팀 규범·갈등·응집력</div><div class="body"><ul>
+    <li>규범은 그룹 행동의 범위를 처방하고, 구성원이 자유롭게 참여할 신뢰를 형성하여 팀의 지속성·예측성을 확보한다.</li>
+    <li>직종 간 갈등이 있는 경우 다학제 구성원의 합의를 통해 해결책을 제시한다.</li>
+    <li>응집력을 방해하는 것은 <mark>안정적이지 않은 구성원 자격</mark>. 기대에 미치지 못한다고 대체할 사람을 찾는 것은 구성을 저해하는 행동이다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d7">
+  <h3><span class="num">7</span> 보건의료자원·보건의료체계</h3>
+  <div class="field"><div class="label">보건의료제도 구성요소</div><div class="body"><ul>
+    <li>보건의료조직</li>
+    <li>보건의료관리</li>
+    <li>의료전달체계</li>
+    <li>재원조달</li>
+  </ul><p>※ 보건의료인력은 보건의료자원 중 하나이다.</p></div></div>
+  <div class="field"><div class="label">보건의료전달체계(보건의료체계)</div><div class="body"><p>제한된 보건의료자원을 효율적으로 활용하여 국민에게 동등한 수준의 의료와 접근도를 유지함으로써 국민건강의 최대화를 달성하고자, 보건의료자원의 조화를 통해 의료서비스 전달을 체계화하는 것. 목적은 국민에게 적절한 의료를 체계적·효율적으로 제공하는 것이다.</p></div></div>
+  <div class="field"><div class="label">우리나라 보건의료체계의 특성</div><div class="body"><ul>
+    <li>보건인력 공급의 탄력성이 낮다</li>
+    <li>고가의 의료장비 및 병상이 과잉공급되어 있다</li>
+    <li>의료기관 종별 기능이 명확하지 않게 운영된다</li>
+    <li>의료기관 양극화 현상이 발생한다</li>
+    <li>민간의료 중심으로 보건의료가 공급된다</li>
+  </ul></div></div>
+  <div class="field"><div class="label">자원 배치 관련 사항</div><div class="body"><ul>
+    <li>의료보험 프로그램으로 의료보험이 있다</li>
+    <li>관리(결제)기관은 비정부기관이다</li>
+    <li>비정부기관으로 각종 보건관련 단체가 있다</li>
+    <li>독립적 민간부분으로 의사·치과의사 등이 있다</li>
+    <li>국가보건의료 당국으로 보건복지부가 대표적이다</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 우리나라 전국민의료보험 실시: <mark>1989년</mark>. 보건의료제도 유형 — 한국: 전국민사회보험형 / 영국: 조세형 / 미국: 민간보험형.</div>
+</section>
+
+<section class="card" id="d8">
+  <h3><span class="num">8</span> 진료비 지불제도</h3>
+  <table class="cmp"><caption>진료비 지불제도 비교</caption>
+    <thead><tr><th>제도</th><th>내용</th><th>특징</th></tr></thead>
+    <tbody>
+      <tr><th>인두제</th><td>일정 지역 주민(등록된 환자·사람) 수에 일정 금액을 정해 보수를 지급. 등록 수만큼 사전 결정된 수입을 보장받고 일정 기간 의료서비스 제공.</td><td>상대적으로 저렴, 예방에 관심 증가 / 환자의 선택권 제한.</td></tr>
+      <tr><th>행위별 수가제</th><td>약제·재료비를 별도 산정하고 진료행위 하나하나마다 항목별 가격을 책정. 단위당 가격 × 서비스 양만큼 보상.</td><td>짧은 시간에 많은 환자 진료, 새 의료기술 도입·연구 촉진 / <mark>과잉 진료·과잉 투약</mark> 소지.</td></tr>
+      <tr><th>포괄수가제</th><td>한 가지 치료행위가 아니라 어떤 질병으로 입원했는가에 따라 질병군(환자군)별 미리 책정된 일정액을 지급. 환자 종류당 총괄보수단가 설정.</td><td>경제적 진료 유도, 의료기관 생산력 증대, 행정 간편 / 서비스 양 최소화·규격화 우려.</td></tr>
+      <tr><th>봉급제</th><td>사회주의 국가·영국 같은 국영의료체계 병원급 근무의에게 적용. 일정 기간에 따라 보상.</td><td>벽지·오지 주민도 쉽게 의료 이용 / 진료수준은 낮은 편, 불필요한 경쟁 억제.</td></tr>
+      <tr><th>총액계약제<br>(총괄계약제)</th><td>보험자 측과 의사단체(보험의협회) 간에 진료비 총액을 추계·협의 후 사전에 결정된 총액을 지급. <mark>독일</mark>의 보험의에게 적용.</td><td>총진료비 억제 가능 / 매년 계약 필요, 새 기술 도입에 제한.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card" id="d9">
+  <h3><span class="num">9</span> 미국 전문간호사 제도</h3>
+  <div class="field"><div class="label">특징</div><div class="body"><ul>
+    <li>전문간호사의 역할이 간호법에 분명히 명시되어 있다</li>
+    <li>법적 책임과 권한을 가진다</li>
+    <li>전문간호사 실습교육이 전문간호사의 지도 하에 이루어진다</li>
+    <li>전문간호사의 자격·면허·갱신 등에 대한 통합관리부서를 가지고 있다</li>
+    <li>주별로 면허 법령과 규정이 있다</li>
+  </ul></div></div>
+  <div class="field"><div class="label">미국 전문간호사 종류</div><div class="body"><p>마취전문간호사, 임상전문간호사, 전문실무간호사, 조산전문간호사.</p></div></div>
+</section>
+
+<section class="card" id="d10">
+  <h3><span class="num">10</span> 한국 전문간호사 제도·교육과정</h3>
+  <div class="field"><div class="label">국내 도입 배경</div><div class="body"><ul>
+    <li>보건의료분야의 전문화 추세</li>
+    <li>전공의 부족, 낮은 의료수가 해결</li>
+    <li>국민의 의료서비스 기대수준 부응, 전문 지식·술기 요구도 부응</li>
+    <li>의료기술 발전, 인구·질병 구조 변화로 의료 이용 증가</li>
+  </ul></div></div>
+  <div class="field"><div class="label">제도 정립을 위한 사항</div><div class="body"><ul>
+    <li>전문간호사 핵심능력 강화</li>
+    <li>전문간호사 영역 중복 문제 해결</li>
+    <li>전문간호사 분야별 역할 규정의 타당성 검증</li>
+    <li>전문간호사와 간호사 간 역할 차별화 및 정체성 확립</li>
+  </ul></div></div>
+  <div class="field"><div class="label">교육과정 기준</div><div class="body"><ul>
+    <li>공통 필수학점: <mark>13학점 이상</mark></li>
+    <li>전공 실습: <mark>300시간 이상</mark></li>
+    <li>교육기간: <mark>2년 이상</mark></li>
+    <li>전공이론: <mark>10학점 이상</mark></li>
+    <li>입학 시: 최근 10년 이내 해당분야 <mark>3년 이상 실무경력</mark> 필요</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · '분야별 간호사'→'전문간호사'로 의료법 개정: <mark>2000년</mark>. '전문간호사 자격인정 등에 관한 규칙' 제정: <mark>2006년</mark>. 자격시험 관리기관: <mark>한국간호교육평가원</mark>. 영역(13개): 보건·마취·정신·가정·감염관리·산업·응급·노인·중환자·호스피스·종양·임상·아동.</div>
+</section>
+
+<section class="card" id="d11">
+  <h3><span class="num">11</span> 질 평가지표·질향상·근거기반실무 <span class="en">QI / EBP</span></h3>
+  <table class="cmp"><caption>질 평가지표</caption>
+    <thead><tr><th>지표</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th>구조지표</th><td>간호전달 과정에서 사용된 인력·장비·자원을 측정. 예) 전문간호사 대 총 간호사 비율, 간호사–환자 비율, 환자당 간호시간.</td></tr>
+      <tr><th>과정지표</th><td>간호를 전달하는 치료제공자의 행동·태도 측정. 대상자와의 대면·대화 포함, 중재와 결과 사이 인과관계를 밝히는 요소. 예) 병원감염 예방을 위한 의료인의 손씻기 수행여부 조사.</td></tr>
+      <tr><th>결과지표</th><td>사람·집단·기관·공동체에 대한 행동·중재의 효과 근거. 서비스를 제공받은 이들에 대한 변화를 나타내며, 제공자에 대한 지표는 아니다.</td></tr>
+    </tbody>
+  </table>
+  <div class="field"><div class="label">질향상(QI) 활동</div><div class="body"><p>보다 나은 질적 서비스 제공을 위한 활동. 문제의 원인·관련요인을 규명하고 효과적 개선과제를 찾아야 한다. 환자안전 활동 모니터링 중 일부 간호사가 지침을 지키지 않는 것을 목격하면, 일단 모니터링을 진행하고 결과를 분석한 후 개선방안을 강구한다.</p><p>전문간호사가 지속적 질 향상 수행 시 도달 가능한 목표: 과실 위험 감소, 환자 간호 성과 평가도구 제시, 간호수행 기록의 향상, 실무 능력 강화.</p></div></div>
+  <div class="field"><div class="label">근거기반실무(EBP)</div><div class="body"><p>개별 환자 간호를 결정할 때 명백하고 신뢰성 있는 최신의 연구기반 근거를 사용하는 것. 전문간호사에게 EBP 수행을 위한 연구역량 강화가 요구된다.</p><p><mark>EBP 단계</mark>: 임상질문 → 근거검색 → 비평적 분석 → 실무적용 → 평가.</p></div></div>
+  <div class="field"><div class="label">관련 연구</div><div class="body"><p>역할 기술 연구: 전문간호사의 직업 특성과 역할을 설명·정의하는 데 중점. 전문간호사 역할이 간호전달 결과에 기여한다는 이론적 발전을 이끌어 내기 위한 증거로 이용.</p></div></div>
+</section>
+
+<section class="card" id="d12">
+  <h3><span class="num">12</span> 전문간호사 역할(사례관리·상담자문·협력실무)</h3>
+  <div class="field"><div class="label">사례관리</div><div class="body"><p>진료의 질을 높이고 재원일수 감소를 통해 비용효과를 얻고자 함. 건강관리 체계 내에서 <mark>연속성 있는 서비스 제공</mark>을 목표로 한다. 전문간호사에게 갈수록 강조되는 역할.</p></div></div>
+  <div class="field"><div class="label">상담자문</div><div class="body"><p>상담가가 전문화된 지식을 가졌다고 인정되는 두 전문가 사이의 상호작용. 기록되어야 하며, 상담가는 처방이 아니라 <mark>권장</mark>을 한다. 둘 사이 관계는 위계적이지 않고 협력적이며, 일반적으로 <mark>의뢰자에 의해 시작</mark>된다.</p></div></div>
+  <div class="field"><div class="label">협력적 실무 모델</div><div class="body"><p>케어 제공 시 <mark>환자의 필요가 최우선</mark>이어야 한다는 것이 핵심 원칙. 의사와 전문간호사 모두 환자를 사정하고 요구도에 따라 관리계획·수행까지 함께 한다.</p></div></div>
+  <div class="field"><div class="label">역할 모순</div><div class="body"><p>기술·능력과 역할 의무가 비양립적이거나, 개인적 가치·자아와 역할 의무가 비양립적인 역할. 예) 소아 병동에 배치된 성인 전문간호사가 경험하는 역할 개념(역할 내부의 마찰).</p></div></div>
+  <div class="field"><div class="label">기대하는 간호성과</div><div class="body"><p>상급간호실무에서 기대하는 성과: 대상자의 합병증 감소, 대상자·가족의 만족도 증가, 재원기간 단축, 약물복용 이행 증진.</p></div></div>
+  <div class="field"><div class="label">정보관리·기획 부가사항</div><div class="body"><ul>
+    <li>휴대폰·태블릿 PC 등 휴대용 기기의 가장 큰 이익: 정보 접근 시간 단축, 업데이트된 정보 이용으로 오류 감소, 간호 계획 시간 증가로 서비스 향상.</li>
+    <li>사업프로그램 계획 시 수입에 포함되는 항목: 예상 수입, 창업 대출금, 환자로부터 받는 진료비, 국민건강보험·장기요양보험 환급금.</li>
+    <li>환자 교육 향상을 위한 지속적 노력 직무 → <mark>질향상 역할</mark>을 요구하는 것.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d13">
+  <h3><span class="num">13</span> 환자교육·학습목표</h3>
+  <div class="field"><div class="label">학습목표</div><div class="body"><p>환자 교육 계획 시 학습목표는 환자의 <mark>배울 행동(학습 후 행동)</mark>을 기술해야 한다.</p><p>학습목표 영역: 인지적 영역, 정의적 영역, 심리운동적 영역. 정의적 영역은 학습자의 <mark>태도·감정·느낌</mark> 등과 관련된 부분이다.</p></div></div>
+  <div class="field"><div class="label">학습목표의 조건</div><div class="body"><p>논리적으로 기술, 실현가능성·측정가능성이 있는 목표 설정, 학습자·교육자 모두 명확히 이해하고 이에 기준하여 교수–학습이 일어날 수 있도록 명확하게 설정.</p></div></div>
+  <div class="field"><div class="label">성인학습이론</div><div class="body"><p>전문간호사는 환자·가족의 건강교육 계획·수행 시 성인학습이론을 적용한다. 성인학습은 생애 전반의 경험을 지식·태도·가치·정서와 함께 행동변화로 전환시키는 활동으로, <mark>자기주도학습</mark> 등을 통해 학습자 스스로 학습할 동기와 역량을 키워주는 것이 중요하다.</p></div></div>
+  <div class="field"><div class="label">보건교육·요구사정</div><div class="body"><ul>
+    <li>보건교육: 지식 전달에 그치지 않고, 건강은 자기 스스로 지켜야 한다는 긍정적 태도를 가지고 올바른 행동을 일상생활에서 <mark>습관화</mark>하도록 돕는 교육과정.</li>
+    <li>보건교육 계획 시 가장 먼저 할 일: <mark>환자의 요구도 확인</mark>.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d14">
+  <h3><span class="num">14</span> 교육방법(e-learning·m-learning 등)</h3>
+  <div class="field"><div class="label">컴퓨터 보조학습(CAI)</div><div class="body"><p>컴퓨터를 활용하여 실제 수업과 유사한 과정을 제공하는 교육방법. 학습자 개개인에 맞는 수준·속도로 학습 기회 제공. 학습자와 컴퓨터가 상호작용하며 교사는 학습의 보조자·조력자 역할.</p></div></div>
+  <table class="cmp"><caption>e-learning vs m-learning</caption>
+    <thead><tr><th></th><th>e-learning(이러닝)</th><th>m-learning(엠러닝)</th></tr></thead>
+    <tbody>
+      <tr><th>매체</th><td>웹 기술과 인터넷을 이용. 부호데이터·정지영상·동영상·음악·음성 등 여러 형식의 데이터를 통합 제공.</td><td>휴대용 컴퓨터·휴대폰 같은 모바일 기기를 활용한 교육방법.</td></tr>
+      <tr><th>공통 장점</th><td colspan="2">시간·장소에 구애받지 않고 개별학습이 가능하다.</td></tr>
+    </tbody>
+  </table>
+  <div class="field"><div class="label">역할극</div><div class="body"><p>환자·보호자 간 가족 내 의사소통 문제와 갈등이 클 때 가장 적합한 교육전략. 상대방의 입장을 이해하고 효율적 의사소통·문제해결 방식을 학습할 수 있다.</p></div></div>
+  <div class="field"><div class="label">교육방법 선정 영향 요소</div><div class="body"><p>교육일자, 교육대상자 수, 학습목표의 난이도, 교육 장소·시설, 교육참여자들의 교육수준. 이 중 <mark>가장 영향력이 적은 요소는 교육일자</mark>.</p></div></div>
+</section>
+
+<section class="card" id="d15">
+  <h3><span class="num">15</span> 교육평가</h3>
+  <table class="cmp"><caption>교육평가 방법</caption>
+    <thead><tr><th>평가</th><th>시점·목적</th></tr></thead>
+    <tbody>
+      <tr><th>진단평가</th><td>교육 시작 전, 학습자의 <mark>준비도</mark>를 알아보기 위한 평가.</td></tr>
+      <tr><th>형성평가</th><td>학습 중간에 학습 효과 파악 또는 <mark>피드백</mark>을 위해 수행.</td></tr>
+      <tr><th>총괄평가</th><td>과정·프로그램 완료 후 <mark>학습성과</mark>를 평가.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card" id="d16">
+  <h3><span class="num">16</span> 건강행동 이론</h3>
+  <div class="field"><div class="label">범이론적 모형</div><div class="body"><p>개인이 어떻게 건강행동을 시작하고 유지하는가에 대한 행동변화의 원칙·과정을 설명하는 통합적 모형. 단계: <mark>계획이전단계 → 계획단계 → 준비단계 → 행동단계 → 유지단계</mark>.</p></div></div>
+  <div class="field"><div class="label">건강신념모델</div><div class="body"><p>건강행위를 수행할 준비에 관한 예측이론으로 많이 사용. 질병의 <mark>민감성·심각성·위협성</mark>에 대한 개인의 신념뿐 아니라, 건강관리 행위에 대한 <mark>유익성·장애성</mark>에 대한 신념에 근거한다. 건강동기와 자기효능감은 건강행위 실천을 높이는 개념으로 중요도가 높다.</p></div></div>
+</section>
+
+<section class="card" id="d17">
+  <h3><span class="num">17</span> 프리셉터·간호이론·간호연구</h3>
+  <div class="field"><div class="label">프리셉터</div><div class="body"><p>경험 있는 실무자와 초보자가 일대일·단기간 계약하는 <mark>공식적 관계</mark>. 전문간호사는 프리셉터 프로그램을 기획하고, 프리셉터로서 기능도 하며, 프리셉터 선발·훈련·평가 과정에 참여한다.</p></div></div>
+  <div class="field"><div class="label">간호이론</div><div class="body"><ul>
+    <li>적응이론</li>
+    <li>뉴먼의 체계모형(저항선, 정상방어선, 유연방어선 등)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">간호연구</div><div class="body"><ul>
+    <li>표본추출(샘플링) 방법</li>
+    <li>통계방법</li>
+    <li>간호연구 오류(2번째 측정 시 점수가 상승되는 것과 관련된 오류)</li>
+  </ul></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

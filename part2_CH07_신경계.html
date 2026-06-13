@@ -1,0 +1,2606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 신경계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 신경계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">신경계 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 신경계 (CHAPTER 7).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q01">문 01</a></li>
+  <li><a href="#q02">문 02</a></li>
+  <li><a href="#q03">문 03</a></li>
+  <li><a href="#q04">문 04</a></li>
+  <li><a href="#q05">문 05</a></li>
+  <li><a href="#q06">문 06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13">문 13</a></li>
+  <li><a href="#q14">문 14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19">문 19</a></li>
+  <li><a href="#q20">문 20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+  <li><a href="#q34">문 34</a></li>
+  <li><a href="#q35">문 35</a></li>
+  <li><a href="#q36">문 36</a></li>
+  <li><a href="#q37">문 37</a></li>
+  <li><a href="#q38">문 38</a></li>
+  <li><a href="#q39">문 39</a></li>
+  <li><a href="#q40">문 40</a></li>
+  <li><a href="#q41">문 41</a></li>
+  <li><a href="#q42">문 42</a></li>
+  <li><a href="#q43">문 43</a></li>
+  <li><a href="#q44">문 44</a></li>
+  <li><a href="#q45">문 45</a></li>
+  <li><a href="#q46">문 46</a></li>
+  <li><a href="#q47">문 47</a></li>
+  <li><a href="#q48">문 48</a></li>
+  <li><a href="#q49">문 49</a></li>
+  <li><a href="#q50">문 50</a></li>
+  <li><a href="#q51">문 51</a></li>
+  <li><a href="#q52">문 52</a></li>
+  <li><a href="#q53">문 53</a></li>
+  <li><a href="#q54">문 54</a></li>
+  <li><a href="#q55">문 55</a></li>
+  <li><a href="#q56">문 56</a></li>
+  <li><a href="#q57">문 57</a></li>
+  <li><a href="#q58">문 58</a></li>
+  <li><a href="#q59">문 59</a></li>
+  <li><a href="#q60">문 60</a></li>
+  <li><a href="#q61-62">문 61–62</a></li>
+  <li><a href="#q63">문 63</a></li>
+  <li><a href="#q64">문 64</a></li>
+  <li><a href="#q65">문 65</a></li>
+  <li><a href="#q66">문 66</a></li>
+  <li><a href="#q67">문 67</a></li>
+  <li><a href="#q68">문 68</a></li>
+  <li><a href="#q69">문 69</a></li>
+  <li><a href="#q70">문 70</a></li>
+  <li><a href="#q71">문 71</a></li>
+  <li><a href="#q72">문 72</a></li>
+  <li><a href="#q73-77">문 73–77</a></li>
+  <li><a href="#q78">문 78</a></li>
+  <li><a href="#q79">문 79</a></li>
+  <li><a href="#q80">문 80</a></li>
+  <li><a href="#q81">문 81</a></li>
+  <li><a href="#q82">문 82</a></li>
+  <li><a href="#q83">문 83</a></li>
+  <li><a href="#q84">문 84</a></li>
+  <li><a href="#q85">문 85</a></li>
+  <li><a href="#q86">문 86</a></li>
+  <li><a href="#q87">문 87</a></li>
+  <li><a href="#q88">문 88</a></li>
+  <li><a href="#q89">문 89</a></li>
+  <li><a href="#q90">문 90</a></li>
+  <li><a href="#q91">문 91</a></li>
+  <li><a href="#q92">문 92</a></li>
+  <li><a href="#q93">문 93</a></li>
+  <li><a href="#q94">문 94</a></li>
+  <li><a href="#q95-96">문 95–96</a></li>
+  <li><a href="#q97">문 97</a></li>
+  <li><a href="#q98">문 98</a></li>
+  <li><a href="#q99-100">문 99–100</a></li>
+  <li><a href="#q101">문 101</a></li>
+  <li><a href="#q102">문 102</a></li>
+  <li><a href="#q103">문 103</a></li>
+  <li><a href="#q104">문 104</a></li>
+  <li><a href="#q105">문 105</a></li>
+  <li><a href="#q106">문 106</a></li>
+  <li><a href="#q107">문 107</a></li>
+  <li><a href="#q108">문 108</a></li>
+  <li><a href="#q109">문 109</a></li>
+  <li><a href="#q110">문 110</a></li>
+  <li><a href="#q111-112">문 111–112</a></li>
+  <li><a href="#q113">문 113</a></li>
+  <li><a href="#q114">문 114</a></li>
+  <li><a href="#q115">문 115</a></li>
+  <li><a href="#q116-117">문 116–117</a></li>
+  <li><a href="#q118">문 118</a></li>
+  <li><a href="#q119">문 119</a></li>
+  <li><a href="#q120-121">문 120–121</a></li>
+  <li><a href="#q122">문 122</a></li>
+  <li><a href="#q123">문 123</a></li>
+  <li><a href="#q124">문 124</a></li>
+  <li><a href="#q125-126">문 125–126</a></li>
+  <li><a href="#q127-128">문 127–128</a></li>
+  <li><a href="#q129-130">문 129–130</a></li>
+  <li><a href="#q131">문 131</a></li>
+  <li><a href="#q132">문 132</a></li>
+  <li><a href="#q133">문 133</a></li>
+  <li><a href="#q134-136">문 134–136</a></li>
+  <li><a href="#q137">문 137</a></li>
+  <li><a href="#q138">문 138</a></li>
+  <li><a href="#q139">문 139</a></li>
+  <li><a href="#q140">문 140</a></li>
+  <li><a href="#q141">문 141</a></li>
+  <li><a href="#q142">문 142</a></li>
+  <li><a href="#q143">문 143</a></li>
+  <li><a href="#q144">문 144</a></li>
+  <li><a href="#q145">문 145</a></li>
+  <li><a href="#q146">문 146</a></li>
+  <li><a href="#q147">문 147</a></li>
+  <li><a href="#q148">문 148</a></li>
+  <li><a href="#q149">문 149</a></li>
+  <li><a href="#q150">문 150</a></li>
+  <li><a href="#q151">문 151</a></li>
+  <li><a href="#q152">문 152</a></li>
+  <li><a href="#q153">문 153</a></li>
+  <li><a href="#q154">문 154</a></li>
+  <li><a href="#q155-156">문 155–156</a></li>
+  <li><a href="#q157">문 157</a></li>
+  <li><a href="#q158">문 158</a></li>
+  <li><a href="#q159">문 159</a></li>
+  <li><a href="#q160">문 160</a></li>
+  <li><a href="#q161">문 161</a></li>
+  <li><a href="#q162">문 162</a></li>
+  <li><a href="#q163">문 163</a></li>
+  <li><a href="#q164-167">문 164–167</a></li>
+  <li><a href="#q168">문 168</a></li>
+  <li><a href="#q169-172">문 169–172</a></li>
+  <li><a href="#q173">문 173</a></li>
+  <li><a href="#q174">문 174</a></li>
+  <li><a href="#q175">문 175</a></li>
+  <li><a href="#q176">문 176</a></li>
+  <li><a href="#q177-179">문 177–179</a></li>
+  <li><a href="#q180">문 180</a></li>
+  <li><a href="#q181">문 181</a></li>
+  <li><a href="#q182">문 182</a></li>
+  <li><a href="#q183">문 183</a></li>
+  <li><a href="#q184">문 184</a></li>
+  <li><a href="#q185">문 185</a></li>
+  <li><a href="#q186">문 186</a></li>
+  <li><a href="#q187">문 187</a></li>
+  <li><a href="#q188">문 188</a></li>
+  <li><a href="#q189">문 189</a></li>
+  <li><a href="#q190">문 190</a></li>
+  <li><a href="#q191">문 191</a></li>
+  <li><a href="#q192">문 192</a></li>
+  <li><a href="#q193">문 193</a></li>
+  <li><a href="#q194">문 194</a></li>
+  <li><a href="#q195">문 195</a></li>
+  <li><a href="#q196">문 196</a></li>
+  <li><a href="#q197">문 197</a></li>
+  <li><a href="#q198">문 198</a></li>
+  <li><a href="#q199">문 199</a></li>
+  <li><a href="#q200">문 200</a></li>
+</ul></nav>
+
+<section class="card" id="q01">
+  <h3><span class="num">문 01</span> <span class="en">요추천자 부위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>요추천자를 요추 3~4번째 척주 사이 공간에서 시행하는 이유는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>척추 사이의 간격이 가장 넓다</li>
+    <li>시술자가 접근하기에 용이하다</li>
+    <li>척수를 손상시킬 위험이 적다</li>
+    <li>통증이 가장 적은 부위이다</li>
+    <li>뇌척수액이 가장 많다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q02">
+  <h3><span class="num">문 02</span> <span class="en">실어증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌졸중 환자가 간호사의 말은 이해하지만 본인이 하고 싶은 말은 하지 못한다. 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>완전 실어증</li>
+    <li>유창 실어증</li>
+    <li>알츠하이머병</li>
+    <li>감각성 실어증</li>
+    <li>운동성 실어증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q03">
+  <h3><span class="num">문 03</span> <span class="en">일과성 허혈발작</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>67세 남자가 갑작스럽게 말이 어둔해지고 어지럽고 몸에 힘이 빠졌으나 3~4시간 후에 회복되었다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌경색</li>
+    <li>심인성 실신</li>
+    <li>출혈성 뇌졸중</li>
+    <li>혈관억제성 실신</li>
+    <li>일과성 허혈성 발작</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q04">
+  <h3><span class="num">문 04</span> <span class="en">극소동공(pinpoint pupil)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자에게 극소동공(pinpoint pupil)이 관찰된다면 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심정지</li>
+    <li>뇌교출혈</li>
+    <li>각성제 중독</li>
+    <li>동안신경마비</li>
+    <li>아트로핀 투약</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q05">
+  <h3><span class="num">문 05</span> <span class="en">조정기능 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신경계의 조정기능을 평가하는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>근력검사</li>
+    <li>소멸검사</li>
+    <li>발꿈치-무릎검사</li>
+    <li>회내근 처짐검사</li>
+    <li>바빈스키반사검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q06">
+  <h3><span class="num">문 06</span> <span class="en">간헐적 파행증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>척추관협착증 환자의 간헐적 파행증(intermittent claudication)의 특징은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>한쪽 다리만 아프다</li>
+    <li>통증이 갑자기 시작된다</li>
+    <li>족배동맥 박동이 감소한다</li>
+    <li>누운 상태에서 다리를 못 든다</li>
+    <li>걸음을 멈추면 증상이 사라진다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">GCS 점수</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고 후 환자가 통증자극을 줄 때만 눈을 뜨고 말은 못하지만 신음소리를 내고 지시를 따르지 못하면서 다만 통증자극을 줄 때 몸을 피하려고 한다. 이 환자의 글래스고 혼수척도(GCS) 점수는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>E3V4M5</li>
+    <li>E3V3M4</li>
+    <li>E2V2M5</li>
+    <li>E2V2M4</li>
+    <li>E3V2M3</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">파킨슨병 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파킨슨병의 증상에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>휴식 시 떨림이 완화된다</li>
+    <li>초기 증상은 하지에서 시작된다</li>
+    <li>수의적 움직임 시 진전이 약화된다</li>
+    <li>글씨 쓸 수 있지만 속도가 느려진다</li>
+    <li>주먹을 꼭 쥔 것 같은 손동작이 특징적이다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">중증근무력증·텐실론검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증근무력증 환자에게 진단 목적으로 텐실론(Tensilon)을 주사할 때 예상되는 반응은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈압이 하강한다</li>
+    <li>오심/구토가 심해진다</li>
+    <li>증상이 일시적으로 심해진다</li>
+    <li>30초 이내에 근력이 향상된다</li>
+    <li>구강이 건조해지고 통증이 초래된다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">길랑바레증후군 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>길랑바레(Guillain-Barre)증후군의 증상에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>하행성 운동마비</li>
+    <li>심부건반사 감소</li>
+    <li>비대칭성 근 약화</li>
+    <li>진전을 동반한 운동실조</li>
+    <li>근위축을 동반한 강직성 마비</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">경추수술 후 우선 사정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경추수술 후 환자에게 가장 우선적으로 사정해야 하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>운동마비</li>
+    <li>호흡장애</li>
+    <li>배뇨장애</li>
+    <li>욕창 발생</li>
+    <li>수술부위 감염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">유두부종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>유두부종(papilledema)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>망막동맥의 출혈이다</li>
+    <li>황반변성과 관련이 있다</li>
+    <li>주변시야에 문제가 생긴다</li>
+    <li>검안경으로 확인할 수 있다</li>
+    <li>시신경유두의 염증으로 인해 발생한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13">
+  <h3><span class="num">문 13</span> <span class="en">SIADH</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항이뇨호르몬부적절분비증후군(SIADH)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>탈수가 나타난다</li>
+    <li>고나트륨혈증이 발생한다</li>
+    <li>S-Osm가 320 이상으로 상승한다</li>
+    <li>항이뇨호르몬의 분비가 감소한다</li>
+    <li>권태감, 발작, 혼수가 발생할 수 있다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q14">
+  <h3><span class="num">문 14</span> <span class="en">중추성 요붕증/대뇌염분소모</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 외상성 뇌손상 진단을 받은 환자에게 탈수, 체중감소, 체위성 저혈압이 발생하였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>애디슨병</li>
+    <li>쿠싱증후군</li>
+    <li>중추성 요붕증</li>
+    <li>대뇌염분소모증후군</li>
+    <li>항이뇨호르몬부적절분비증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">척수쇼크 징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>척수쇼크의 징후에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈맥</li>
+    <li>혈압저하</li>
+    <li>반사소실</li>
+    <li>소변량 감소</li>
+    <li>피부온도 하강</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">두개저골절</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고 환자의 코에서 맑은 물이 흐르고 눈 주변에 반상출혈이 있을 때 의심할 수 있는 손상은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경막상혈종</li>
+    <li>경막하혈종</li>
+    <li>두개저골절</li>
+    <li>지주막하출혈</li>
+    <li>두개함몰골절</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">척수손상 증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 허리를 다친 환자의 신경계검진 결과 손상부위 이하로 동측의 운동과 촉각 그리고 반대측의 통증감각과 온도감각이 저하되어 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>척수쇼크</li>
+    <li>전척수증후군</li>
+    <li>중심척수증후군</li>
+    <li>측방척수증후군</li>
+    <li>후방척수증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">Cincinnati Prehospital Stroke Scale</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성뇌졸중 환자의 병원 전단계에서 사용되는 Cincinnati Prehospital Stroke Scale 항목에 포함되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>두통</li>
+    <li>구토</li>
+    <li>감각</li>
+    <li>언어</li>
+    <li>의식</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19">
+  <h3><span class="num">문 19</span> <span class="en">뇌졸중 초기 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌졸중 의심 환자의 초기 치료 결정에 가장 큰 영향을 주는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌컴퓨터단층촬영</li>
+    <li>뇌자기공명영상</li>
+    <li>뇌혈관조영술</li>
+    <li>요추천자</li>
+    <li>심전도</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q20">
+  <h3><span class="num">문 20</span> <span class="en">뇌척수액검사 해석</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중추신경계 감염이 의심되는 환자의 뇌척수액검사 결과가 다음과 같을 때 가장 가능성이 높은 원인은?</p>
+  <p>WBC 700/mm³, Protein 200 mg/dL, Glucose 30 mg/dL</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>세균</li>
+    <li>진균</li>
+    <li>정상</li>
+    <li>결핵균</li>
+    <li>바이러스</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p115.png" alt="문항 원문/검사 결과 표" loading="lazy"><figcaption>p.115 원문(검사 결과 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">양측 동공확장</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>응급실로 이송된 환자의 양쪽 동공이 확장되어 있고 빛 반사가 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>항우울제 중독</li>
+    <li>중뇌의 병변</li>
+    <li>코카인 복용</li>
+    <li>심장마비</li>
+    <li>뇌탈출</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">두개내압 상승 징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승의 징후에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>확장기혈압 상승</li>
+    <li>유두부종</li>
+    <li>맥압 저하</li>
+    <li>저체온</li>
+    <li>빈맥</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">삼차신경통</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>주로 볼, 턱, 입술 부위에 타는 듯한 느낌이 특징적인 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>지주막하출혈</li>
+    <li>삼차신경통</li>
+    <li>측두동맥염</li>
+    <li>군집두통</li>
+    <li>편두통</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">뇌척수액검사 후 추가검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두통, 발열, 목의 경직을 호소하는 환자의 뇌척수액검사 결과 외양이 투명하고 압력은 약간 상승하였으며, 포도당과 단백질은 정상이다. 이 환자의 진단을 위해 가장 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌파검사</li>
+    <li>소변배양검사</li>
+    <li>머리방사선촬영</li>
+    <li>뇌컴퓨터단층촬영</li>
+    <li>중합효소연쇄반응검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">바이러스 수막염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>바이러스 수막염의 징후에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>편마비</li>
+    <li>목 경직</li>
+    <li>혈압 상승</li>
+    <li>시야결손</li>
+    <li>안구진탕</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">NIH Stroke Scale</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>미국국립보건원 뇌졸중 척도(NIH Stroke Scale)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>정상인의 표준점수와 비교한다</li>
+    <li>점수가 높을수록 중증이다</li>
+    <li>3개 항목으로 구성된다</li>
+    <li>혈액검사가 포함된다</li>
+    <li>3-5분 정도 소요된다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">만성 수두증 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>성인에게 발생하는 만성 수두증의 주요 증상에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>실신</li>
+    <li>구토</li>
+    <li>허약</li>
+    <li>감각장애</li>
+    <li>보행장애</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">SIADH 특성</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항이뇨호르몬부적절분비증후군(SIADH)의 특성으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소변량 증가</li>
+    <li>체액량 감소</li>
+    <li>혈청나트륨 감소</li>
+    <li>혈청삼투질농도 증가</li>
+    <li>소변삼투질농도 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">와파린 모니터링</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>허혈성 뇌졸중 치료 후 퇴원약에 와파린(warfarin)이 포함된 환자에게 주기적으로 체크해야 하는 혈액검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>INR</li>
+    <li>aPTT</li>
+    <li>Bleeding time</li>
+    <li>혈중칼륨농도</li>
+    <li>혈중와파린농도</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">의식명료기간·경막외혈종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>의식명료기간(lucid interval)을 동반하는 두부손상은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>지주막하출혈</li>
+    <li>경막외혈종</li>
+    <li>기저골절</li>
+    <li>뇌진탕</li>
+    <li>뇌좌상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">중증근무력증 진단약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>복시, 안검하수, 근력 약화를 호소하는 40대 여자의 진단을 위하여 주사할 수 있는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>텐실론</li>
+    <li>도파민</li>
+    <li>피리독신</li>
+    <li>스테로이드</li>
+    <li>아드레날린</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">파킨슨병 징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파킨슨병 환자의 징후에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>근긴장이 저하된다</li>
+    <li>고혈압을 동반한다</li>
+    <li>원발성 떨림이 있다</li>
+    <li>운동마비가 발생한다</li>
+    <li>사지와 관절이 뻣뻣하다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">L4-5 추간판탈출증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>L4-5 추간판 탈출증 환자의 임상증상에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>하지로 방사되는 통증</li>
+    <li>무릎 굴곡 시 목 통증</li>
+    <li>늑골 하부의 통증</li>
+    <li>손과 팔의 저림</li>
+    <li>호흡곤란</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q34">
+  <h3><span class="num">문 34</span> <span class="en">뇌하수체선종 절제술 후 요붕증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌하수체선종 절제술 후 환자에게 요붕증이 발생하였다. 이 환자의 상황에 대한 적절한 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈압이 상승한다</li>
+    <li>소변량이 감소한다</li>
+    <li>수분중독의 위험이 있다</li>
+    <li>저나트륨혈증이 예상된다</li>
+    <li>혈중 항이뇨호르몬 농도가 낮다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q35">
+  <h3><span class="num">문 35</span> <span class="en">뇌농양 진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌농양의 주 진단방법은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌컴퓨터단층촬영</li>
+    <li>경두개초음파</li>
+    <li>뇌동맥조영술</li>
+    <li>뇌조직검사</li>
+    <li>요추천자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q36">
+  <h3><span class="num">문 36</span> <span class="en">병적 반사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 건강한 성인에게는 나타나지 않는 병적 반사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>바빈스키반사</li>
+    <li>심부건반사</li>
+    <li>각막반사</li>
+    <li>복부반사</li>
+    <li>구역반사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q37">
+  <h3><span class="num">문 37</span> <span class="en">NIH Stroke Scale 항목</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>미국국립보건원 뇌졸중 척도(NIH Stroke Scale)의 검사 항목에 포함되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>각막반사</li>
+    <li>시야검사</li>
+    <li>심부건반사</li>
+    <li>안구전정검사</li>
+    <li>동공의 빛반사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q38">
+  <h3><span class="num">문 38</span> <span class="en">경막하혈종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경막하혈종(subdural hematoma)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>초승달 모양이다</li>
+    <li>주원인은 고혈압이다</li>
+    <li>혈관조영술로 진단한다</li>
+    <li>주 손상혈관은 중경막동맥이다</li>
+    <li>두개골과 경막 사이에 혈종이 발생한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q39">
+  <h3><span class="num">문 39</span> <span class="en">중증근무력증 악화</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증근무력증 환자의 근허약이 심해지고 동공이 축소되고 서맥이 있을 때 확인해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복용 약의 용량</li>
+    <li>뇌졸중의 증상</li>
+    <li>흉선의 크기</li>
+    <li>영양부족</li>
+    <li>임신</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q40">
+  <h3><span class="num">문 40</span> <span class="en">편두통</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>편두통에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>이차성이다</li>
+    <li>전조를 동반한다</li>
+    <li>머리의 뒤편에 주로 발생한다</li>
+    <li>눈물과 콧물을 흔히 동반한다</li>
+    <li>지속적인 근육긴장에 의해 유발된다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q41">
+  <h3><span class="num">문 41</span> <span class="en">일과성 허혈발작</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>갑작스럽게 어지럼증, 구음장애, 근육약화가 발생하여 응급실을 방문하였으나 증상들이 사라지고 영상검사 결과도 음성이었다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌색전증</li>
+    <li>뇌내출혈</li>
+    <li>메니에르병</li>
+    <li>동정맥기형</li>
+    <li>일과성 허혈발작</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q42">
+  <h3><span class="num">문 42</span> <span class="en">지주막하출혈 원인 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하 출혈의 원인을 파악하기 위하여 반드시 실시해야 하는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>요추천자</li>
+    <li>경두개초음파</li>
+    <li>뇌혈관조영술</li>
+    <li>뇌자기공명영상</li>
+    <li>뇌컴퓨터단층촬영</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q43">
+  <h3><span class="num">문 43</span> <span class="en">뇌혈관연축 조기발견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈 환자의 뇌혈관연축 조기발견을 위하여 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>요추천자</li>
+    <li>경두개초음파</li>
+    <li>뇌혈관조영술</li>
+    <li>뇌자기공명영상</li>
+    <li>뇌컴퓨터단층촬영</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q44">
+  <h3><span class="num">문 44</span> <span class="en">다발성 경화증 진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다발성 경화증 환자의 진단을 위하여 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>근전도</li>
+    <li>뇌전도</li>
+    <li>척수천자</li>
+    <li>뇌자기공명영상</li>
+    <li>뇌컴퓨터단층촬영</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q45">
+  <h3><span class="num">문 45</span> <span class="en">루게릭병(ALS)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>루게릭병에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>하체부터 증상이 시작된다</li>
+    <li>혈중 CK 농도로 확진한다</li>
+    <li>호흡기감염 후 발생한다</li>
+    <li>인지기능은 보존된다</li>
+    <li>건반사가 항진된다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q46">
+  <h3><span class="num">문 46</span> <span class="en">뇌농양 증상·징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌농양의 증상 및 징후로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>국소 신경학적 장애가 나타난다</li>
+    <li>의식수준에는 영향을 주지 않는다</li>
+    <li>뇌척수액 천자 시 압력이 감소한다</li>
+    <li>질병이 진행되면 오한과 발열이 나타난다</li>
+    <li>전두엽 농양인 경우 안구진탕이 발생한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q47">
+  <h3><span class="num">문 47</span> <span class="en">광범위 축삭손상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두부외상 후 뇌컴퓨터촬영 상 국소 병소가 없으나 임상적으로 혼수상태가 6시간 이상 지속되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌수막염</li>
+    <li>척수쇼크</li>
+    <li>경막외혈종</li>
+    <li>경막하혈종</li>
+    <li>광범위축삭손상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q48">
+  <h3><span class="num">문 48</span> <span class="en">눈머리반사검사 금기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>눈머리반사검사(oculocephalic reflex test)를 할 수 없는 환자는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>무의식 환자</li>
+    <li>뇌출혈 환자</li>
+    <li>경추손상 환자</li>
+    <li>교통사고 환자</li>
+    <li>뇌간손상이 의심되는 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q49">
+  <h3><span class="num">문 49</span> <span class="en">그림 검사 양성</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 그림과 같은 검사 결과가 양성일 때 의심할 수 있는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>봉와직염</li>
+    <li>대퇴탈구</li>
+    <li>골관절염</li>
+    <li>추간판탈출증</li>
+    <li>심부정맥혈전증</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p121.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.121 원문(그림 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q50">
+  <h3><span class="num">문 50</span> <span class="en">뇌신경 기능검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 측두근과 저작근을 교대로 촉진하면서 이를 꽉 깨물도록 하여 근수축의 강도를 확인하는 것은 어느 뇌신경의 기능을 검사하기 위함인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>제1뇌신경</li>
+    <li>제3뇌신경</li>
+    <li>제5뇌신경</li>
+    <li>제7뇌신경</li>
+    <li>제9뇌신경</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q51">
+  <h3><span class="num">문 51</span> <span class="en">급성 뇌졸중 초기 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>55세 남자가 2시간 전에 갑자기 발생한 좌측 반신마비와 안면마비를 호소하여 응급실에 도착하였다. 내원 당시 혈압은 190/110 mmHg이다. 이 환자에게 가장 먼저 시행해야 할 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌 CT</li>
+    <li>뇌 MRI</li>
+    <li>뇌파검사</li>
+    <li>뇌혈류검사</li>
+    <li>뇌혈관조영술</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q52">
+  <h3><span class="num">문 52</span> <span class="en">출혈성 뇌졸중 특징</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌졸중 증상 중 출혈성 뇌졸중에서 두드러지게 나타나는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>편마비</li>
+    <li>수면 중 발생</li>
+    <li>발병 시 심한 두통</li>
+    <li>일과성 허혈증이 선행함</li>
+    <li>의식 장애보다 신경학적 장애가 많음</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q53">
+  <h3><span class="num">문 53</span> <span class="en">급성 뇌경색 치료</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 고혈압, 당뇨병이 있는 62세 남자가 갑자기 우측 상지 마비와 실어증 발생으로 인해 20분 만에 응급실에 도착하였다. 환자의 의식은 명료하고 뇌 CT 상 출혈 소견은 없고 혈액응고검사 결과는 정상이다. 이 환자에게 가장 적절한 치료 방법은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>스텐트 삽입술</li>
+    <li>경동맥내막절제술</li>
+    <li>정맥내 혈전용해제 투여</li>
+    <li>혈관확장제 투여</li>
+    <li>코일색전술</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q54">
+  <h3><span class="num">문 54</span> <span class="en">정맥내 혈전용해술 적응증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌 CT 상 출혈 흔적이 없는 급성기 뇌경색으로 진단되어 정맥내 혈전용해술을 시행하고자 한다. 다음 중 정맥내 혈전용해술이 가능한 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈당 45 mg/dL</li>
+    <li>혈소판 수치 90,000 /mm³</li>
+    <li>수축기 혈압 200 mmHg</li>
+    <li>2개월 전 심근경색 발생 병력</li>
+    <li>경구항응고제 복용 중이며 현재 INR 1.5</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q55">
+  <h3><span class="num">문 55</span> <span class="en">정맥 내 혈전용해술 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 뇌경색으로 정맥 내 혈전용해술 치료를 받는 환자에게 적절한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>몸무게 Kg당 0.9 mg을 계산한 용량의 50%는 5분 동안 일시주입하고, 나머지는 60분간 주입한다</li>
+    <li>혈전용해제 투여 후 6시간 동안은 1시간마다 신경학적 평가를 시행한다</li>
+    <li>혈전용해제 투여 후 첫 2시간 동안 15분마다 혈압을 측정한다</li>
+    <li>정맥 내 혈전용해제 투여는 일반 병실에서 시행 후 모니터한다</li>
+    <li>수축기 혈압이 160 mmHg 이상이면 labetalol 10 mg을 정맥투여 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q56">
+  <h3><span class="num">문 56</span> <span class="en">항혈소판제 기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌경색의 재발 가능성을 낮추기 위한 약물 중 기전이 다른 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Aspirin</li>
+    <li>Cilostazol</li>
+    <li>Clopidogrel</li>
+    <li>Ticlopidine</li>
+    <li>Warfarin</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q57">
+  <h3><span class="num">문 57</span> <span class="en">심방세동·뇌졸중 예방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심방세동 환자의 뇌졸중 발생 예방을 위해 사용하는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Aspirin</li>
+    <li>Warfarin</li>
+    <li>Cilostazol</li>
+    <li>Ticlopidine</li>
+    <li>Clopidogrel</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q58">
+  <h3><span class="num">문 58</span> <span class="en">손상 혈관 추정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 고혈압, 당뇨병이 있는 62세 남자가 갑자기 우측 상지마비와 실어증이 발생하여 20분 만에 응급실에 도착하였다. 환자의 증상을 바탕으로 손상된 혈관을 추정한다면?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>우측 전대뇌동맥</li>
+    <li>우측 중대뇌동맥</li>
+    <li>좌측 전대뇌동맥</li>
+    <li>좌측 중대뇌동맥</li>
+    <li>기저동맥</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q59">
+  <h3><span class="num">문 59</span> <span class="en">손상 혈관 추정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심방세동 부정맥이 있는 50세 남자가 갑작스런 좌측 다리 마비와 감각장애를 호소하여 응급실을 방문하였다. 손상이 의심되는 뇌혈관은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>우측 전대뇌동맥</li>
+    <li>우측 중대뇌동맥</li>
+    <li>좌측 전대뇌동맥</li>
+    <li>좌측 중대뇌동맥</li>
+    <li>기저동맥</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q60">
+  <h3><span class="num">문 60</span> <span class="en">연하장애 환자 식이</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>연하기능이 저하된 뇌졸중 환자의 음식 섭취 방법으로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>물과 함께 삼킨다</li>
+    <li>고개를 들어서 삼킨다</li>
+    <li>음식의 점도를 높여준다</li>
+    <li>숨을 내쉬면서 음식을 삼킨다</li>
+    <li>TV를 보는 등 주의를 분산시키면 쉽게 삼길 수 있다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q61-62">
+  <h3><span class="num">문 61–62</span> <span class="en">지주막하출혈(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>택배직원이 오전 10시쯤 무거운 상자를 옮기던 중 망치로 머리를 내리치는 것 같은 극심한 두통을 호소하다가 의식을 잃었다. 응급실 도착 당시 환자는 눈을 감고 있었고 흔들어 깨우니 묻는 말에 적절히 대답을 했다. 신체검진 시 목 경직이 보이고 우측 안검 하수와 동공이 확장되어 있다.</p></div></div>
+  <div class="field"><div class="label">문 61</div><div class="body"><p>이 환자에게 의심되는 상태는?</p><ol>
+    <li>뇌수막염</li>
+    <li>뇌경색</li>
+    <li>뇌출혈</li>
+    <li>안면마비</li>
+    <li>중증근무력증</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 62</div><div class="body"><p>이 환자는 뇌 CT 상 뇌동맥류 파열로 인한 지주막하출혈로 진단되어 병실로 이송되었다. 입원 당일 밤 극심한 두통과 구토를 호소하여 의식이 저하되어 반응이 없다. 이 환자에게 의심되는 상태는?</p><ol>
+    <li>발작</li>
+    <li>재출혈</li>
+    <li>수두증</li>
+    <li>뇌수막염</li>
+    <li>뇌혈관연축</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q63">
+  <h3><span class="num">문 63</span> <span class="en">SAH 10일째</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈 환자가 입원 10일째에 갑자기 말이 어둔해지고 불안정한 모습을 보이며 반응이 떨어진다. 가장 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>발작</li>
+    <li>재출혈</li>
+    <li>수두증</li>
+    <li>뇌수막염</li>
+    <li>뇌혈관연축</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q64">
+  <h3><span class="num">문 64</span> <span class="en">뇌혈관연축 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈 환자의 뇌혈관 연축이 의심될 때 시행하는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌 CT</li>
+    <li>뇌 MRI</li>
+    <li>뇌파검사</li>
+    <li>경두개초음파</li>
+    <li>뇌혈관조영술</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q65">
+  <h3><span class="num">문 65</span> <span class="en">결찰술 후 연축</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌동맥류 결찰술 후 10일째인 환자의 말이 어눌하고 정맥주사 바늘을 빼려고 하여 불안정한 모습을 보인다. 뇌 CT 상 이상소견은 없고 경두개초음파 검사 결과 중대뇌동맥의 평균 혈류속도가 240 cm/sec이다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>발작</li>
+    <li>재출혈</li>
+    <li>수두증</li>
+    <li>뇌수막염</li>
+    <li>뇌혈관연축</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q66">
+  <h3><span class="num">문 66</span> <span class="en">SAH 후 수두증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈로 수술과 치료를 마치고 퇴원한 환자가 3개월 만에 보행장애와 소변을 지리는 증상으로 다시 내원하였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>발작</li>
+    <li>재출혈</li>
+    <li>수두증</li>
+    <li>뇌수막염</li>
+    <li>뇌혈관연축</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q67">
+  <h3><span class="num">문 67</span> <span class="en">뇌혈관연축 예방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈 환자의 뇌혈관연축을 예방하기 위한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>예방적 항생제 투여</li>
+    <li>스테로이드제제 투여</li>
+    <li>칼슘통로차단제 투여</li>
+    <li>중심정맥압 5 mmHg 미만 유지</li>
+    <li>수축기혈압 150 mmHg 이하로 유지</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q68">
+  <h3><span class="num">문 68</span> <span class="en">모야모야병</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>7세 아동이 뜨거운 라면을 먹다가 갑자기 의식을 잃은 후 일시적으로 마비 증상을 보였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌염</li>
+    <li>뇌경색</li>
+    <li>동정맥기형</li>
+    <li>모야모야병</li>
+    <li>경동맥해면정맥동루</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q69">
+  <h3><span class="num">문 69</span> <span class="en">EDAS 적응 질환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>혈액순환 개선을 위해 뇌경막동맥 간접문합술(encephaloduroarteriosynangiosis; EDAS)이 필요한 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌경색</li>
+    <li>동정맥기형</li>
+    <li>모야모야병</li>
+    <li>해면혈관종</li>
+    <li>경동맥해면정맥동루</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q70">
+  <h3><span class="num">문 70</span> <span class="en">기저골 골절</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 입원한 환자의 안와 주변에 반상출혈이 관찰되고, 이루와 비루가 있을 때 의심할 수 있는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수두증</li>
+    <li>경막하혈종</li>
+    <li>경막외혈종</li>
+    <li>기저골 골절</li>
+    <li>지주막하출혈</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q71">
+  <h3><span class="num">문 71</span> <span class="en">뇌척수액 누출 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 입원한 환자의 코에서 연한 붉은색의 액체가 흘러나와 포도당을 측정한 결과 70 mg/dL이었고 말초 혈당은 120 mg/dL이다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>조기 이상을 격려한다</li>
+    <li>머리를 하지보다 낮게 유지한다</li>
+    <li>침상에서 절대안정을 취하게 한다</li>
+    <li>코에 거즈를 단단하게 넣어 막아준다</li>
+    <li>코를 풀어 이물질을 제거하도록 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q72">
+  <h3><span class="num">문 72</span> <span class="en">만성 경막하혈종</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>70세 환자가 2주 전부터 시작된 두통과 어지럼증이 더 심해진다고 하면서 의식수준이 점차 떨어져서 내원하였다. 이 환자는 수년 전 고혈압과 심방세동 부정맥을 진단받고 항고혈압제와 와파린을 복용하고 있었다. 한 달 전 빙판길에서 넘어진 적이 있으나 당시 큰 이상이 없어 병원에 내원하지는 않았다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경막외혈종</li>
+    <li>경막하혈종</li>
+    <li>두개저 골절</li>
+    <li>지주막하출혈</li>
+    <li>미만성 축삭손상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q73-77">
+  <h3><span class="num">문 73–77</span> <span class="en">경수손상(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>50세 남자가 지붕을 수리하던 중 발을 헛디뎌 흙바닥으로 떨어지면서 머리를 찧었고, 119 구급차로 병원에 호송되었다. 신체검진 시 의식은 명료하였으나 삼두근건반사(triceps deep tendon reflex)가 항진되어 있고 손가락을 구부렸다 펴는 데 어려움이 있다.</p></div></div>
+  <div class="field"><div class="label">문 73</div><div class="body"><p>이 환자에게 손상이 의심되는 부위는?</p><ol>
+    <li>C1-2</li>
+    <li>C3-4</li>
+    <li>C5-6</li>
+    <li>C7-8</li>
+    <li>T2-3</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 74</div><div class="body"><p>이 환자의 척수손상 기전으로 예측되는 것은?</p><ol>
+    <li>과굴곡손상</li>
+    <li>과신전손상</li>
+    <li>압박손상</li>
+    <li>회전손상</li>
+    <li>관통손상</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 75</div><div class="body"><p>이 환자에게 우선적으로 시행해야 할 검사는?</p><ol>
+    <li>척추 CT</li>
+    <li>척추 MRI</li>
+    <li>근전도검사</li>
+    <li>척추 X-ray</li>
+    <li>척추관조영술</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 76</div><div class="body"><p>병원 도착 두 시간 후에 측정한 환자의 혈압은 60/40 mmHg, 맥박은 40회/분이다. 피부는 건조하고 따뜻하다. 이 환자에게 의심되는 상태는?</p><ol>
+    <li>척수공동증</li>
+    <li>출혈성 쇼크</li>
+    <li>신경성 쇼크</li>
+    <li>심부정맥혈전증</li>
+    <li>자율신경반사 항진</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 77</div><div class="body"><p>이 환자에게 가장 적절한 중재는?</p><ol>
+    <li>심폐소생술</li>
+    <li>도뇨관 삽입</li>
+    <li>심장율동전환</li>
+    <li>충분한 수액 정주</li>
+    <li>트렌델렌버그 자세</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q78">
+  <h3><span class="num">문 78</span> <span class="en">자율신경반사 항진</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>흉수 1번 손상이 있는 환자가 안면홍조와 함께 심한 두통을 호소한다. 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>만니톨을 즉시 투여한다</li>
+    <li>마약성 진통제를 투여한다</li>
+    <li>스테로이드 제제를 투여한다</li>
+    <li>침상 머리를 평평하게 내려준다</li>
+    <li>방광과 직장의 팽만 여부를 확인한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q79">
+  <h3><span class="num">문 79</span> <span class="en">Gardner-Wells 견인 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경추손상으로 인하여 Gardner-Wells 견인 치료를 받는 환자 간호로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>견인 중에는 금식을 유지한다</li>
+    <li>견인 중에는 과호흡을 피한다</li>
+    <li>8시간마다 10분씩 견인을 풀어준다</li>
+    <li>신체선열을 위해 트렌델렌버그 자세를 취한다</li>
+    <li>추의 무게를 올리기 전에 사지의 운동 및 감각 상태를 사정한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q80">
+  <h3><span class="num">문 80</span> <span class="en">수막염 우선 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 건강하던 20세 환자가 3일 전부터 발열과 두통을 호소하다가 발작을 한 후 의식 수준이 저하되어 응급실에 호송되었다. 신체검진 시 목의 경직과 유두부종이 있었다면 가장 우선적으로 시행해야 하는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>척수천자</li>
+    <li>경두개초음파</li>
+    <li>단순 두부촬영</li>
+    <li>뇌 자기공명영상</li>
+    <li>뇌 전산화단층촬영</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q81">
+  <h3><span class="num">문 81</span> <span class="en">수막구균 수막염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>22세 대학생이 피로감, 두통, 고열을 호소하여 내원하였다. 신체검진 상 경부경직과 다리의 점상출혈이 있었고 뇌척수액 검사에서 그람음성균이 나왔다. 가장 가능성이 높은 원인균은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Neisseria meningitidis</li>
+    <li>Listeria monocytogenes</li>
+    <li>Pseudomonas aeruginosa</li>
+    <li>Cryptococcus neoformans</li>
+    <li>Mycobacterium pneumonia</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q82">
+  <h3><span class="num">문 82</span> <span class="en">수막구균성 수막염 CSF</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수막구균성 수막염이 의심되는 환자의 뇌척수액 검사 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>단백질 증가</li>
+    <li>포도당 증가</li>
+    <li>AFB 검사 양성</li>
+    <li>그람염색 음성반응</li>
+    <li>뇌척수액 압력 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q83">
+  <h3><span class="num">문 83</span> <span class="en">헤르페스 뇌염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수일간 발열이 지속되다 발작, 섬망, 의식저하를 주호소로 응급실에 내원한 환자의 뇌 자기공명영상 결과 양쪽 측두엽에 음영이 증가되어 있다. 이 환자에게 경험적으로 적용해야 할 약제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Acyclovir</li>
+    <li>Ampicillin</li>
+    <li>Cefotaxim</li>
+    <li>Praziquantel</li>
+    <li>Streptomycin</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p128.png" alt="문항 원문/MRI 의존" loading="lazy"><figcaption>p.128 원문(MRI 소견 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q84">
+  <h3><span class="num">문 84</span> <span class="en">간질지속증 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>전신 강직-간대성 발작으로 응급실로 이송된 환자의 의식이 회복되지 않은 상태에서 발작이 다시 시작될 때 우선적으로 제공할 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>활력징후를 측정한다</li>
+    <li>다치지 않게 억제대로 환자를 묶는다</li>
+    <li>혀를 깨물지 않도록 입에 설압자를 넣는다</li>
+    <li>정맥경로를 확보하고 valium 5 mg을 천천히 투여한다</li>
+    <li>의식 회복 유무를 확인하기 위해 강한 자극을 주어 환자를 깨운다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q85">
+  <h3><span class="num">문 85</span> <span class="en">복합부분발작</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고등학생이 선생님과 상담 중에 갑자기 순간적으로 메스꺼움을 느끼다가 기억이 없어진다고 한다. 선생님은 학생이 멍하게 반응이 없으면서 입맛을 다시고 손을 만지작거리는 행동을 1분 정도 반복하였다고 한다. 이 학생의 발작 유형은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소발작</li>
+    <li>근간대발작</li>
+    <li>무긴장발작</li>
+    <li>복합부분발작</li>
+    <li>강직간대발작</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q86">
+  <h3><span class="num">문 86</span> <span class="en">페니토인 투여 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>간질지속증 환자에게 페니토인(phenytoin) 1 g 정맥주입이 처방되었다. 약물 투여와 관련된 간호중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>포도당에 약물을 희석한다</li>
+    <li>분당 500 mg보다 빠른 속도로 주입한다</li>
+    <li>약을 주입하는 동안 심전도를 기록하여 환자의 심장을 감시한다</li>
+    <li>정맥 투여 직후 혈중 약물농도 검사를 시행한다</li>
+    <li>치료적 혈중 농도는 20~40 mcg/mL이다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q87">
+  <h3><span class="num">문 87</span> <span class="en">길랑바레증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>10일 전에 발열, 콧물, 기침 등으로 감기 치료를 받은 환자에게 3일 전부터는 오심, 구토, 식욕감퇴가 나타났다. 신체검진 상 양쪽 하지에서 시작된 쇠약은 점차 상지로 진행하고 있으며 심부건반사가 감소되어 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>길랑바레증후군</li>
+    <li>다발성경화증</li>
+    <li>중증근무력증</li>
+    <li>뇌수막염</li>
+    <li>뇌경색</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q88">
+  <h3><span class="num">문 88</span> <span class="en">길랑바레증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>23세 남자가 사지의 심각한 허약 등의 통증, 하지의 '바늘로 콕콕 찌르는 느낌'을 주호소로 응급실에 내원하였다. 2주 전 기관지염을 앓은 병력이 있고 신체검진 상 근육의 힘은 2-3/5점, 발한, 빈호흡, 빈맥이 있고 혈압은 88/50 mmHg이다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>길랑바레증후군</li>
+    <li>다발성경화증</li>
+    <li>중증근무력증</li>
+    <li>뇌수막염</li>
+    <li>뇌경색</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q89">
+  <h3><span class="num">문 89</span> <span class="en">중증근무력증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>45세 여자가 눈꺼풀이 처지고 사물이 겹쳐 보이며, 콧소리와 발음이 어둔하고 연하장애를 호소하는데, 증상들이 오후에 심해지고 휴식을 취하면 쉬면 호전된다고 한다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>길랑바레증후군</li>
+    <li>다발성경화증</li>
+    <li>중증근무력증</li>
+    <li>뇌수막염</li>
+    <li>뇌경색</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q90">
+  <h3><span class="num">문 90</span> <span class="en">중증근무력증 쇠약 특성</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증근무력증 환자에게 나타나는 쇠약의 특성은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>아침에 가장 심함</li>
+    <li>안정 시 떨림과 동반됨</li>
+    <li>움직임 시 떨림과 동반됨</li>
+    <li>근위부가 원위부보다 심함</li>
+    <li>근육을 반복해서 사용하면 호전됨</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q91">
+  <h3><span class="num">문 91</span> <span class="en">중증근무력증 진단검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증근무력증이 의심되는 환자의 진단을 위해 시행하는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌 CT</li>
+    <li>뇌 MRI</li>
+    <li>뇌파검사</li>
+    <li>텐실론검사</li>
+    <li>뇌척수액검사</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q92">
+  <h3><span class="num">문 92</span> <span class="en">중증근무력증 교육</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증근무력증 환자의 일상생활 유지를 위한 교육으로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>콜린성 위기 증상이 나타나면 처방된 약을 증량해서 복용한다</li>
+    <li>근육피로는 아침에 심하므로 낮에 활동할 수 있도록 일정을 짠다</li>
+    <li>스트레스, 감염, 생리, 고열이 있을 때 콜린성 위기를 유발할 수 있다</li>
+    <li>호흡근 움직임이 약하고 호흡곤란이 보이면 콜린성 위기를 의심해야 한다</li>
+    <li>일부 항생제는 병용투여 시 증상이 더 악화될 수 있으므로 주의가 필요하다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q93">
+  <h3><span class="num">문 93</span> <span class="en">피리도스티그민</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>47세 여자가 자고 일어나면 괜찮은데 집안일을 하고 오후가 될수록 눈꺼풀이 처지고 말을 할 때 목소리가 변한다. 이 환자에게 가장 적절한 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Levodopa</li>
+    <li>Pregabalin</li>
+    <li>Lamotrigine</li>
+    <li>Pyridostigmin</li>
+    <li>Carbamazepine</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q94">
+  <h3><span class="num">문 94</span> <span class="en">브라운-세카르 증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>오른쪽 등이 강도의 칼에 찔린 환자의 신체검진 결과가 다음과 같을 때 가장 의심되는 상태는?</p>
+  <p>손상 이하 부위 우측 운동마비 / 손상 이하 부위 우측 촉감·위치감각·진동감각 소실 / 손상 이하 부위 좌측 통각과 온도감각 소실</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>전척수증후군</li>
+    <li>신경근증후군</li>
+    <li>후척수증후군</li>
+    <li>측방척수증후군</li>
+    <li>중심척수증후군</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p131.png" alt="문항 원문/검사 결과" loading="lazy"><figcaption>p.131 원문(검사 결과 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q95-96">
+  <h3><span class="num">문 95–96</span> <span class="en">정상압 수두증(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>72세 남자가 친구들의 이름을 자꾸 잊어버리고 발을 질질 끌며 걷고 자주 넘어지며, 요실금이 심해졌다.</p></div></div>
+  <div class="field"><div class="label">문 95</div><div class="body"><p>이 환자에게 가장 의심되는 상태는?</p><ol>
+    <li>뇌전증</li>
+    <li>파킨슨병</li>
+    <li>알츠하이머병</li>
+    <li>정상압 수두증</li>
+    <li>출혈성 뇌졸중</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 96</div><div class="body"><p>이 환자에게 가장 적절한 치료는?</p><ol>
+    <li>혈종제거술</li>
+    <li>뇌실-복강 단락술</li>
+    <li>면역 억제제 투약</li>
+    <li>스테로이드 부하 치료</li>
+    <li>항콜린에스테라제 투약</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q97">
+  <h3><span class="num">문 97</span> <span class="en">단락 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌수막염 후 발생한 수두증으로 5일 전 뇌실-복강 단락술을 받은 아동이 두통과 어지럼증을 호소할 때 가장 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과잉배액</li>
+    <li>단락 감염</li>
+    <li>단락 폐쇄</li>
+    <li>뇌실내 출혈</li>
+    <li>복강내 낭종</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q98">
+  <h3><span class="num">문 98</span> <span class="en">악성 뇌종양</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 가장 악성인 뇌종양은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌수막종</li>
+    <li>별아교세포종</li>
+    <li>뇌실막세포종</li>
+    <li>다형성 교모세포종</li>
+    <li>원발성 중추신경림프종</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q99-100">
+  <h3><span class="num">문 99–100</span> <span class="en">두부외상 CT(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>오토바이를 타다가 넘어진 환자의 뇌 CT 영상이 다음과 같다.</p></div></div>
+  <div class="field"><div class="label">문 99</div><div class="body"><p>이 환자에게 의심되는 상태는?</p><ol>
+    <li>수두증</li>
+    <li>경막하혈종</li>
+    <li>경막외혈종</li>
+    <li>기저골 골절</li>
+    <li>지주막하출혈</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 100</div><div class="body"><p>이 환자가 사고에 대해 이야기를 하던 중 갑자기 의식을 잃고 왼쪽 팔다리 마비와 동공이 커졌다. 가장 적절한 치료는?</p><ol>
+    <li>혈종제거술</li>
+    <li>코일색전술</li>
+    <li>보존적 치료</li>
+    <li>뇌실외 배액술</li>
+    <li>뇌실-복강 단락술</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p132.png" alt="문항 원문/뇌 CT 영상" loading="lazy"><figcaption>p.132 원문(뇌 CT 영상 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q101">
+  <h3><span class="num">문 101</span> <span class="en">TCD·뇌혈관연축</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈로 두개절제술을 받은 지 5일 된 환자에게 경두개초음파(TCD) 검사를 시행하였다. 어떤 합병증을 확인하기 위한 검사인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>재출혈</li>
+    <li>뇌혈관 연축</li>
+    <li>수술 후 감염</li>
+    <li>두개내압 상승</li>
+    <li>의식저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q102">
+  <h3><span class="num">문 102</span> <span class="en">뇌관류 유지 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승 위험이 있는 환자의 효과적인 뇌관류 유지를 위한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>활력징후 상 미열은 경과를 관찰한다</li>
+    <li>환자의 안정을 지지하기 위해 앙와위를 취해준다</li>
+    <li>동맥혈가스분석검사(ABGA) 상 PaO₂ 수치를 집중적으로 관찰한다</li>
+    <li>호흡곤란 증상이 없다면 동맥혈가스분석검사(ABGA)는 시행하지 않는다</li>
+    <li>발살바수기를 줄이기 위해 섬유식이를 제공하고 침상변기를 이용하여 장운동을 도와준다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q103">
+  <h3><span class="num">문 103</span> <span class="en">중대뇌동맥 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음의 뇌졸중 증상과 관련이 있는 혈관은?</p>
+  <p>병변 반대측 안면, 체간 또는 팔·다리 이하의 위약 및 감각저하 / 실어증 / 무시증후군</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>전대뇌동맥</li>
+    <li>중대뇌동맥</li>
+    <li>후대뇌동맥</li>
+    <li>소뇌동맥</li>
+    <li>기저동맥</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p133.png" alt="문항 원문/증상 표" loading="lazy"><figcaption>p.133 원문(증상 설명 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q104">
+  <h3><span class="num">문 104</span> <span class="en">혈전용해술 후 혈압관리</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 뇌경색으로 동맥 내 혈전용해술 시술 후 중환자실에 입원한 환자의 혈압이 180/100 mmHg일 때 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Nicardipine 시간당 5 mg 정맥주입</li>
+    <li>Labetalol 10 mg 정맥주사</li>
+    <li>Hydralazine 5 mg 정맥주사</li>
+    <li>Carvedilol 25 mg 경구투약</li>
+    <li>경과관찰</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q105">
+  <h3><span class="num">문 105</span> <span class="en">NIHSS 항목</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌졸중으로 중환자실에 입원치료 중인 환자에게 담당 간호사가 그림 한 장을 보여주고 그림의 상황을 설명하도록 요청하였다. 이는 NIHSS (NIH stroke scale) 검사 중 어느 항목에 해당하는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>구음장애</li>
+    <li>최적의 응시</li>
+    <li>의식수준: 지시</li>
+    <li>최상의 언어능력</li>
+    <li>인식상실과 부주의 상태</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q106">
+  <h3><span class="num">문 106</span> <span class="en">뇌혈류 증가 상황</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌혈류를 증가시키는 상황은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저체온증</li>
+    <li>교감신경 자극</li>
+    <li>세포의 pH 증가</li>
+    <li>동맥혈의 산소 감소</li>
+    <li>혈청 내 젖산의 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q107">
+  <h3><span class="num">문 107</span> <span class="en">뇌혈류 자동조절 범위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌혈류 자동조절기전이 정상일 경우 뇌혈류를 일정하게 유지할 수 있는 뇌관류압의 범위는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>30-130 mmHg</li>
+    <li>40-140 mmHg</li>
+    <li>50-150 mmHg</li>
+    <li>60-160 mmHg</li>
+    <li>70-170 mmHg</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q108">
+  <h3><span class="num">문 108</span> <span class="en">그림 A 폐쇄</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 그림에서 A의 폐쇄로 발생할 수 있는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>우측 마비</li>
+    <li>두개내압 상승</li>
+    <li>모야모야병</li>
+    <li>각막반사소실</li>
+    <li>폐쇄성 수두증</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p135.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.135 원문(그림 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q109">
+  <h3><span class="num">문 109</span> <span class="en">뇌관류압 계산</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두부외상으로 인한 혈종제거 수술 후 중환자실에 입원한 환자의 활력징후와 두개내압이 다음과 같을 때 뇌관류압은?</p>
+  <p>혈압 90/60 mmHg, 맥박 100회/분, 호흡 18회/분, 두개내압 24 mmHg</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>26 mmHg이며 정상이다</li>
+    <li>46 mmHg이며 정상이다</li>
+    <li>26 mmHg이며 비정상이다</li>
+    <li>46 mmHg이며 비정상이다</li>
+    <li>46 mmHg이며 추가 징후를 확인해 보아야 한다</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p135.png" alt="문항 원문/검사 결과" loading="lazy"><figcaption>p.135 원문(검사 결과 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q110">
+  <h3><span class="num">문 110</span> <span class="en">Phenytoin 부하용량</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Phenytoin (Dilantin)의 첫 부하용량을 주사할 때 가장 주의해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>치료적 혈중 농도는 20-30 mg/mL이다</li>
+    <li>부작용으로 피부발진, 치은증식증이 발생할 수 있다</li>
+    <li>포도당(D₅W) 용액에 혼합하여 투약하는 것이 안전하다</li>
+    <li>Phenytoin의 빠른 투약은 부정맥과 심정지를 초래할 수 있다</li>
+    <li>항고혈압 약물을 투약 중이었다면 항고혈압 약물 용량을 증량해야 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q111-112">
+  <h3><span class="num">문 111–112</span> <span class="en">콜린성 위기(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>중증 근무력증 환자인 62세 여자가 최근 식욕저하와 호흡곤란 증상이 심하여 중환자실에 입원 후 약물 치료 및 경과 관찰 중이다. 오늘 아침 기관지분비물 증가, 느린호흡, 심각한 근육약화, 서맥 및 발작 증상이 나타났다.</p></div></div>
+  <div class="field"><div class="label">문 111</div><div class="body"><p>이 환자에게 의심되는 상태는?</p><ol>
+    <li>감염</li>
+    <li>두개내압 증가</li>
+    <li>콜린성 위기</li>
+    <li>급성 호흡부전</li>
+    <li>중증 근무력증 위기</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 112</div><div class="body"><p>이 환자에게 사용할 수 있는 응급약물은?</p><ol>
+    <li>Flumazenil</li>
+    <li>Pheniramine</li>
+    <li>Acetylcysteine</li>
+    <li>Atropine sulfate</li>
+    <li>Sodium bicarbonate</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q113">
+  <h3><span class="num">문 113</span> <span class="en">길랑바레증후군 관련균</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>길랑바레증후군과 관련 있는 균은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Herpes simplex virus</li>
+    <li>Campylobacter jejuni</li>
+    <li>Staphylococcus aureus</li>
+    <li>Streptococcus pneumonia</li>
+    <li>Listeria monocytogenes</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q114">
+  <h3><span class="num">문 114</span> <span class="en">단락 과잉배액</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수두증으로 뇌실-복강내 단락술을 받은 후 치료 중인 환자가 점점 약화되는 두통과 함께 극심한 어지러움을 호소하고 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과잉배액</li>
+    <li>단락 폐쇄</li>
+    <li>단락 감염</li>
+    <li>뇌실 내 출혈</li>
+    <li>두개내압 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q115">
+  <h3><span class="num">문 115</span> <span class="en">EVD 배액 감소 조치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌실외배액술(EVD) 장치의 배액량이 거의 없을 때 간호사가 가장 먼저 취해야 할 조치는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>EVD 배액을 잠근다</li>
+    <li>주치의에게 보고한다</li>
+    <li>뇌 CT를 찍을 준비를 한다</li>
+    <li>Mannitol 정맥주사를 실시한다</li>
+    <li>배액관의 진동(oscillation)을 확인한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q116-117">
+  <h3><span class="num">문 116–117</span> <span class="en">뇌사·장기기증(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>59세 남자가 교통사고로 복합외상 및 뇌출혈을 진단받고 중환자실에서 장기간 치료 중이다. 주치의는 환자의 회복 가능성이 희박한 것을 가족들에게 여러 차례 설명하였고 뇌사 가능성이 있음을 알렸다. 가족들은 평소 환자가 연명치료를 원하지 않았고 가능하다면 장기기증을 하고 싶다고 얘기한 것을 기억하고 담당간호사에게 이에 관해 문의하였다.</p></div></div>
+  <div class="field"><div class="label">문 116</div><div class="body"><p>이 환자의 가족이 원하는 절차를 진행하고자 할 때 담당간호사가 협력해야 할 기관은?</p><ol>
+    <li>보건복지부</li>
+    <li>질병관리본부</li>
+    <li>생명윤리위원회</li>
+    <li>장기조직기증원(KODA)</li>
+    <li>장기이식관리센터(KONOS)</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 117</div><div class="body"><p>이 환자의 장기기증을 위해 뇌사판정 절차가 시작되었다. 뇌사판정을 위한 뇌파검사 기준은?</p><ol>
+    <li>20분 이상 평탄 뇌파</li>
+    <li>30분 이상 평탄 뇌파</li>
+    <li>40분 이상 평탄 뇌파</li>
+    <li>50분 이상 평탄 뇌파</li>
+    <li>60분 이상 평탄 뇌파</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q118">
+  <h3><span class="num">문 118</span> <span class="en">신경성 쇼크</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 신경성 쇼크에 대한 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고혈압과 역설적 서맥이 동반된 상태</li>
+    <li>척수외상 후 일시적인 이완성 마비상태</li>
+    <li>구해면체반사가 있는 급성하반신 마비의 상태</li>
+    <li>저혈량이 있으면서 심실빈맥과 고혈압을 일으키는 상태</li>
+    <li>교감신경 긴장이 저하되어 순환혈량과 혈압이 하강된 상태</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q119">
+  <h3><span class="num">문 119</span> <span class="en">VP shunt 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수두증으로 뇌실-복강 단락술(VP shunt)을 받은 환자를 위한 간호중재로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌척수액의 색과 양을 관찰한다</li>
+    <li>수술 직후부터 침상머리를 30° 올린 자세를 유지한다</li>
+    <li>수술 4시간 이후에는 장음에 상관없이 유동식을 시작한다</li>
+    <li>의식수준에 변화가 없는 것은 수술이 잘 되었다는 증거이다</li>
+    <li>적절한 배액 여부를 확인하기 위하여 의식수준을 자주 모니터한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q120-121">
+  <h3><span class="num">문 120–121</span> <span class="en">자율신경반사부전(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>24세 남자가 스키를 타다 넘어져 경추 4번(C4) 손상되어 집중치료를 받고 있다. 중환자실 입원 10일째에 환자가 갑자기 홍조를 띠고 땀을 흘리며 두통을 호소하였다. 활력징후 측정 결과 혈압 170/90 mmHg, 맥박 58회/분, 호흡 22회/분, 체온 37.4℃이었다.</p></div></div>
+  <div class="field"><div class="label">문 120</div><div class="body"><p>이 환자에게 의심되는 상태는?</p><ol>
+    <li>척수성 쇼크</li>
+    <li>두개내압상승</li>
+    <li>중환자실 섬망</li>
+    <li>경련 전조증상</li>
+    <li>자율신경성 반사부전증</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 121</div><div class="body"><p>이 환자에게 우선적으로 제공해야 할 간호중재는?</p><ol>
+    <li>앙와위를 취해준다</li>
+    <li>의식수준을 확인한다</li>
+    <li>활력징후를 지속적으로 측정한다</li>
+    <li>혈압조절을 위해 베타차단제를 투약한다</li>
+    <li>유해자극이 있는지 확인하고 즉시 제거한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q122">
+  <h3><span class="num">문 122</span> <span class="en">중환자 영양 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중환자실 환자의 적절한 영양상태를 유지하기 위한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>현재 영양상태를 확인하기 위해 Albumin 검사를 한다</li>
+    <li>환자의 영양상태를 증진하기 위하여 영양지원팀과 협업한다</li>
+    <li>수술 환자의 경우 반드시 장음을 확인하고 식이를 시작한다</li>
+    <li>경구영양이 가능한 환자의 경우 환자가 원하는 만큼만 제공한다</li>
+    <li>위관영양은 기도흡인의 위험이 있으므로 가능하면 총비경구영양을 시행한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q123">
+  <h3><span class="num">문 123</span> <span class="en">재활 금기 환자</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중환자실 환자 중 재활 시작이 금기인 환자는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경련, 뇌전증 환자</li>
+    <li>인공호흡기 적용 환자</li>
+    <li>신경근육이완제를 사용하지 않는 환자</li>
+    <li>일반병실 전실을 앞두고 있으며 불안해하는 환자</li>
+    <li>RASS (Richmond agitation sedation scale) +1 ~ -2 수준 유지 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q124">
+  <h3><span class="num">문 124</span> <span class="en">중환자 재활 권고</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>효과적인 중환자 재활의 적절한 빈도와 시간에 대한 권고기준은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>1회 10분 이상, 하루 1~2회, 격일</li>
+    <li>1회 10분 이상, 하루 1~2회, 매일</li>
+    <li>1회 10분 이상, 하루 2~3회, 매일</li>
+    <li>1회 20분 이상, 하루 1~2회, 매일</li>
+    <li>1회 20분 이상, 하루 2~3회, 매일</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q125-126">
+  <h3><span class="num">문 125–126</span> <span class="en">메틸프레드니솔론(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>등산 도중 발을 헛디뎌 절벽에서 미끄러진 45세 남자 환자가 하지마비를 주호소로 중환자실에 입원하였다.</p></div></div>
+  <div class="field"><div class="label">문 125</div><div class="body"><p>이 환자의 신경학적 예후를 호전시키기 위해 사용하는 약물은?</p><ol>
+    <li>Naloxone</li>
+    <li>Dimethyl sulfoxide</li>
+    <li>Thyrotropin-releasing hormone</li>
+    <li>Methylprednisolone</li>
+    <li>Nimodipine</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 126</div><div class="body"><p>이 약물 사용과 관련한 부작용을 예방하기 위한 간호중재로 적절한 것은?</p><ol>
+    <li>진정제를 투여한다</li>
+    <li>처방된 H2 blocker를 투여한다</li>
+    <li>혈청 나트륨 수치를 모니터한다</li>
+    <li>주기적으로 의식수준을 사정한다</li>
+    <li>주기적으로 응고시간을 검사한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q127-128">
+  <h3><span class="num">문 127–128</span> <span class="en">기저두개골절(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>교통사고로 응급실을 통해 중환자실에 입원한 환자의 안와 및 귀 뒷부분의 반상출혈이 있었고 비루, 이루도 확인되었다.</p></div></div>
+  <div class="field"><div class="label">문 127</div><div class="body"><p>이 환자의 신체검진 소견이 의미하는 것은?</p><ol>
+    <li>뇌교출혈</li>
+    <li>경막하혈종</li>
+    <li>경막상혈종</li>
+    <li>기저두개골절</li>
+    <li>지주막하혈종</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 128</div><div class="body"><p>위 환자에게 발생할 수 있는 가장 심각한 합병증을 관리하기 위한 적절한 간호중재는?</p><ol>
+    <li>손위생</li>
+    <li>침상안정</li>
+    <li>정서적 지지</li>
+    <li>수동적 관절가동운동</li>
+    <li>주기적인 의식수준 사정</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q129-130">
+  <h3><span class="num">문 129–130</span> <span class="en">간질지속증(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>간질지속증 의증(R/O Status Epilepticus)으로 중환자실에 입원한 환자가 전신성 강직-간대 발작을 시작하였다.</p></div></div>
+  <div class="field"><div class="label">문 129</div><div class="body"><p>이 환자에게 가장 먼저 투여해야 할 약물은?</p><ol>
+    <li>Valproate</li>
+    <li>Phenytoin</li>
+    <li>Lamotrigin</li>
+    <li>Lorazepam</li>
+    <li>Phenobarbital</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 130</div><div class="body"><p>이 환자가 20년 동안 매일 소주를 2병씩 마셨다면 감별진단을 위하여 투여해야 할 약물은?</p><ol>
+    <li>Thiamine</li>
+    <li>Naloxone</li>
+    <li>Flumazenil</li>
+    <li>Furosemide</li>
+    <li>50% dextrose water</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q131">
+  <h3><span class="num">문 131</span> <span class="en">Mannitol</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌동맥류 진단을 받고 개두술을 시행한 환자에게 처방된 mannitol에 대한 내용으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈당을 상승시킬 수 있다</li>
+    <li>혈액제제와 함께 주입할 수 있다</li>
+    <li>저혈압인 경우에도 투여할 수 있다</li>
+    <li>신장에 영향을 줄 수 있으므로 천천히 주입한다</li>
+    <li>혈중 creatinine 검사 결과가 3.2 mg/dL인 경우 투여 가능하다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q132">
+  <h3><span class="num">문 132</span> <span class="en">섬망 모니터링 도구</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 중환자의 섬망을 모니터하기 위해 추천되는 도구는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>RASS, MRC</li>
+    <li>DOS, ICDSC</li>
+    <li>RASS, ICDSC</li>
+    <li>DSM-IV, CAM</li>
+    <li>CAM-ICU, ICDSC</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q133">
+  <h3><span class="num">문 133</span> <span class="en">Dexmedetomidine</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>반감기가 짧고 활성 대사산물이 없으며 아편양-보존 효과가 있어 중환자에게 진정 관련 섬망 발생 부작용의 위험이 작은 진정제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Propofol</li>
+    <li>Diazepam</li>
+    <li>Lorazepam</li>
+    <li>Midazolam</li>
+    <li>Dexmedetomidine</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q134-136">
+  <h3><span class="num">문 134–136</span> <span class="en">수막염·요추천자(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>23세 여자 환자가 두통, 고열, 경부강직으로 응급실을 통해 중환자실에 입원하였다.</p></div></div>
+  <div class="field"><div class="label">문 134</div><div class="body"><p>이 환자가 구토와 발작을 보인다면 가장 먼저 해야 할 검사는?</p><ol>
+    <li>뇌파검사</li>
+    <li>뇌혈관조영술</li>
+    <li>뇌척수액검사</li>
+    <li>뇌 자기공명영상</li>
+    <li>뇌 전산화단층촬영</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 135</div><div class="body"><p>주치의가 이 환자에게 요추천자 처방을 내리고 검사를 준비하고 있다. 환자에게 적용할 간호중재로 옳은 것은?</p><ol>
+    <li>검사 전 방광을 비운다</li>
+    <li>요오드 알레르기를 확인한다</li>
+    <li>검사를 위해 복위를 취해준다</li>
+    <li>검사 후 4시간은 금식을 유지한다</li>
+    <li>검사 후 적어도 6시간은 침상머리를 30° 이상 올린 자세를 취해준다</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 136</div><div class="body"><p>이 환자의 뇌척수액 검사 결과가 다음과 같았다. 가장 의심되는 상태는?</p>
+  <p>압력 252 mmH₂O, 단백질 117 mg/dL, 포도당 25 mg/dL, 백혈구 1250 cells/mm³, 균검사 Gram stain negative, Neisseria 배양</p><ol>
+    <li>결핵수막염</li>
+    <li>무균성 수막염</li>
+    <li>진균성 수막염</li>
+    <li>수막구균수막염</li>
+    <li>바이러스성 수막염</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p142.png" alt="문항 원문/검사 결과" loading="lazy"><figcaption>p.142 원문(뇌척수액 검사 결과 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q137">
+  <h3><span class="num">문 137</span> <span class="en">tPA 시간창</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>허혈성 뇌졸중 환자에게 정맥내 tPA(tissue plasminogen activator) 치료는 발병 후 몇 시간 이내에 적용할 것을 권고하는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>1시간</li>
+    <li>2시간</li>
+    <li>3시간</li>
+    <li>4.5시간</li>
+    <li>5.5시간</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q138">
+  <h3><span class="num">문 138</span> <span class="en">Levodopa 교육</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파킨슨병 진단으로 levodopa를 처방받은 환자에게 교육해야 할 내용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>코피가 날 수도 있다</li>
+    <li>고단백 식이는 피해야 한다</li>
+    <li>부작용으로 얼굴이 부을 수 있다</li>
+    <li>양치 후 매일 아침 잇몸 마사지를 해야 한다</li>
+    <li>오심을 예방하기 위해 음식물과 함께 복용한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q139">
+  <h3><span class="num">문 139</span> <span class="en">생애말기 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고혈압과 당뇨를 앓고 있는 78세 여자가 교통사고로 인한 복합외상으로 중환자실에 입원하였다. 환자는 깊은 혼수상태이며 인공호흡기, 승압제, 지속적 신대체요법을 적용하고 있으나 활력징후가 불안정하다. 주치의는 환자 상태에 대해 설명하고 사망의 위험이 있음을 알렸으며 가족들은 생애말기 치료에 대해 의사결정을 앞두고 있다. 가족들을 위한 간호로 적절하지 않은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>가족의 심정을 이해하고 존중한다</li>
+    <li>가능한 한 같은 의료진의 돌봄을 받도록 한다</li>
+    <li>가족구성원이 합의를 이룰 수 있도록 돕는다</li>
+    <li>가족들이 미리 계획을 세울 수 있도록 돕는다</li>
+    <li>'사망'이나 '죽음'이라는 단어는 사용하지 않는다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q140">
+  <h3><span class="num">문 140</span> <span class="en">TIA 약물 치료</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>일과성 허혈발작의 약물 치료에 우선적으로 포함되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Aspirin</li>
+    <li>Heparin</li>
+    <li>Dipyridamole</li>
+    <li>Beta blocker</li>
+    <li>Calcium channel blocker</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q141">
+  <h3><span class="num">문 141</span> <span class="en">Nimodipine</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파열성 뇌동맥류 환자의 뇌혈관 연축을 예방하기 위해 사용하는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Mannitol</li>
+    <li>Nimodipine</li>
+    <li>Vasopressin</li>
+    <li>Valproic acid</li>
+    <li>Dexamethasone</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q142">
+  <h3><span class="num">문 142</span> <span class="en">GCS 점수</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중환자실에 입원 중인 환자가 지시를 따르지 못했으나 통증자극을 주니 눈을 뜨고 간호사의 손을 밀치며 "아 뭐야"라고 하였다. 그러나 이름과 장소를 묻는 질문에는 대답을 하지 않았다. 이 환자의 GCS 점수는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>3점</li>
+    <li>5점</li>
+    <li>7점</li>
+    <li>10점</li>
+    <li>12점</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q143">
+  <h3><span class="num">문 143</span> <span class="en">Phenytoin 무효 발작</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 항발작 약물인 phenytoin의 투약이 효과가 없는 발작은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소발작</li>
+    <li>간질지속증</li>
+    <li>정신운동발작</li>
+    <li>긴장-간대발작</li>
+    <li>두부 외상을 동반한 발작</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q144">
+  <h3><span class="num">문 144</span> <span class="en">중환자 통증관리</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>성인 중환자의 통증관리에 대한 내용으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Fentanyl은 빠른 진통효과가 필요할 때 유용하다</li>
+    <li>환자가 통증을 호소하는 즉시 관리계획을 수립한다</li>
+    <li>말기 뇌종양 환자의 통증 조절에는 morphine이 가장 유용하다</li>
+    <li>'정기적인 진통제 투약'보다는 '필요시 사용하는' 방법이 좋다</li>
+    <li>Acetaminophen을 투여하고 있는 환자는 신부전 및 위장관 출혈 여부를 잘 모니터해야 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q145">
+  <h3><span class="num">문 145</span> <span class="en">Warfarin 길항제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Warfarin이 과량 투여된 환자를 위해 사용하는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Atropine</li>
+    <li>Naloxone</li>
+    <li>Vitamin K</li>
+    <li>Acetylcysteine</li>
+    <li>Protamine sulfate</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q146">
+  <h3><span class="num">문 146</span> <span class="en">심정지 일차약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>무수축, 무맥성 심실빈맥, 심실세동 등 모든 심정지 리듬에 사용할 수 있는 일차약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Epinephrine</li>
+    <li>Atropine</li>
+    <li>Lidocaine</li>
+    <li>Amiodarone</li>
+    <li>Vasopressin</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q147">
+  <h3><span class="num">문 147</span> <span class="en">헤파린 과용량 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>처방된 용량보다 과용량으로 헤파린이 주입되고 있을 때 적절한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>주치의에게 보고한다</li>
+    <li>대상자의 aPTT 수치를 측정한다</li>
+    <li>10분 이상에 걸쳐 protamine sulfate 50 mg을 정맥주입 한다</li>
+    <li>헤파린이 주입된 후 경과된 시간과 주입된 헤파린의 양을 확인한다</li>
+    <li>치료적 효과를 증가시키기 위해 비타민 K와 protamine sulfate를 함께 투여한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q148">
+  <h3><span class="num">문 148</span> <span class="en">다발성 경화증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음은 어떤 질환에 대한 설명인가?</p>
+  <p>정상적인 신경 자극의 전도가 이루어지지 않아 증상이 발생한다. 뇌와 척수에 있는 수초와 신경 축삭돌기가 파괴되는 만성 질환이다. 뇌척수액 검사 상 clonal IgG bands, MRI, CT 및 근육 생검으로 진단한다. 갑작스럽게 진행되는 사지허약, 근육경련, 안구진탕, 진전, 불안정한 걸음걸이, 피로, 방광 기능장애, 시각장애 또는 실명 및 우울 등의 증상이 나타난다.</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>파킨슨병</li>
+    <li>중증근무력증</li>
+    <li>알츠하이머병</li>
+    <li>다발성 경화증</li>
+    <li>길랑바레증후군</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p145.png" alt="문항 원문/질환 설명" loading="lazy"><figcaption>p.145 원문(질환 설명 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q149">
+  <h3><span class="num">문 149</span> <span class="en">TSA 후 요붕증 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌하수체종양을 진단받고 경접형동 접근법(transsphenoidal approach; TSA) 수술 후 집중치료를 받고 있는 환자의 검사 결과가 다음과 같을 때 적절한 간호중재는?</p>
+  <p>요비중 1.001, 혈청 나트륨 152 mEq/L, 혈청 삼투질 농도 332 mOsm/Kg, 소변 삼투질 농도 243 mOsm/Kg</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고혈압 감시</li>
+    <li>이뇨제 투여</li>
+    <li>감염의 징후 관찰</li>
+    <li>의식수준 변화 관찰</li>
+    <li>코분비물 양상 관찰</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p145.png" alt="문항 원문/검사 결과" loading="lazy"><figcaption>p.145 원문(검사 결과 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q150">
+  <h3><span class="num">문 150</span> <span class="en">뇌종양 절제술 후 SIADH</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌종양절제술 후 중환자실에서 치료 중인 환자의 소변량이 감소하고 요비중이 증가하였고, 혈액검사에서 저나트륨혈증과 삼투질 농도 저하가 확인되었다. 이 환자에게 적절한 간호는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>DDAVP를 투약한다</li>
+    <li>Vasopressin을 투여한다</li>
+    <li>Beta blocker를 투약한다</li>
+    <li>0.45% NS를 정맥내로 주입한다</li>
+    <li>혈청 나트륨 수치를 시간당 1 mEq 미만의 속도로 교정한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q151">
+  <h3><span class="num">문 151</span> <span class="en">SAH 후 뇌관류 증가</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈의 수술적 중재 후 합병증 예방을 위한 뇌관류 증가 방법으로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Nimodipine을 투여한다</li>
+    <li>중심정맥압을 4~5 mmHg로 유지한다</li>
+    <li>Dopamine을 사용하여 혈압을 높게 유지한다</li>
+    <li>수축기 혈압을 100~120 mmHg 사이로 유지한다</li>
+    <li>헤마토크리트를 증가시켜 산소 운반을 돕도록 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q152">
+  <h3><span class="num">문 152</span> <span class="en">두개내압 상승 초기 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 두개내압 상승의 초기 증상 및 징후에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고열</li>
+    <li>두통</li>
+    <li>맥압 증가</li>
+    <li>맥박수 감소</li>
+    <li>시신경 유두부종</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q153">
+  <h3><span class="num">문 153</span> <span class="en">두개내압 상승 방지 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승을 방지하기 위한 간호중재로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>발살바수기를 유도한다</li>
+    <li>침상머리를 30°로 유지한다</li>
+    <li>트렌델렌버그 자세를 취해준다</li>
+    <li>PaCO₂ 45 mmHg 이상으로 유지한다</li>
+    <li>호기말양압(PEEP)을 15 cmH₂O 이상으로 유지한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q154">
+  <h3><span class="num">문 154</span> <span class="en">Mannitol 치료</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압을 낮추기 위한 mannitol 치료에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저칼륨혈증을 초래한다</li>
+    <li>체액량 과다에 주의한다</li>
+    <li>가능한 한 천천히 주입한다</li>
+    <li>정맥 주입 시 필터 수액세트를 사용한다</li>
+    <li>주입 시 혈청 삼투질 농도를 300 mOsm/L 미만으로 유지한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q155-156">
+  <h3><span class="num">문 155–156</span> <span class="en">뇌탈출(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>뇌출혈로 응급수술을 받고 중환자실에 입원한 환자가 신음소리만 내고, 왼쪽 동공이 이전보다 커지고 느려졌다. 활력징후는 혈압 180/90 mmHg, 체온 37.1℃, 맥박 58회/분, 호흡 12회/분, ICP는 14 mmHg에서 25 mmHg로 변화하였다.</p></div></div>
+  <div class="field"><div class="label">문 155</div><div class="body"><p>이 환자에게 가장 먼저 시행해야 하는 것은?</p><ol>
+    <li>뇌 전산화단층촬영을 실시한다</li>
+    <li>뇌 자기공명영상을 촬영한다</li>
+    <li>기도삽관을 시행한다</li>
+    <li>응급수술을 준비한다</li>
+    <li>진정제를 투여한다</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 156</div><div class="body"><p>이 환자의 동공 반응의 변화로 미루어 볼 때 의심할 수 있는 상태는?</p><ol>
+    <li>뇌경색</li>
+    <li>안압의 상승</li>
+    <li>두개내압 상승</li>
+    <li>시신경의 손상</li>
+    <li>뇌조직의 탈출</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q157">
+  <h3><span class="num">문 157</span> <span class="en">GCS 총점</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌출혈로 응급수술을 받은 환자가 다음 날 아침 의사소통이 잘 되지 않고 통증 자극에만 눈을 뜨며 신음소리만 내고 자극에 대해 피하려고 몸을 들썩이듯 반응을 보인다. 이 환자의 글래스고 혼수척도(Glasgow Coma scale; GCS) 총점은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>5</li>
+    <li>6</li>
+    <li>8</li>
+  </ol>
+  <p>(보기 일부 OCR 누락 — 원문 참조)</p></div></div>
+</section>
+
+<section class="card" id="q158">
+  <h3><span class="num">문 158</span> <span class="en">뇌관류압 계산</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신경계 중환자실에 입원한 환자의 혈압이 180/90 mmHg, 체온 37.1℃, 맥박 58회/분, 호흡 12회/분, ICP가 25 mmHg일 때 뇌관류압은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>88 mmHg</li>
+    <li>90 mmHg</li>
+    <li>95 mmHg</li>
+    <li>75 mmHg</li>
+    <li>54 mmHg</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q159">
+  <h3><span class="num">문 159</span> <span class="en">두개내압 상승 보상기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승이 시작되면 가장 먼저 나타나는 보상기전은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심박수 저하</li>
+    <li>맥압의 증가</li>
+    <li>뇌혈관의 확장</li>
+    <li>뇌혈액량의 감소</li>
+    <li>수축기압의 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q160">
+  <h3><span class="num">문 160</span> <span class="en">두개내압 측정 도관 삽입 부위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>정확한 두개강 내압 측정을 위한 도관 삽입 부위는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경막하 공간</li>
+    <li>경막외 공간</li>
+    <li>뇌실 내 공간</li>
+    <li>지주막하 공간</li>
+    <li>뇌실질 조직 내 공간</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q161">
+  <h3><span class="num">문 161</span> <span class="en">두개내압 상승 만성증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승의 만성증상 및 징후를 올바르게 설명한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복시가 발생한다</li>
+    <li>저체온증이 나타난다</li>
+    <li>두통은 저녁에 심하다</li>
+    <li>망막유두 출혈이 발생한다</li>
+    <li>병소의 반대쪽에 불완전 편마비가 나타난다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q162">
+  <h3><span class="num">문 162</span> <span class="en">두개내압 상승 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승 환자를 위한 간호에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과다환기를 적용한다</li>
+    <li>저산소증을 모니터한다</li>
+    <li>항경련제를 지속적으로 투여한다</li>
+    <li>예방적 목적으로 항생제를 투여한다</li>
+    <li>반드시 두개강 내압 감시 장치를 적용한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q163">
+  <h3><span class="num">문 163</span> <span class="en">뇌척수액 누출 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌척수액 누출 환자 간호에 대한 설명 중 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상머리를 50° 이상으로 유지한다</li>
+    <li>감염 예방을 위해 항생제를 투여한다</li>
+    <li>기저골 골절로 인한 뇌척수액 누출은 경과가 나쁘다</li>
+    <li>5~7일이 지난 후에도 누출이 지속된다면 수술을 한다</li>
+    <li>콧물의 포도당 농도가 혈당의 60%라면 뇌척수액 누출을 의심한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q164-167">
+  <h3><span class="num">문 164–167</span> <span class="en">중대뇌동맥경색·혈전용해(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>60세 남자가 30분 전에 발생한 오른쪽 팔과 다리의 마비 및 오른쪽 얼굴마비를 주호소로 응급실로 내원하였다. 활력징후는 170/90-36.9-92-24이고 눈을 맞출 수 있지만 질문에 대답하지 못한다.</p></div></div>
+  <div class="field"><div class="label">문 164</div><div class="body"><p>이 환자에게 가장 먼저 시행해야 하는 검사는?</p><ol>
+    <li>척수천자</li>
+    <li>뇌혈관조영술</li>
+    <li>경두개초음파</li>
+    <li>뇌 자기공명영상</li>
+    <li>뇌 컴퓨터단층촬영</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 165</div><div class="body"><p>이 환자의 증상을 고려할 때 의심되는 상태는?</p><ol>
+    <li>소뇌경색</li>
+    <li>뇌교출혈</li>
+    <li>지주막하출혈</li>
+    <li>중대뇌동맥경색</li>
+    <li>후대뇌동맥경색</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 166</div><div class="body"><p>이 환자의 뇌 자기공명영상(Brain MRI) 촬영 후 혈전 용해술이 계획되었다. 다음 중 혈전용해술이 가능한 경우는?</p><ol>
+    <li>혈압이 200/120 mmHg이다</li>
+    <li>두 시간 전에 증상이 시작되었다</li>
+    <li>MCA 영역의 50% 이상에 병변이 있다</li>
+    <li>처음보다 신경학적 증상이 호전되었다</li>
+    <li>NIHSS (National Institute of Health Stroke Scale) 34점이다</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 167</div><div class="body"><p>이 환자의 혈전 용해제 치료가 시작된 후 적절한 중재는?</p><ol>
+    <li>48시간 후 항응고제 치료를 시작한다</li>
+    <li>혈압은 140/80 mmHg 이하로 조절한다</li>
+    <li>출혈 확인을 위해 위관과 배뇨관을 삽입한다</li>
+    <li>동맥관을 삽입하여 혈압을 지속적으로 감시한다</li>
+    <li>두통, 혈압상승, 구토가 발생하면 CT를 촬영한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q168">
+  <h3><span class="num">문 168</span> <span class="en">혈관연축</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈의 합병증인 혈관연축에 대한 설명 중 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌혈류 속도가 감소된다</li>
+    <li>베타차단제로 예방이 가능하다</li>
+    <li>첫 7~10일 이내에 주로 발생한다</li>
+    <li>지주막하출혈의 주 사망원인이다</li>
+    <li>혈관이 좁아지면 풍선 혈관성형술을 시행한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q169-172">
+  <h3><span class="num">문 169–172</span> <span class="en">지주막하출혈·혈관연축(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>45세 여자 환자가 운동 중 갑작스럽게 극심한 두통을 호소하면서 의식 변화를 보여 응급실에 내원하였다. 내원 당시 의식은 일부 회복된 상태이며, 편마비 증세는 없었다. 통증 점수는 10점이었고 활력징후는 130/90-37.3-108-23이었다. 과거력은 없으며 흡연력은 15갑년이었다.</p></div></div>
+  <div class="field"><div class="label">문 169</div><div class="body"><p>이 환자에게 의심되는 상태는?</p><ol>
+    <li>뇌경색</li>
+    <li>뇌내출혈</li>
+    <li>경막하출혈</li>
+    <li>뇌실내출혈</li>
+    <li>지주막하출혈</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 170</div><div class="body"><p>응급실에서 이 환자에게 가장 먼저 시행해야 할 검사는?</p><ol>
+    <li>요추천자</li>
+    <li>뇌혈류검사</li>
+    <li>뇌혈관조영술</li>
+    <li>뇌 자기공명영상</li>
+    <li>뇌혈관 컴퓨터단층촬영</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 171</div><div class="body"><p>이 환자는 코일색전술 후 중환자실에 입원 치료 중이다. 시술 후 7일째, 의식수준이 저하되고 왼쪽 편마비가 발생하여 컴퓨터단층촬영을 한 결과 이상 소견이 없었다. 경두개초음파 결과 오른쪽 중대뇌동맥 평균 혈류 속도가 200 cm/sec 이상으로 증가되었다. 이 환자에게 의심되는 합병증은?</p><ol>
+    <li>재출혈</li>
+    <li>수두증</li>
+    <li>뇌수막염</li>
+    <li>혈관연축</li>
+    <li>두개내압 상승</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 172</div><div class="body"><p>이 환자의 합병증 치료로 옳은 것은?</p><ol>
+    <li>수분을 제한한다</li>
+    <li>Mannitol을 투여한다</li>
+    <li>Nimodipine을 투여한다</li>
+    <li>뇌실외배액술을 시행한다</li>
+    <li>혈압을 140 mmHg 이하로 유지한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q173">
+  <h3><span class="num">문 173</span> <span class="en">두개내압 상승 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승 환자의 증상 및 징후로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>빈맥</li>
+    <li>동공축소</li>
+    <li>의식수준 저하</li>
+    <li>저녁에 심해지는 두통</li>
+    <li>오심이 동반된 투사성 구토</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q174">
+  <h3><span class="num">문 174</span> <span class="en">개두술 후 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개 내 종양 절제를 위한 개두술 후 환자의 간호중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>앙와위를 취해준다</li>
+    <li>수술부위를 아래로 하여 눕게 한다</li>
+    <li>기침을 유도하고 흡인을 자주 시행한다</li>
+    <li>따뜻한 물주머니를 적용하여 체온을 올려준다</li>
+    <li>필요시 비마약성 진통제를 사용하여 통증을 조절한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q175">
+  <h3><span class="num">문 175</span> <span class="en">개두술 후 ICP 상승</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>개두술 후 2일째인 환자가 두통을 호소하면서 투사성 구토를 하였다. 혈압 185/72 mmHg, 맥박 52회/분일 때 의심되는 원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소뇌의 경색</li>
+    <li>두개내압 상승</li>
+    <li>통증으로 인한 과호흡</li>
+    <li>출혈로 인한 뇌교의 압박</li>
+    <li>탈수로 인한 체액량 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q176">
+  <h3><span class="num">문 176</span> <span class="en">두개내압 상승 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승 환자의 간호중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수분 섭취를 권장한다</li>
+    <li>삼투압 이뇨제인 Mannitol을 투여한다</li>
+    <li>두통 호소 시 Morphine sulfate를 투약한다</li>
+    <li>낙상을 예방하고 안정을 위해 억제대를 적용한다</li>
+    <li>뇌조직 관류를 위하여 트렌델렌버그 자세를 취해준다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q177-179">
+  <h3><span class="num">문 177–179</span> <span class="en">EVD 간호(묶음)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>43세 남자 환자가 지주막하출혈의 합병증으로 수두증이 발생하여 뇌실외배액술(EVD)을 시행받고 중환자실에서 입원 치료 중이다. EVD는 귀구슬(tragus) 기준으로 5 cm에 설치되었고 상방 23 cm 위치에서 진동되고 있다.</p></div></div>
+  <div class="field"><div class="label">문 177</div><div class="body"><p>이 환자의 두개내압은?</p><ol>
+    <li>13 cmH₂O</li>
+    <li>18 cmH₂O</li>
+    <li>20 cmH₂O</li>
+    <li>23 cmH₂O</li>
+    <li>28 cmH₂O</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 178</div><div class="body"><p>간호사는 이 환자의 의식이 저하되고 뇌실외배액(EVD)이 배액되지 않는 것을 발견하였다. 가장 적절한 중재는?</p><ol>
+    <li>응급 수술을 준비한다</li>
+    <li>EVD를 내려 재고정한다</li>
+    <li>생리식염수로 관을 세척한다</li>
+    <li>뇌 컴퓨터단층촬영을 실시한다</li>
+    <li>진동 여부와 관의 개방성을 확인한다</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 179</div><div class="body"><p>이 환자의 EVD 간호로 옳은 것은?</p><ol>
+    <li>예방적 항생제를 사용한다</li>
+    <li>기도 흡인 시 EVD를 개방해 둔다</li>
+    <li>주기적으로 생리식염수로 세척한다</li>
+    <li>검체 채취 시 뇌척수액을 빠르게 제거한다</li>
+    <li>챔버 높이는 항상 귀구슬 상방 1 cm에 고정한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q180">
+  <h3><span class="num">문 180</span> <span class="en">TSA 수술 후 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경접형동 접근법(Transsphenoidal Approach; TSA) 수술 후 환자를 위한 간호중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고염식이를 제공한다</li>
+    <li>수분섭취를 제한한다</li>
+    <li>염분섭취를 제한한다</li>
+    <li>스테로이드를 투약한다</li>
+    <li>혈청과 소변의 삼투질 농도를 확인한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q181">
+  <h3><span class="num">문 181</span> <span class="en">TSA 후 뇌척수액 누출</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경접형동 접근법 수술 후 환자의 코에서 약간 붉은 액체가 흘러나올 때 적절한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고여 있는 콧물을 풀어낸다</li>
+    <li>침상 머리를 90°로 유지한다</li>
+    <li>머리를 가능한 한 낮게 유지한다</li>
+    <li>액체의 포도당과 혈당을 측정한다</li>
+    <li>요추 배액관을 삽입하여 뇌척수액을 제거한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q182">
+  <h3><span class="num">문 182</span> <span class="en">두부 수술 환자 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두부 수술 환자의 간호로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>진통제를 사용하지 않는다</li>
+    <li>혈량 보충을 위해 저장성 수액을 정맥주입 한다</li>
+    <li>수술 후 48시간 이내에 항응고제 치료를 시작한다</li>
+    <li>천막하 수술 후에는 예방적 항경련제가 필요하지 않다</li>
+    <li>뇌동맥류 결찰술 후 혈압을 130/90 mmHg보다 낮게 유지한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q183">
+  <h3><span class="num">문 183</span> <span class="en">뇌수술 후 ICP 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌수술 환자의 두개내압 상승에 대한 간호로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성 수두증의 두개내압은 mannitol로 낮춘다</li>
+    <li>두개내압이 상승하면 즉시 기도삽관을 시행한다</li>
+    <li>뇌종양으로 인한 뇌부종은 스테로이드로 치료한다</li>
+    <li>혈청 삼투압이 300 mOsm/L이면 신부전 위험이 증가한다</li>
+    <li>PaCO₂ 30~35 mmHg 미만을 유지하기 위해 과다환기를 지속한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q184">
+  <h3><span class="num">문 184</span> <span class="en">침상머리 30° 상승 이유</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개수술 환자의 침상머리를 30° 올리는 이유는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>분비물 배출을 돕기 위하여</li>
+    <li>호흡을 편안하게 하기 위하여</li>
+    <li>정맥 순환을 증진시키기 위하여</li>
+    <li>분비물 흡인을 예방하기 위하여</li>
+    <li>산소 공급을 원활하게 하기 위하여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q185">
+  <h3><span class="num">문 185</span> <span class="en">SAH 수술 전 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>지주막하출혈을 진단받고 긴급 수술이 결정된 환자에게 수술 전 간호로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>관장을 시행한다</li>
+    <li>발살바수기를 교육한다</li>
+    <li>스테로이드를 투약한다</li>
+    <li>심전도검사를 시행한다</li>
+    <li>심호흡과 기침을 교육한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q186">
+  <h3><span class="num">문 186</span> <span class="en">경추 수술 후 우선 사정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경추 골절로 응급 수술을 받은 환자에 대하여 우선적으로 사정해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>배뇨장애</li>
+    <li>호흡곤란</li>
+    <li>운동마비</li>
+    <li>심부건반사</li>
+    <li>수술부위 감염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q187">
+  <h3><span class="num">문 187</span> <span class="en">개두술 후 ICP 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 인한 두개내출혈 때문에 응급 개두술 후 중환자실에서 치료 중인 환자의 혈압이 144/93 mmHg, 체온 37.3℃, 맥박 63회/분, 호흡은 16회/분이다. 인공호흡기 치료를 받고 있으며 ABGA는 7.48-34-91-21, 뇌실외배액(EVD)으로 추정한 두개내압은 28 mmHg이다. 이 환자의 간호중재로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상머리를 30°로 상승시킨다</li>
+    <li>이뇨제를 투여하여 정맥귀환량을 줄인다</li>
+    <li>인공호흡기 PEEP을 15 cmH₂O로 올린다</li>
+    <li>기도흡인을 자주 실시하여 폐렴을 예방한다</li>
+    <li>인공호흡기의 호흡수를 올려 과다환기를 유도한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q188">
+  <h3><span class="num">문 188</span> <span class="en">뇌종양 절제 후 SIADH</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌종양 절제술 후 환자의 의식수준이 저하되고 혈청 나트륨 123 mEq/L, 혈청 삼투압 232 mOsm/L일 때 적절한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>이뇨제를 투여한다</li>
+    <li>항이뇨 호르몬제를 투여한다</li>
+    <li>3% 식염수를 100 cc/hr로 투여한다</li>
+    <li>갈증을 호소하면 수분을 충분히 제공한다</li>
+    <li>혈청 나트륨을 1.5 mEq/L/hr 속도로 교정한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q189">
+  <h3><span class="num">문 189</span> <span class="en">저체온 요법 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증 뇌경색으로 반두개 절제술(hemicraniectomy)을 시행 후 저체온 요법을 시행 중인 환자에게 적절한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐렴예방을 위해 자주 흡인을 한다</li>
+    <li>심부 체온을 30℃ 미만으로 유지한다</li>
+    <li>오한이 있으면 저체온 요법을 중지한다</li>
+    <li>저체온으로 인한 피부 손상을 예방한다</li>
+    <li>두개내압 상승 예방을 위해 수액공급을 제한한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q190">
+  <h3><span class="num">문 190</span> <span class="en">VP shunt 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수두증을 진단받고 뇌실-복강 단락술(Ventriculo-peritoneal shunt)을 시행 받은 환자의 간호중재로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수술 후 6시간 동안 금식한다</li>
+    <li>침상머리를 45° 이상으로 유지한다</li>
+    <li>과소배액이 의심되면 이뇨제를 투여한다</li>
+    <li>활력징후 및 동공반응을 자주 모니터 한다</li>
+    <li>밸브 부위를 자주 눌러 주어 기능이 잘 되도록 한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q191">
+  <h3><span class="num">문 191</span> <span class="en">VP shunt 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌실-복강 단락술 후 4일째인 환자가 두통과 오심을 호소할 때 의심되는 합병증은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과소배액</li>
+    <li>뇌수막염</li>
+    <li>과다배액</li>
+    <li>복수의 증가</li>
+    <li>두개내압 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q192">
+  <h3><span class="num">문 192</span> <span class="en">뇌실 배액술 후 감염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>수두증으로 인해 6일전 응급 뇌실 내 배액술을 시행받은 환자에게 경직과 두통, 고열이 발생하였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌부종</li>
+    <li>뇌수막염</li>
+    <li>뇌수두증</li>
+    <li>경막하 출혈</li>
+    <li>두개내압 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q193">
+  <h3><span class="num">문 193</span> <span class="en">척주융합술 후 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>요추부의 척주융합술 후 환자 간호로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상 머리를 30° 올린다</li>
+    <li>비마약성 진통제를 사용한다</li>
+    <li>목 뒤에 높은 베개를 대준다</li>
+    <li>수술 12시간 후 조기 이상을 실시한다</li>
+    <li>통나무 굴리기법으로 체위를 변경한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q194">
+  <h3><span class="num">문 194</span> <span class="en">경막하혈종 ICP 예방</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>경막하 혈종으로 중환자실에 입원 치료 중인 환자의 두개내압 상승 예방을 위한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>쇼크 체위를 유지한다</li>
+    <li>수분 섭취를 권장한다</li>
+    <li>흡인은 10초 미만으로 시행한다</li>
+    <li>낙상 예방을 위해 억제대를 적용한다</li>
+    <li>체온을 정상보다 약간 높게 유지한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q195">
+  <h3><span class="num">문 195</span> <span class="en">개두술 후 간호진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>개두술 후 환자가 의식저하, 혈압상승, 불규칙한 호흡, 서맥을 보일 때 가장 우선적으로 내릴 수 있는 간호진단은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수술과 관련된 감염 위험성</li>
+    <li>신경학적 압박과 관련된 통증</li>
+    <li>뇌부종과 관련된 조직관류 장애</li>
+    <li>간질 발작과 관련된 잠재적 손상</li>
+    <li>신경학적 장애와 관련된 신체 기동 장애</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q196">
+  <h3><span class="num">문 196</span> <span class="en">ICP 상승 시 요추천자 금기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심한 두개내압 상승이 의심되는 환자에게 요추 천자가 금기인 이유는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>척수 손상의 위험이 크다</li>
+    <li>침습적 시술로 감염의 위험이 높다</li>
+    <li>시술로 인한 통증이 두개내압을 더욱 상승시킬 수 있다</li>
+    <li>의식 변화로 인해 검사 후 요구되는 앙와위 자세 유지가 힘들다</li>
+    <li>갑작스런 뇌척수액 제거로 뇌구조가 대후두공으로 탈출될 수 있다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q197">
+  <h3><span class="num">문 197</span> <span class="en">고혈압성 뇌출혈 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고혈압성 뇌출혈 환자의 간호로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>과호흡과 기침을 유도한다</li>
+    <li>분비물이 많으면 20초 이상 흡인을 시행한다</li>
+    <li>경련이 없다면 항경련제를 투여하지 않는다</li>
+    <li>환자가 먹거나 마실 수 없다면 즉시 위관 영양을 시행한다</li>
+    <li>두개내압 상승 예방을 위해 mannitol과 스테로이드를 투여한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q198">
+  <h3><span class="num">문 198</span> <span class="en">뇌동맥류 조기/지연 수술</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌동맥류 환자의 조기 수술과 지연 수술의 장·단점에 대한 옳은 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>조기 수술은 재출혈 위험이 높다</li>
+    <li>지연 수술의 경우 뇌의 긴장으로 뇌의 견인이 어렵다</li>
+    <li>지연 수술의 경우 뇌동맥류 박리 시 조기 파열이 많다</li>
+    <li>지연 수술의 경우 수술 시 박리가 용이해져 사망률을 줄일 수 있다</li>
+    <li>조기 수술을 하면 뇌부종 감소로 혈관 연축 발생 가능성이 낮아진다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q199">
+  <h3><span class="num">문 199</span> <span class="en">ICP 약물요법</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>두개내압 상승 환자의 약물요법에 관한 설명 중 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Dexamethasone 사용 시 제산제를 같이 투여한다</li>
+    <li>Mannitol은 반드시 포도당과 혼합하여 정맥 주입한다</li>
+    <li>Mannitol은 작용 유지 시간이 짧으므로 천천히 주입한다</li>
+    <li>Barbiturate는 두개내압을 하강시키는 일차적인 치료제이다</li>
+    <li>혈청 삼투질 농도가 320 mOsm/L 이상일 때에는 이뇨제인 furosemide를 사용한다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q200">
+  <h3><span class="num">문 200</span> <span class="en">뇌종양 ICP 예방 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌종양 환자의 두개내압 상승 예방을 위한 간호중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>산소는 최소한으로 공급한다</li>
+    <li>정맥 수액 주입 시 저장액을 사용한다</li>
+    <li>뇌관류압을 15~20 mmHg 정도로 유지한다</li>
+    <li>Corticosteroid를 투여하되 제산제를 함께 투여한다</li>
+    <li>뇌조직의 수분을 제거하기 위해 furosemide를 투여한다</li>
+  </ol></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

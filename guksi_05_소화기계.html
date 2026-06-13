@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소화기계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>소화기계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: 국시 정리</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">소화기계</h2>
+<p class="sys-desc">소화성궤양·위염·위암 등 상부위장관 질환부터 간·담·췌 질환, 염증성 장질환과 대장암, 충수염·복막염·식도정맥류 등 응급 상황까지 다루는 계통이다.</p>
+
+<nav class="toc"><strong>이 계통의 질환·주제</strong>
+<ul>
+  <li><a href="#d1">소화성궤양 (위궤양 vs 십이지장궤양·천공)</a></li>
+  <li><a href="#d2">소화성궤양 치료제</a></li>
+  <li><a href="#d3">위염</a></li>
+  <li><a href="#d4">덤핑증후군</a></li>
+  <li><a href="#d5">외과적 수술 후 식이 교육</a></li>
+  <li><a href="#d6">위암</a></li>
+  <li><a href="#d7">Child-Pugh score</a></li>
+  <li><a href="#d8">ICG test</a></li>
+  <li><a href="#d9">간염 (A·B·C형)</a></li>
+  <li><a href="#d10">간경화·간암</a></li>
+  <li><a href="#d11">급성 담낭염</a></li>
+  <li><a href="#d12">췌장염</a></li>
+  <li><a href="#d13">췌장암</a></li>
+  <li><a href="#d14">크론병 vs 궤양성 대장염 (IBD)</a></li>
+  <li><a href="#d15">대장암·결장암</a></li>
+  <li><a href="#d16">복막염</a></li>
+  <li><a href="#d17">급성 충수염</a></li>
+  <li><a href="#d18">복강내출혈</a></li>
+  <li><a href="#d19">식도정맥류</a></li>
+  <li><a href="#d20">그 외 (게실염·바렛식도·서혜부탈장·변비유발약물·장폐색)</a></li>
+</ul></nav>
+
+<section class="card" id="d1">
+  <h3><span class="num">1</span> 소화성궤양 <span class="en">Peptic Ulcer</span></h3>
+  <div class="field"><div class="label">정의·특징</div><div class="body"><p>위 또는 십이지장 점막에 발생하는 궤양으로, 발생 부위에 따라 통증 양상과 위험요인이 다르다.</p></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>위궤양 vs 십이지장궤양</caption>
+    <thead><tr><th>항목</th><th>위궤양</th><th>십이지장궤양</th></tr></thead>
+    <tbody>
+      <tr><th>호발 연령</th><td>고령에 흔함</td><td>15~40세 젊은 나이에 잘 발병</td></tr>
+      <tr><th>주 원인</th><td>점막 방어요소 약화</td><td><mark>위산 과다분비 등 공격요소 증가</mark></td></tr>
+      <tr><th>위산도</th><td>정상~낮음</td><td>높음</td></tr>
+      <tr><th>가족력</th><td>비교적 적음</td><td>있음</td></tr>
+      <tr><th>통증 시기</th><td>식사 직후 통증, 음식물이 통증을 경감시키지 못함</td><td><mark>공복 시 명치 통증, 한밤중 통증</mark>, 식후 2~3시간 후 발생</td></tr>
+      <tr><th>통증 완화</th><td>음식물로 잘 완화 안 됨</td><td>음식물·제산제로 쉽게 완화</td></tr>
+      <tr><th>출혈 양상</th><td>토혈이 흔함, 구토·토혈 흔함</td><td>흑색변(melena)이 많음, 혈변 증상 흔함</td></tr>
+      <tr><th>암 진행 가능성</th><td>상대적으로 높음</td><td>희박함</td></tr>
+      <tr><th>빈도</th><td>—</td><td>위궤양보다 더 흔하게 발생</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">합병증·천공</div><div class="body"><ul>
+    <li>소화성궤양 천공 시: <mark>갑작스럽고 날카로운, 참을 수 없이 심한 통증</mark>이 명치 중간부위에서 시작해 복부 전체로 퍼진다.</li>
+    <li>복부가 <mark>단단한 판자처럼(board-like rigidity)</mark> 된다. 오심·구토가 동반될 수 있다.</li>
+    <li>저혈압과 빈맥은 저혈량성 쇼크로 진행되면 나타난다.</li>
+  </ul></div></div>
+  <div class="warn"><b>주의/금기</b> · 천공은 외과적 응급상황이다. 판자 같은 복부 강직 + 명치에서 시작해 전복부로 퍼지는 극심한 통증은 천공을 의심한다.</div>
+  <div class="tip"><b>시험 포인트</b> · 십이지장궤양 = 젊은 나이·위산과다·공복/야간통·제산제로 완화·흑색변. 위궤양 = 식후 통증·토혈·암 진행 가능성.</div>
+</section>
+
+<section class="card" id="d2">
+  <h3><span class="num">2</span> 소화성궤양 치료제 <span class="en">Antacid / H2RA / PPI</span></h3>
+  <div class="field"><div class="label">제산제 (Antacids)</div><div class="body"><p>분비된 위산을 중화시켜 속쓰림 증상을 완화하나, 위산 분비 자체를 감소시키지는 않는다. 효과 지속 약 <mark>30~60분</mark>.</p></div></div>
+  <div class="field"><div class="label">H2 차단제 (H2 blocker)</div><div class="body"><ul>
+    <li>위산 생성 경로 중 히스타민에 의한 H2 receptor 자극 경로를 차단하여 부분적으로 위산 생성을 감소시킨다(완전 억제는 아님). 효과 지속 약 <mark>12시간</mark>. Ranitidine, famotidine 등.</li>
+    <li><b>cimetidine</b>: cytochrome P-450을 억제하는 유일한 H2RA로 많은 약물의 대사를 지연시킨다. Phenytoin, theophylline과 상호작용 가능성이 크다.</li>
+    <li><b>ranitidine</b>: 궤양 치유에 약 4~8주 소요, 더 장기 치료가 필요할 수 있다. 유해반응이 드물고 BBB를 통과하지 않아 중추신경계 억제 효과가 나타나지 않는다. 제산제는 흡수를 방해하므로 함께 복용하지 않는다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">PPI (Proton Pump Inhibitor)</div><div class="body"><ul>
+    <li>위산 분비 마지막 경로인 proton pump를 완전히 차단해 위산 분비 자체를 억제한다. <mark>H+/K+-ATPase를 억제</mark>해 산 분비를 줄인다. 효과 지속 약 72시간. Lansoprazole, omeprazole 등.</li>
+    <li><b>omeprazole</b>: 소화성궤양·위식도역류 단기치료에 4~8주 사용. 장기간 사용 시 위암 발병 증가와 관련이 있어 2개월로 제한되는 경우가 많다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">기타</div><div class="body"><ul>
+    <li>합성 프로스타글란딘 유도제 <b>misoprostol</b>.</li>
+    <li>COX-1은 적절한 신장 관류와 위점막층 보호·유지를 포함한 여러 기전을 통해 장기 건강에 영향을 미친다.</li>
+    <li>CCB(예: amlodipine) 사용 시 위괄약근 압력이 낮아져 GERD가 악화될 수 있다.</li>
+  </ul></div></div>
+  <div class="warn"><b>주의/금기</b> · PPI 장기 사용 시 철분·vit B12·Ca·Mg 흡수 감소로 골절 위험이 높아지고, 폐렴·C. difficile colitis 발생 위험도 증가한다.</div>
+</section>
+
+<section class="card" id="d3">
+  <h3><span class="num">3</span> 위염 <span class="en">Gastritis</span></h3>
+  <div class="field"><div class="label">급성 위염</div><div class="body"><p>산성 위액 또는 보호 점막층을 손상시키는 물질에 위점막이 노출될 때 손상이 유발된다. 대표 물질은 <mark>NSAIDs</mark>로, 프로스타글란딘 합성을 저해해 위 보호 점막 생성·점액 분비를 방해함으로써 위점막이 노출되는 환경을 만든다.</p></div></div>
+  <div class="field"><div class="label">만성 위염</div><div class="body"><ul>
+    <li>급성 위염이 반복되면 점막이 위축되고 상피 화생을 초래하는 점막의 만성 염증이 유발된다.</li>
+    <li><b>자가면역성(위 기저부) 위염</b>: 위산을 분비하는 위 기저부 벽세포에 대한 자가항체가 생성되어 벽세포를 파괴, 위 기저부 위축과 염산 분비 이상을 초래한다. 또한 내인성인자 분비 저하로 vit B12 결핍성 빈혈인 <mark>악성 빈혈</mark>을 유발한다.</li>
+    <li><b>헬리코박터 감염성 위염</b>: 만성 위염의 90%가 헬리코박터균 만성 감염에 의한다. 균은 강력한 요소분해효소를 분비, 암모니아를 생성해 위산을 중화시키며 생존 환경을 만든다. 위 상피세포 점막층 감염이 만성으로 진행되면 만성 위염이 발생한다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">GERD 진단 참고</div><div class="body"><ul>
+    <li>GERD는 특별한 진단검사 없이 속쓰림과 산 역류의 특징적 증상으로 진단한다.</li>
+    <li>GERD 환자에게 H. pylori를 찾기 위한 분변검사는 추천되지 않는다.</li>
+    <li>상부 위내시경은 GERD 진단의 필수 조건이 아니며, 보통 GERD 합병증이 의심될 때 시행한다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d4">
+  <h3><span class="num">4</span> 덤핑증후군 <span class="en">Dumping Syndrome</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>위 절제술 후 위 배출이 촉진되면서 생기는 증상이다. <mark>고삼투성 식사</mark>를 할 때 나타난다.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><p>어지러움, weakness, diaphoresis(발한), epigastric fullness, tachycardia, abdominal cramping 등. 초기 증상은 보통 <mark>식후 5~30분</mark>(또는 식사가 끝날 즈음)에 발생하며 현기증·빈맥·실신·발한·창백·심계항진·눕고 싶은 열망 등이 나타난다.</p></div></div>
+  <div class="field"><div class="label">간호중재·교육</div><div class="body"><ul>
+    <li>소량씩 자주 식사한다.</li>
+    <li>수분 섭취를 제한한다.</li>
+    <li><mark>저탄수화물 식사</mark>를 한다.</li>
+    <li>식사 후 <mark>축위(누운 자세)</mark>를 취한다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d5">
+  <h3><span class="num">5</span> 외과적 수술 후 식이 교육 <span class="en">Post-op Diet Education</span></h3>
+  <div class="field"><div class="label">교육 내용</div><div class="body"><ul>
+    <li>수술 후 합병증으로 발생할 수 있는 덤핑증후군, 식후 저혈당, 담즙역류성 위염 등에 대해 교육한다.</li>
+    <li><b>덤핑증후군 예방</b>: 소량씩 자주 식사, 수분 섭취 제한으로 저탄수화물 식사. 식후 15~30분(또는 식사 끝날 즈음) 증상이 나타날 수 있으므로 식후 축위 자세를 취한다.</li>
+    <li><b>식후 저혈당</b>: 농축된 탄수화물 덩어리가 십이지장으로 빨리 넘어가면서 인슐린 분비를 촉진시켜 저혈당이 발생한다. 소량씩 자주 식사하고 수분 섭취를 제한한다.</li>
+    <li>커피·차·콜라·알코올 등을 섭취하지 않도록 하고, 흡연자에게는 금연하도록 한다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d6">
+  <h3><span class="num">6</span> 위암 <span class="en">Gastric Cancer</span></h3>
+  <div class="field"><div class="label">증상</div><div class="body"><p>체중 감소, 식욕 부진, 삼키기 어려움, 복통, 배변습관 변화, 혈변 등. 이런 증상이 있으면 반드시 병원을 방문해 검진받도록 한다. 서구 생활습관의 영향으로 젊은 환자에서도 발병률이 높아지고 있다.</p></div></div>
+  <div class="field"><div class="label">수술 후 식이 교육</div><div class="body"><ul>
+    <li>수술 후 소화·흡수율이 줄고 식사량이 저하되어 체중 감소·영양 불균형이 초래될 수 있다.</li>
+    <li>양질의 단백질 식품 등 여러 영양소를 골고루 섭취한다.</li>
+    <li>음식은 조금씩 자주 천천히 먹고, <mark>식사 중 수분 섭취를 자제</mark>한다.</li>
+    <li>맵고 짠 음식은 피하고, 고기·과일·채소 등은 되도록 부드러운 상태로 섭취한다.</li>
+    <li>퇴원 후에도 식사 적응을 위한 주기적인 교육이 필요하다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d7">
+  <h3><span class="num">7</span> Child-Pugh score <span class="en">Child-Pugh classification</span></h3>
+  <div class="field"><div class="label">정의·용도</div><div class="body"><p>원래 간경변 환자에서 수술 위험 및 수술 후 생존률을 평가하는 데 사용되었고, 현재는 수술 후 경과, 간이식 적합 판정, 약물 용량 조절 등에도 사용된다.</p></div></div>
+  <div class="field"><div class="label">5가지 지표</div><div class="body"><ul>
+    <li>혈청 빌리루빈(높을수록 높은 점수), 혈청 알부민(낮을수록 높은 점수), 복수, 신경학적 이상, 프로트롬빈 시간 연장.</li>
+    <li><b>복수</b>: 없음 1점 / 이뇨제로 쉽게 조절 2점 / 조절 안 됨 3점.</li>
+    <li><b>신경학적 이상</b>: 없음 1점 / 의학적 조치로 쉽게 처치 가능한 경미한 증상 2점 / 조절되지 않는 혼수 3점.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">분류·생존률</div><div class="body">
+    <table class="cmp"><caption>Child-Pugh 분류 및 1년 생존률</caption>
+    <thead><tr><th>총점</th><th>Class</th><th>1년 생존률</th></tr></thead>
+    <tbody>
+      <tr><th>5~6점</th><td>A</td><td>100%</td></tr>
+      <tr><th>7~9점</th><td>B</td><td>81%</td></tr>
+      <tr><th>10~15점</th><td>C</td><td>45%</td></tr>
+    </tbody></table>
+  </div></div>
+</section>
+
+<section class="card" id="d8">
+  <h3><span class="num">8</span> ICG test <span class="en">Indocyanine Green</span></h3>
+  <div class="field"><div class="label">원리</div><div class="body"><p>ICG는 90% 이상이 간세포에서 섭취되어 간으로만 배설되는 특징이 있어, 투여 후 정체율이 간 기능 지표로 사용된다. 투여 15분 후 혈장에 남은 양을 측정하는 <b>ICG R15</b>(retention 15) 검사가 많이 이용된다.</p></div></div>
+  <div class="field"><div class="label">해석</div><div class="body"><p>검사값이 높을수록 ICG가 제거되지 않고 남아있는 것이므로 간기능 저하를 시사한다. <mark>10% 이하가 정상치</mark>이며, 40% 이상이면 예후가 매우 불량하다.</p></div></div>
+</section>
+
+<section class="card" id="d9">
+  <h3><span class="num">9</span> 간염 <span class="en">Hepatitis A / B / C</span></h3>
+  <div class="field"><div class="label">A형 간염 (HAV)</div><div class="body"><ul>
+    <li>HAV 감염이 원인이며 오염된 음식·물을 통해 전염(경구 감염). 피막이 없는 RNA 바이러스.</li>
+    <li>치료약은 없고 대증요법이 주 치료, 고단백 식이요법과 간의 휴식이 도움. 예방은 개인위생 준수 및 고위험군 예방접종.</li>
+    <li>백신 대상: 12~23개월 모든 영유아, 백신 미접종 2~18세 유아·청소년, A형간염 보균자와 직접 접촉한 자, 면역을 얻고자 하는 모든 사람.</li>
+    <li>만성화되지 않으며, 어린이는 거의 무증상이고 연령이 높아질수록 증상이 심해진다. 20세 이상 성인은 무증상으로 이미 면역이 형성된 경우가 많다.</li>
+    <li><b>증상</b>: 오심, 식욕부진, 열, 권태감, 복통, 황달.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">B형 간염 (HBV)</div><div class="body"><ul>
+    <li>HBV 감염이 원인이며 혈액 등 체액으로 감염. 만성 간질환의 가장 흔한 원인 중 하나.</li>
+    <li>성인은 대부분 특별한 치료 없이도 저절로 회복(충분한 휴식·고단백 식이). 필요시 항바이러스제, 심각한 경우 간이식.</li>
+    <li><b>감염 경로</b>: 수직감염(보유 산모 → 신생아), 수평감염(혈액·정액·타액의 바이러스가 주사바늘·성접촉·상처 점막/피부로 감염).</li>
+    <li>잠복기 45~180일을 거쳐 전신 권태, 식욕부진, 짙어진 소변, 황달, HBV 항원 출현, AST/ALT 상승. 무증상인 경우도 있다.</li>
+    <li>모든 국민은 백신을 접종해야 하고, B형 간염 산모의 신생아는 출생 시 <mark>B형 간염 백신 + 면역글로불린</mark>을 투여한다.</li>
+    <li>B형 간염 항원 양성이려면 노출 후 3~4주가 되어야 하며, <mark>IgM 양성은 급성 B형 간염</mark>을 의미한다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">C형 간염 (HCV)</div><div class="body"><ul>
+    <li>HCV 감염이 원인이며 혈액 등 체액으로 감염. 치료는 대부분 경구 항바이러스제(interferon 사용 가능). <mark>백신이 없다.</mark></li>
+    <li>혈중 바이러스 농도가 낮고 숙주 면역체계를 빠져나가 특이적 항체가 잘 생성되지 않으며 유전적 변이가 심해 백신 개발이 어렵다.</li>
+    <li>감염자의 70~80%가 만성화되고, 만성 감염자의 20% 이상이 간경변·간암으로 진행한다(C형 간염 환자의 50~80%가 만성 간염으로 진행). 만성 간염·간경변증·간암의 중요한 원인.</li>
+    <li>예방: 1회용 주사기 사용, 침·문신·피어싱 시 소독된 도구 사용.</li>
+    <li><b>HCV 항체</b>는 일반적으로 노출 후 2~6개월 사이 발생. 노출된 지 6개월이 안 된 경우 <mark>HCV RNA 검사</mark>로 확진하며, <mark>HCV RNA 음성이면 HCV 감염이 아니다.</mark></li>
+  </ul></div></div>
+  <div class="field"><div class="label">바이러스성 간염 공통</div><div class="body"><p>흔한 임상 특징은 오심·식욕부진·발열·권태감·복부통증·황달이며, 점토색 변·어두운 색 소변·관절통이 유발된다. 진단검사에서 AST가 정상의 <mark>20배 이상</mark> 높게 나타난다.</p></div></div>
+</section>
+
+<section class="card" id="d10">
+  <h3><span class="num">10</span> 간경화·간암 <span class="en">Liver Cirrhosis / HCC</span></h3>
+  <div class="field"><div class="label">병태생리</div><div class="body"><p>간세포 손상(간염)이 장기간 지속되며 간섬유화증이 진행되고, 간 전반에 진행되면 간경변증이 된다. 섬유화로 간 혈류 유입이 잘 안 되어 간문맥압이 증가하고, 문맥고혈압 합병증으로 <mark>복수·정맥류</mark>가 발생한다. 정상 간세포가 적어지면서 단백질 합성·해독 장애로 황달·간성뇌증이 발생하고 간암으로 이어질 수 있다.</p></div></div>
+  <div class="field"><div class="label">원인</div><div class="body"><p>만성 B형 간염 약 70%, 알코올성 간염, 만성 C형 간염 순으로 많다. 그 외 지방간염, 경화성 담관염, 유전적 간경변 등.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><ul>
+    <li>초기에는 대개 무증상, 진행 후 식욕부진·소화불량·복부 불쾌감 등 비특이적 증상.</li>
+    <li>복수가 차면 복부팽만감·하지 부종·숨참. 식도·위 정맥류 출혈, 말기에는 간성뇌증.</li>
+    <li>거미상 혈관종(앞가슴의 거미줄 모양 모세혈관 확장), 수장 홍반(손바닥이 붉어짐).</li>
+    <li>남성은 유방 비대·고환 위축, 여성은 월경 불규칙.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">진단</div><div class="body"><p>임상검사(간효소 상승, 응고검사 이상, 알부민 감소, 빈혈, 혈소판 감소증, 빌리루빈 상승, BUN/Cr 상승), 복수천자, 초음파(복수 발견·간/담관 해부학적 이상 감별), CT(간경화·문맥고혈압 관찰). 복수가 있을 때 타진 시 <mark>이동탁음(shifting dullness)</mark>·액체파동(fluid wave)을 확인한다.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><ul>
+    <li>무엇보다 <mark>원인 제거가 필수</mark>(알코올성은 금주·균형식, 바이러스성은 항바이러스 치료 선행). 초기 적절한 치료 시 대부분 정상 생활 가능, 금주가 매우 중요.</li>
+    <li><b>락툴로오스(lactulose) 관장</b>: 삼투성 설사를 유발하고 장내를 산성화해 암모니아를 변으로 제거. 1일 2~3회 대변을 보도록 조절하여 의식 회복 및 혈중 암모니아 수치 저하를 유도(간기능 저하 시 암모니아가 배출되어 독성 발생).</li>
+    <li><b>간암 치료</b>: TNM 병기·Child-Pugh score·전신 상태를 종합하여 수술/간이식, 고주파열치료술, 경동맥화학색전술(TACE), 방사선치료, 항암치료 등 시행. 항암제는 LENVIMA(lenvatinib)를 1차로 사용하기도 한다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">간성뇌증·간부전</div><div class="body"><ul>
+    <li>피부·결막 황달의 가장 큰 원인은 간부전(체내 빌리루빈 제거능력 저하).</li>
+    <li>필적 약화는 간질환의 초기 징후이고, 정신착란·혼란·졸림의 미묘한 변화는 간성뇌증의 후기 증상이다.</li>
+    <li><b>자세고정불능(asterixis)</b> 사정: 대상자의 팔을 곧게 펴고 손바닥을 아래로, 손목을 구부리고 손가락을 편 상태를 유지하게 요청한다. 손과 팔을 곧게 폈을 때 손가락·손목이 불규칙하게 파닥거리는 움직임으로, 간성뇌병증에서 흔히 발견된다.</li>
+  </ul></div></div>
+  <div class="tip"><b>시험 포인트</b> · 간성뇌증 = asterixis(자세고정불능) + 혈중 암모니아 상승 → lactulose로 암모니아 배출. 간경변 복수 → shifting dullness.</div>
+</section>
+
+<section class="card" id="d11">
+  <h3><span class="num">11</span> 급성 담낭염 <span class="en">Acute Cholecystitis</span></h3>
+  <div class="field"><div class="label">증상</div><div class="body"><ul>
+    <li>우상복부 통증(담도 산통으로 갑작스런 통증, 왼쪽 견갑골로 방사 가능), 압통(<mark>Murphy's sign</mark>).</li>
+    <li>대부분 오심 호소, 구토(종종 일시적으로 완화), 열(안 날 수도 있음), 움직일 때 통증 악화.</li>
+    <li>20~50%에서 황달, 담낭이 만져지는 경우는 거의 없음. 고령 환자는 Murphy sign이 나타나지 않아 진단이 지연될 수 있다. 무증상은 보통 담석증이다.</li>
+    <li>지방식·알코올·카페인 섭취 후 시간이 흐르면서 생성된다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">진단</div><div class="body"><p>검사 결과 백혈구(WBC)와 간효소(hepatic enzyme) 증가.</p></div></div>
+  <div class="field"><div class="label">위험요인</div><div class="body"><p>50세 이상, 여성, 비만, 고지혈증, 갑작스러운 체중감소, 임신 등.</p></div></div>
+  <div class="warn"><b>합병증</b> · 흔한 중증 합병증은 췌장염과 패혈증이다.</div>
+</section>
+
+<section class="card" id="d12">
+  <h3><span class="num">12</span> 췌장염 <span class="en">Pancreatitis</span></h3>
+  <div class="field"><div class="label">병태생리</div><div class="body"><p>췌장 효소(주로 트립신)에 의해 췌장 분비샘이 파괴되거나 염증이 발생하며 발병한다. 췌장 내에서 췌장 효소가 활성화되면 <mark>자가소화(autodigestion)</mark>로 염증과 괴사가 초래된다. 급성에서는 부분적 괴사가 발생 가능하고, 합병증으로 다발성 농양이 발생할 수 있다.</p></div></div>
+  <div class="field"><div class="label">원인</div><div class="body"><p>주 원인은 <mark>담석과 알코올</mark>. 약물·바이러스에 의해서도 발생.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><ul>
+    <li>상복부 중앙의 급성 천자통으로 등·왼쪽 견갑골·옆구리로 방사. 심한 오한·구토 유발.</li>
+    <li>특이 증상: 배꼽 주위 청색 착색 <mark>Cullen sign</mark>, 옆구리에 멍이 생기는 <mark>Grey Turner sign</mark>.</li>
+    <li>복통·오심·구토·설사·빈맥 등 동반.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">진단</div><div class="body"><p>혈액검사상 <mark>lipase, amylase 상승</mark>, WBC·CRP 등 염증 수치 상승. ERCP 같은 영상검사.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><ul>
+    <li>통증 치료, 적극적 수액 요법과 함께 <mark>금식</mark>. 이차 감염 예방·치료 위해 항생제 사용, 수술적 치료 고려.</li>
+    <li>저혈압을 보일 때 가장 우선 중재는 <mark>저혈압 교정</mark>이며, 췌장 효소 공급은 급성기 이후에 필요하다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">만성 췌장염</div><div class="body"><p>장기화되면 만성으로 진행. 췌장 기능 부전·지방변·영양 불균형·체중 감소 동반. 치료는 금연·금주 등 생활습관 교정, 통증 조절, 저지방 식이요법 등 대증치료, 췌관 스텐트 삽입(협착·폐쇄 완화), 췌석에 의한 폐쇄 시 체외충격파쇄석술로 췌석제거술, 복강 신경총 신경 차단술, 췌장 절제술 등.</p></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>급성 췌장염 vs 만성 췌장염</caption>
+    <thead><tr><th>항목</th><th>급성 췌장염</th><th>만성 췌장염</th></tr></thead>
+    <tbody>
+      <tr><th>발생</th><td>갑자기 발생</td><td>몇 년에 걸쳐 진행</td></tr>
+      <tr><th>주요 원인</th><td>음주, 담석 등</td><td>여러 원인에 의한 자극</td></tr>
+      <tr><th>통증</th><td>심한 복통</td><td>경미했던 복통이 장기간 심해졌다 나아졌다 반복</td></tr>
+      <tr><th>경과</th><td>적기에 치료하면 쉽게 회복 가능, 치료가 늦으면 췌장 기능 이상</td><td>췌장 기능 손실로 다른 문제 발생 가능</td></tr>
+    </tbody></table>
+  </div></div>
+</section>
+
+<section class="card" id="d13">
+  <h3><span class="num">13</span> 췌장암 <span class="en">Pancreatic Cancer</span></h3>
+  <div class="field"><div class="label">위험요인</div><div class="body"><p>가족력, 흡연, 음주, 당뇨, 만성 췌장염 병력, 비만 등.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><ul>
+    <li>복통, 종양으로 담즙이 제대로 흐르지 못해 황달, 소화액 통로가 막혀 소화장애·체중감소·지방변·식욕부진·구역감.</li>
+    <li>갑작스레 시작되는 통증으로, 대개 걷거나 똑바로 누울 때 심해지고 앉거나 앞으로 기울이면 완화된다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">진단</div><div class="body"><p>CT, 내시경 초음파, ERCP 등 영상검사. 조기 발견이 어렵고 조기 발견 가능한 혈액검사는 없다. 발생 시 <mark>CA19-9 혹은 CEA</mark> 종양표지자가 검출될 수 있다. 황달로 빌리루빈 증가, 2차적 췌장염으로 amylase 상승.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><ul>
+    <li>수술적 절제와 항암화학요법. 수술은 <mark>Whipple operation</mark>(담낭·담관·췌장 대부분·십이지장 일부·위 일부·비장 및 근처 림프절 제거).</li>
+    <li>췌장 절제 시 췌장의 꼬리는 소화효소·호르몬 생성 기능이 있어 보존한다.</li>
+    <li>항암화학요법: Gemcitabine, 5-FU 등.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d14">
+  <h3><span class="num">14</span> 크론병 vs 궤양성 대장염 <span class="en">IBD: Crohn's vs Ulcerative Colitis</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>둘 다 염증성장질환(IBD)으로, 장관 내 비정상적 만성 염증이 호전과 재발을 반복하는 질환이다. 정확한 기전은 불분명하며 환경적·유전적·면역학적 요인이 복합 작용한다.</p></div></div>
+  <div class="field"><div class="label">비교</div><div class="body">
+    <table class="cmp"><caption>궤양성 대장염 vs 크론병</caption>
+    <thead><tr><th>항목</th><th>궤양성 대장염</th><th>크론병</th></tr></thead>
+    <tbody>
+      <tr><th>침범 깊이</th><td>mucosa~submucosa(점막~점막하층)</td><td><mark>transmural(장벽 전층)</mark></td></tr>
+      <tr><th>침범 부위</th><td>항상 직장(rectum)부터 침범, 근위부로 진행하여 회장 말단까지 가능. 결장 점막에 국한</td><td>입(oral)부터 항문(anus)까지 전 GI tract 가능, 회장·결장이 가장 흔함</td></tr>
+      <tr><th>침범 양상</th><td>연속적, 광범위한 표재성 궤양, 장의 모양 유지</td><td><mark>불연속적 반점 형태(skip lesion)</mark>, 깊고 날카로운 선상 열상·궤양, 근육층 비후로 내강 협착</td></tr>
+      <tr><th>특징 증상</th><td>복통·복부경련·변실금·열·피로, 특징적으로 <mark>혈성 설사(bloody diarrhea)·직장 출혈</mark></td><td>복통·복부경련·설사·오심·구토</td></tr>
+      <tr><th>육아종</th><td>비육아종 병변</td><td>비건락성 육아종 병변</td></tr>
+      <tr><th>합병증</th><td>장관폐색·탈수·흡수 불량·철 결핍성 빈혈·악성 종양·원발성 경화성 담관염</td><td>탈수·협착·농양·누공·엽산/Ca/vit D 흡수 장애</td></tr>
+      <tr><th>수술</th><td>심한 경우·악성 종양 시 치료적 목적으로 수술</td><td>합병증 치료 제외하고는 수술이 금기</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="field"><div class="label">치료 (CRAMPS)</div><div class="body"><ul>
+    <li><b>C</b>ontrol diarrhea and infection</li>
+    <li><b>R</b>elieve pain and restore fluid</li>
+    <li><b>A</b>nticholinergics and antimicrobials</li>
+    <li><b>M</b>eals — correct nutritional deficiencies</li>
+    <li><b>P</b>sychological counseling</li>
+    <li><b>S</b>upport emotionally</li>
+  </ul></div></div>
+  <div class="field"><div class="label">식이·영양 교육</div><div class="body"><p>소량씩 자주 식사, 저지방식이·저섬유식이·저잔사식이, 자극이 적은 음식으로 섭취. 장을 통한 비타민 흡수가 방해되므로 <mark>vit B12·vit D</mark>를 보충한다.</p></div></div>
+  <div class="warn"><b>주의/금기</b> · 크론병은 합병증 치료를 제외하고는 수술이 금기다.</div>
+</section>
+
+<section class="card" id="d15">
+  <h3><span class="num">15</span> 대장암·결장암 <span class="en">Colorectal Cancer</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>대장·직장에서 발생하는 암으로 대다수가 선종성 용종이라는 양성 종양에서 시작한다. 보통 용종이 1cm 이상이고 2개 이상이며 dysplasia 소견 시 암일 가능성이 높아진다.</p></div></div>
+  <div class="field"><div class="label">위험인자</div><div class="body"><p>50세 이상, 비만, 2형 당뇨, 가족력, 염증성 장질환(궤양성 대장염·크론병), 방사선치료 이력, 식습관, 흡연, 용종증 가족력 등.</p></div></div>
+  <div class="field"><div class="label">증상 (위치별)</div><div class="body"><ul>
+    <li>초기에는 증상이 없을 수 있다.</li>
+    <li><b>우측 대장암</b>: 설사·소화불량·복부팽만·복통·체중 및 근력 감소.</li>
+    <li><b>좌측 대장암</b>: 변비·혈변·점액변·장폐색.</li>
+    <li><b>직장암</b>: 변비/설사·혈변·배변 후 잔변감·배변 시 통증.</li>
+    <li>결장암: 잠혈검사 양성, DRE 시 짙은 갈색의 변, 빈혈 증상 시 대장내시경이 필요하다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">진단·검진</div><div class="body"><p>대장내시경과 colon biopsy 선행, 혈액검사상 <mark>CEA와 CA19-9</mark> 종양표지자 검출. 50세 이상 남녀는 대장내시경 검진을 주기적으로 받으며, 국내 보건복지부는 5년마다 검진을 권고한다.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><p>수술요법·방사선요법·항암화학요법·표적치료요법.</p></div></div>
+  <div class="field"><div class="label">대장절제술 후 식이 교육</div><div class="body"><ul>
+    <li>장 길이에 따라 영양 흡수 능력이 달라지므로 주의가 필요하다.</li>
+    <li>변의 굳기 정상화를 위해 충분한 수분을 섭취한다.</li>
+    <li>소장 절제 부위가 많으면 소화·흡수가 불량하고 설사가 쉬우므로 <mark>설사 유발 음식을 피하고</mark> 점차적으로 섬유소 섭취를 늘려간다.</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d16">
+  <h3><span class="num">16</span> 복막염 <span class="en">Peritonitis</span></h3>
+  <div class="field"><div class="label">증상</div><div class="body"><p>복통, 약한 장음, 복부 강직, 손을 뗄 때 통증(반동압통).</p></div></div>
+  <div class="warn"><b>주의</b> · 복막염을 의심할 때는 수술을 준비해야 한다.</div>
+</section>
+
+<section class="card" id="d17">
+  <h3><span class="num">17</span> 급성 충수염 <span class="en">Acute Appendicitis</span></h3>
+  <div class="field"><div class="label">특징</div><div class="body"><ul>
+    <li><mark>10~30세</mark>에 가장 많이 발생. 고령에서는 잘 발생하지 않아 진단이 지연될 수 있다.</li>
+    <li>충수의 해부학적 위치에 따라 증상이 다를 수 있음을 고려한다.</li>
+  </ul></div></div>
+  <div class="field"><div class="label">사정·징후</div><div class="body"><p>복부 촉진에서 반동압통 양성 → <mark>Blumberg's sign</mark>. 우하복부 반동압통으로 <mark>McBurney's point</mark> 압통. 복막 염증 부위에서 칼로 찌르는 듯한 통증.</p></div></div>
+  <div class="field"><div class="label">진단</div><div class="body"><p>급성 충수염·충수파열 의심 시 시행하는 검사는 <mark>복부 CT</mark>로, 충수의 해부학적 이상 확인에 다른 영상검사보다 월등하다.</p></div></div>
+</section>
+
+<section class="card" id="d18">
+  <h3><span class="num">18</span> 복강내출혈 <span class="en">Intra-abdominal Hemorrhage</span></h3>
+  <div class="field"><div class="label">징후</div><div class="body"><ul>
+    <li><b>Grey Turner 징후</b>: 옆구리 부위의 푸르거나 붉은색 변화로 복강내 출혈을 의미(푸르스름한 착색).</li>
+    <li><b>Cullen 징후</b>: 배꼽 주변 피하조직의 멍과 부종. 급성 췌장염을 시사하며, 그 외 외상·대동맥파열·자궁외임신에서도 보일 수 있다.</li>
+    <li>복부 경직은 복부 대량 출혈을 의심하는 중요 사정 소견이다.</li>
+  </ul></div></div>
+  <div class="warn"><b>주의</b> · 복강내출혈 의심 환자에게 급속 수액요법을 수행했음에도 저혈압이 지속되면 수술을 먼저 준비해야 한다.</div>
+</section>
+
+<section class="card" id="d19">
+  <h3><span class="num">19</span> 식도정맥류 <span class="en">Esophageal Varices</span></h3>
+  <div class="field"><div class="label">정의·의심</div><div class="body"><p>과도한 알코올 남용으로 유발 가능하며, 식도 조직이 약해져 가벼운 외상으로도 출혈할 수 있다. 알코올 남용 과거력이 있는 환자의 비위관에서 검붉은색 혈액이 지속적으로 나온다면 식도정맥류를 의심한다.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><p><b>TIPS</b>(transjugular intrahepatic portosystemic shunt, 경정맥 간내 문맥전신 단락술): 간내에서 간정맥과 간문맥을 연결하는 통로를 만든 후 넓히고 스텐트를 삽입해 단락을 형성하는 치료법이다.</p></div></div>
+  <div class="warn"><b>주의</b> · TIPS는 스텐트가 막히거나 간성 혼수가 초래되는 부작용이 발생할 수 있다.</div>
+</section>
+
+<section class="card" id="d20">
+  <h3><span class="num">20</span> 그 외 기타 <span class="en">Others</span></h3>
+  <div class="field"><div class="label">게실염</div><div class="body"><p>급성 대장게실염이 의심될 때 <mark>조영증강 CT</mark>로 장벽이 두꺼워지는 상태를 확인하는 데 도움이 된다.</p></div></div>
+  <div class="field"><div class="label">바렛식도</div><div class="body"><p>바렛 식도는 <mark>식도선암의 위험인자</mark>로, 상부 위내시경과 생검으로 평가한다.</p></div></div>
+  <div class="field"><div class="label">서혜부 탈장</div><div class="body"><p>서혜부 탈장이 의심되는 환자를 검진할 때는 선 자세로 검진하는 동안 배 아래 힘을 주고 기침하도록 한다.</p></div></div>
+  <div class="field"><div class="label">변비 초래 약물</div><div class="body"><ul>
+    <li>amlodipine (CCB로 장운동 저하)</li>
+    <li>oxybutynin (항콜린 성질로 장에서 점액 건조)</li>
+    <li>naproxen (NSAIDs, 프로스타글란딘 억제로 변비 유발)</li>
+    <li>prevacid/lansoprazole (PPI, 변비와 관련)</li>
+    <li>칼슘보충제도 변비와 관련 있음</li>
+  </ul></div></div>
+  <div class="field"><div class="label">장폐색</div><div class="body"><p>일반적으로 소장폐색에서 혈관 내 → 혈관 밖으로의 액체 이동이 심하다. 따라서 장폐색 환자의 급성기 간호에서 <mark>저혈량증</mark>을 주의해야 한다.</p></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

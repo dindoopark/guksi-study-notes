@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 신장·혈액·면역·기타 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 신장·혈액·면역·기타</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">신장·혈액·면역·기타 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 신장·혈액·면역·기타 (CHAPTER 11).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q01">문 01</a></li>
+  <li><a href="#q02">문 02</a></li>
+  <li><a href="#q03">문 03</a></li>
+  <li><a href="#q04">문 04</a></li>
+  <li><a href="#q05">문 05</a></li>
+  <li><a href="#q06">문 06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13-14">문 13–14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19">문 19</a></li>
+  <li><a href="#q20">문 20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+  <li><a href="#q34-36">문 34–36</a></li>
+  <li><a href="#q37">문 37</a></li>
+  <li><a href="#q38">문 38</a></li>
+  <li><a href="#q39">문 39</a></li>
+  <li><a href="#q40">문 40</a></li>
+  <li><a href="#q41">문 41</a></li>
+  <li><a href="#q42">문 42</a></li>
+  <li><a href="#q43">문 43</a></li>
+  <li><a href="#q44">문 44</a></li>
+  <li><a href="#q45-46">문 45–46</a></li>
+  <li><a href="#q47">문 47</a></li>
+  <li><a href="#q48">문 48</a></li>
+  <li><a href="#q49">문 49</a></li>
+  <li><a href="#q50">문 50</a></li>
+  <li><a href="#q51">문 51</a></li>
+  <li><a href="#q52">문 52</a></li>
+  <li><a href="#q53">문 53</a></li>
+  <li><a href="#q54">문 54</a></li>
+  <li><a href="#q55">문 55</a></li>
+  <li><a href="#q56">문 56</a></li>
+  <li><a href="#q57">문 57</a></li>
+  <li><a href="#q58">문 58</a></li>
+  <li><a href="#q59">문 59</a></li>
+  <li><a href="#q60">문 60</a></li>
+  <li><a href="#q61">문 61</a></li>
+  <li><a href="#q62">문 62</a></li>
+  <li><a href="#q63">문 63</a></li>
+  <li><a href="#q64">문 64</a></li>
+  <li><a href="#q65">문 65</a></li>
+  <li><a href="#q66">문 66</a></li>
+  <li><a href="#q67">문 67</a></li>
+  <li><a href="#q68">문 68</a></li>
+  <li><a href="#q69">문 69</a></li>
+  <li><a href="#q70">문 70</a></li>
+  <li><a href="#q71">문 71</a></li>
+  <li><a href="#q72">문 72</a></li>
+  <li><a href="#q73">문 73</a></li>
+  <li><a href="#q74">문 74</a></li>
+  <li><a href="#q75">문 75</a></li>
+  <li><a href="#q76">문 76</a></li>
+</ul></nav>
+
+<section class="card" id="q01">
+  <h3><span class="num">문 01</span> <span class="en">CKD 요독증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성신장질환(CKD) 환자의 요독증(Uremia) 증상에 해당하지 않는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈관의 경화</li>
+    <li>말초신경병증</li>
+    <li>고칼슘혈증</li>
+    <li>위장관계 출혈 위험 증가</li>
+    <li>빈혈 위험 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q02">
+  <h3><span class="num">문 02</span> <span class="en">CKD 빈혈 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 만성신장질환(CKD) 환자에게 나타난 빈혈을 완화시키기 위한 가장 효과적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Bicarbonate 투여</li>
+    <li>단백질 섭취 제한</li>
+    <li>Erythropoietin 투여</li>
+    <li>고혈압 조절</li>
+    <li>철분섭취 강화</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q03">
+  <h3><span class="num">문 03</span> <span class="en">신혈류량</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신장으로 유입되는 혈액량은 심박출량의 몇 %인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>80%</li>
+    <li>40%</li>
+    <li>20~25%</li>
+    <li>10~15%</li>
+    <li>5%</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q04">
+  <h3><span class="num">문 04</span> <span class="en">CKD 임상진단검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성신장질환(CKD)을 진단하기 위한 임상진단검사에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>CKD를 정확히 진단하기 위해 조영제를 사용한 CT가 이용된다.</li>
+    <li>CKD에서 일반적으로 신피질의 부종을 볼 수 있다.</li>
+    <li>소변에서 혈액이 검출되면 사구체 기능장애를 의미한다.</li>
+    <li>알부민:크레아티닌 비율이 30~299 mg/g일 때 미세알부민뇨로 판단한다.</li>
+    <li>CKD 환자의 헤모글로빈 수치가 9~10 g/dL이면 악성빈혈로 진단한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q05">
+  <h3><span class="num">문 05</span> <span class="en">혈액투석여과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>혈액투석여과(hemodiafiltration)에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>확산에 의해 혈액을 여과한다.</li>
+    <li>수분·전해질 수치가 급격하게 변하지 않아 심장 부담이 적다.</li>
+    <li>혈류속도가 최소 300 mL/min 이면 가능하므로 작은 혈관에 적용하기 쉽다.</li>
+    <li>저분자 용질 제거에는 유리하나 중분자 제거의 효과는 적다.</li>
+    <li>투석의 효과가 강하나 여과의 효과는 적다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q06">
+  <h3><span class="num">문 06</span> <span class="en">폐색전증 신기능 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>빈맥, 빈호흡, 저혈압을 보이며 폐색전증이 의심되는 환자에게 신장 기능 손상 여부를 가장 신속히 확인할 수 있는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>MRI</li>
+    <li>소변검사</li>
+    <li>폐혈관조영술</li>
+    <li>V/Q perfusion scan</li>
+    <li>조영제를 이용한 폐 CT</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">신장 허혈성 손상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신장의 허혈성 손상이 시작되는 상황은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>40시간 이상 지속적으로 평균동맥압이 60 mmHg 이하</li>
+    <li>평균동맥압이 60 mmHg 이상이나 시간당 소변량이 30 mL 이하</li>
+    <li>60시간 이상 간헐적으로 수축기압이 100 mmHg 이하</li>
+    <li>수축기압이 100 mmHg 이하</li>
+    <li>이완기압이 60 mmHg 이하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">신장이식 후 응급조치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신장이식을 받은 환자에게 나타나는 다음 상황 중 가장 신속한 조치가 요구되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>PTT 20 sec</li>
+    <li>크레아티닌 감소</li>
+    <li>체온 38℃</li>
+    <li>혈당 260 mg/dL</li>
+    <li>Hemoglobin 9.6 g/dL</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">사구체여과율 평가</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 사구체여과율을 평가하기 위한 가장 적절한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>proteinuria</li>
+    <li>serum creatinine</li>
+    <li>serum amylase</li>
+    <li>blood urea nitrogen (BUN)</li>
+    <li>urine creatinine clearance</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">조영제 CT 후 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>조영제가 주입된 CT 검사 후의 간호중재로 가장 중요한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>적절한 수분 섭취를 강조한다.</li>
+    <li>항생제를 투약한다.</li>
+    <li>과량의 염분을 제공한다.</li>
+    <li>절대 침상안정을 유지한다.</li>
+    <li>활력징후를 15분마다 4회, 매시간 4회, 이후부터 4시간마다 측정한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">급성신부전 검사결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>식도정맥류 파열 후 내원한 35세 남자가 상부위장관의 과도한 출혈을 보인 후 급성신부전 상태가 되었다. 다음 중 예상되는 임상검사 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>낮은 요 삼투압, 요 중 높은 나트륨 비중</li>
+    <li>높은 요 삼투압, 요 중 높은 나트륨 비중</li>
+    <li>낮은 요 삼투압, 요 중 낮은 나트륨 비중</li>
+    <li>높은 요 삼투압, 요 중 낮은 나트륨 비중</li>
+    <li>낮은 요 삼투압, 요 중 나트륨 정상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">furosemide 작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 furosemide의 효과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수분을 세뇨관으로 끌어당기는 삼투압제제로 작용</li>
+    <li>헨레고리의 상행각에서 나트륨과 수분의 재흡수를 감소시킴</li>
+    <li>항이뇨호르몬(ADH)의 길항제로 작용</li>
+    <li>aldosterone 길항제로 작용</li>
+    <li>집합관에서 칼륨 분비를 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13-14">
+  <h3><span class="num">문 13–14</span> <span class="en">횡문근융해증 (공유지문)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>부엌에서 쓰러진 후 약 48시간 동안 움직일 수 없었던 상태에서 이송되어 온 50세 여자의 소변이 짙은 홍차색깔이다. myoglobin이 검출되었다. BUN은 52 mEq/L, 혈청 creatinine은 4.2 mEq/L, 혈청 포타슘은 5.6 mEq/L이다.</p></div></div>
+  <div class="field"><div class="label">문 13</div><div class="body"><p>이 환자에게 신장손상을 최소화하기 위해 가장 우선적으로 처치되어야 하는 중재는?</p><ol>
+    <li>루프계 이뇨제 투여</li>
+    <li>sodium bicarbonate 1 ample 투여</li>
+    <li>0.9% 식염수를 투여하여 시간당 소변배출량을 300 mL로 유지</li>
+    <li>가능한 한 빨리 복막투석 실시</li>
+    <li>sorbitol 구강투여</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 14</div><div class="body"><p>이 환자에게 나타날 것으로 예측되는 검사수치는?</p><ol>
+    <li>CK 30,000</li>
+    <li>amylase 500</li>
+    <li>troponin 12</li>
+    <li>bilirubin 4.2</li>
+    <li>BUN 10</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">다발성 장기손상 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다발성 장기손상을 입은 16세 남자의 검사결과 BUN 60 mEq/L, BP 98/50 mmHg이었다. 이 상황에서 제공되는 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈액투석</li>
+    <li>교질용액 bolus 투여</li>
+    <li>루프계 이뇨제</li>
+    <li>복막투석</li>
+    <li>지속적 신대체요법(CRRT)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">ATN 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고 후 ICU에서 치료 중인 26세 여자에게 2일째 급성세뇨관괴사(ATN)가 나타났다. 입원 시 혈압은 정상이었다면 다음 중 ATN을 초래한 원인으로 생각되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>출혈</li>
+    <li>횡문근융해증</li>
+    <li>크레아티닌 방출</li>
+    <li>부정맥</li>
+    <li>저혈당</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">신성 vs 신전성 감별</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성세뇨관괴사증이 발생하였을 때 신부전의 원인이 신장성(intrarenal)인지 신전성(prerenal)인지를 파악하기 위해 요구되는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>요비중</li>
+    <li>요삼투압</li>
+    <li>BUN과 creatinine 비율</li>
+    <li>소변 전해질</li>
+    <li>C-반응성 단백(C-reactive protein: CRP)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">norepinephrine 효과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중증 패혈증 치료를 위해 수액요법(fluid resuscitation)을 받고 있는 환자의 평균동맥압(MAP)이 55 mmHg이고 norepinephrine이 처방되었을 때 예상되는 효과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>신장관류액 유지</li>
+    <li>관상동맥 내 혈액흐름의 증가</li>
+    <li>정맥귀환율과 전부하(preload)의 증가</li>
+    <li>혈관긴장도와 후부하(afterload)의 회복</li>
+    <li>사구체여과율 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19">
+  <h3><span class="num">문 19</span> <span class="en">수액소생술 효과 지표</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심한 탈수로 수액소생술(fluid resuscitation) 요법이 제공되는 환자에게 중재가 효과적임을 나타내는 지표는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>CVP 2 mmHg</li>
+    <li>HR가 감소함</li>
+    <li>맥압이 감소함</li>
+    <li>혈청 bicarbonate 16 mEq/L</li>
+    <li>소변량이 감소함</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q20">
+  <h3><span class="num">문 20</span> <span class="en">우선 사정 환자</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 환자의 상태를 고려할 때 가장 우선적으로 사정해야 하는 환자는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복수가 동반되지 않은 간경변증 환자</li>
+    <li>복수가 동반된 췌장염 환자</li>
+    <li>우측 신장이 촉진되는 환자</li>
+    <li>말초부종과 간염이 있는 환자</li>
+    <li>식사 직후 고창과 미열이 동반된 환자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">체액불균형 민감 지표</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 중증 환자의 체액불균형을 판단하기 위한 가장 민감성 높은 지표는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체중</li>
+    <li>I/O balance</li>
+    <li>환자사정</li>
+    <li>소변 내 전해질 수치</li>
+    <li>혈액검사 상 백혈구 수치</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">투석환자 폐색전증 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>CHF, 고혈압, 당뇨병이 있는 70세 환자가 폐렴과 패혈증으로 ICU에서 약 2주간 치료받고 있으며 만성신장질환으로 투석도 진행 중이다. 갑자기 호흡곤란, 빈맥과 빈호흡을 호소하고 폐색전증이 의심될 때 다음 중 진단을 위해 요구되는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>D-dimer</li>
+    <li>chest X-ray</li>
+    <li>조영제를 투입한 CT 촬영</li>
+    <li>ventilation/perfusion scan</li>
+    <li>blood culture</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">ATN 다뇨기 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성세뇨관괴사가 발생한 후 하루 4L의 소변을 배출하는 환자의 간호에서 가장 중요한 고려사항은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수분섭취 제한</li>
+    <li>체액부족과 전해질 농도 사정</li>
+    <li>고장성 용액주입</li>
+    <li>이뇨제 주입</li>
+    <li>염분섭취 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">CKD 가장 흔한 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>현재 만성신장질환의 가장 일반적인 원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>조절되지 않는 당뇨</li>
+    <li>패혈증</li>
+    <li>급성사구체신염</li>
+    <li>신정맥혈전증</li>
+    <li>고혈압</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">조영제 급성신손상 결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>조영제 부작용으로 급성신손상을 입은 환자에게 예상되는 임상결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>BUN 20, creatinine 0.9</li>
+    <li>BUN 47, creatinine 3.8</li>
+    <li>BUN 60, creatinine 1.5</li>
+    <li>BUN 90, creatinine 2.5</li>
+    <li>BUN 110, creatinine 5.2</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">소변 착색 약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>60세 여자가 요로감염으로 항생제를 복용하던 중 혈뇨가 나온다고 호소하여 내원하였다. 다음 약물 중 소변을 오렌지색으로 착색시켜 혈뇨처럼 혼돈할 수 있는 작용이 있는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Nitrofurantoin</li>
+    <li>Ampicillin</li>
+    <li>Fluoroquinolones</li>
+    <li>Phenazopyridine</li>
+    <li>Trimethoprim</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">말기신장질환 특징</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>말기신장질환의 특징을 설명한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>네프론 기능이 약 90% 소실</li>
+    <li>혈청 creatinine이 3.0 mg/dL 이상</li>
+    <li>BUN 60 mg/dL</li>
+    <li>요의 농축도 감소</li>
+    <li>지속적인 혈뇨</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">급성신부전 다뇨기 전해질</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성신부전을 진단 받은 후 환자가 하루 4L의 소변을 배출하고 있을 때 사정해야 할 전해질 불균형은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고칼륨혈증, 저나트륨혈증</li>
+    <li>저나트륨혈증, 저칼륨혈증</li>
+    <li>고칼륨혈증, 고나트륨혈증</li>
+    <li>고칼슘혈증, 저나트륨혈증</li>
+    <li>저칼슘혈증, 고나트륨혈증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">신전성 신부전 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성신부전의 원인 중 신전성(prerenal) 요인에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성사구체신염</li>
+    <li>양성 전립선비대증</li>
+    <li>조영제 사용</li>
+    <li>부정맥</li>
+    <li>결석</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">신증후군 식이</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>단백뇨와 부종이 관찰되어 스테로이드 고용량치료를 받고 있는 신증후군 환자에게 권장되는 식이에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>수분 섭취 권장</li>
+    <li>엄격한 열량제한 식이</li>
+    <li>단백질 섭취 적정량 유지</li>
+    <li>동물성 지방 섭취 권장</li>
+    <li>염분과 포타슘 섭취 권장</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">RAAS 활성화 요인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 레닌-안지오텐신-알도스테론 체계를 활성화 시키는 요인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저칼륨혈증</li>
+    <li>저나트륨혈증</li>
+    <li>체액량 과다</li>
+    <li>BUN과 creatinine 비율의 증가</li>
+    <li>평균동맥압 저하와 신동맥 저혈압</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">고칼륨혈증 ECG</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성신부전으로 진단받은 환자의 심전도에서 QRS 폭이 넓어지고 T파가 높아지는(peaked T wave) 양상을 보일 때 어떤 전해질의 불균형이 있는 것으로 볼 수 있는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저칼륨혈증</li>
+    <li>고인산혈증</li>
+    <li>고칼륨혈증</li>
+    <li>고염소혈증</li>
+    <li>저칼슘혈증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">무뇨 시 우선조치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>중환자실에서 치료 중인 환자에게 유치도뇨관이 삽입되어 있으나 지난 2시간 동안 소변이 배출되지 않았다면 가장 먼저 취해야 할 조치는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>추후 처방을 위해 주치의에게 연락</li>
+    <li>도뇨관 제거</li>
+    <li>정맥수액주입량 증가</li>
+    <li>환자의 의식 확인</li>
+    <li>도뇨관의 개방성 확인</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q34-36">
+  <h3><span class="num">문 34–36</span> <span class="en">수혈 용혈반응 (공유지문)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>수혈이 시작된 직후, 환자가 짧은 호흡과 가슴통증을 호소하고 있다. 활력징후는 BP 100/56, PR 110, RR 22, 체온 38.7℃이다. 이후 헤모글로빈뇨증(hemoglobinuria)과 홍차색 소변을 보였다.</p></div></div>
+  <div class="field"><div class="label">문 34</div><div class="body"><p>이 상황에서 간호사가 즉각적으로 해야 하는 것은?</p><ol>
+    <li>나이트로글리세린 설하투여</li>
+    <li>주치의에게 연락</li>
+    <li>수혈을 즉각적으로 중단</li>
+    <li>지지적인 간호 제공하면서 활력징후를 지속적으로 관찰</li>
+    <li>생리식염수를 즉각적으로 정맥투여</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 35</div><div class="body"><p>이 상황은 혈액의 어떤 반응이 나타난 것인가?</p><ol>
+    <li>용혈반응</li>
+    <li>아나필락틱반응</li>
+    <li>발열반응</li>
+    <li>순환성 과부하</li>
+    <li>치료적 반응</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 36</div><div class="body"><p>이 상황에서 기술된 수혈반응이 나타난 원인은?</p><ol>
+    <li>수혈된 혈액의 혈장단백질에 대한 알레르기반응</li>
+    <li>공여자의 백혈구에 대한 환자의 항체반응</li>
+    <li>환자의 혈액형과 일치하지 않는 혈액의 수혈</li>
+    <li>혈액이 너무 빨리 주입되었기 때문</li>
+    <li>약화된 신체 상태로 인한 과민반응</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q37">
+  <h3><span class="num">문 37</span> <span class="en">다발성 장기부전 지표</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 다발성 장기부전을 나타내는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>시간당 소변량 30 mL 이하, BUN 18 mg/dL, WBC 5,120</li>
+    <li>상부 위장관 출혈, GCS점수 15, Hct 25%</li>
+    <li>총 빌리루빈 15 mg/dL, 혈청 creatinine 8 mg/dL, 혈소판 2,300 mm³</li>
+    <li>분당 호흡수 45회, PaCO₂ 60 mmHg, 희미하게 투영된 흉부 X-ray</li>
+    <li>고혈압, 빈맥, 빈호흡</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q38">
+  <h3><span class="num">문 38</span> <span class="en">외상 후 생명위협 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>25세 남자가 교통사고로 인한 다발성손상으로 12시간 동안 수술을 받은 후 ICU에서 기관내 삽관, 기계적 환기, 여러 번의 수혈을 받았다. 이러한 외상을 입은 환자에게 나타날 수 있는 생명을 위협하는 합병증의 초기 징후는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>알칼리증, 고혈압, 위장관 운동저하</li>
+    <li>산증, 저체온, 폐부종</li>
+    <li>저혈압, 부정맥, 폐부종</li>
+    <li>출혈, 감염, 피부긴장도 감소</li>
+    <li>알칼리증, 고혈압, 피부긴장도 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q39">
+  <h3><span class="num">문 39</span> <span class="en">탈수 vs 신부전 감별</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>53세 여자가 지난 3일간 오심과 구토가 지속됨을 호소하다 응급실로 내원하였는데, 초기 혈액검사에서 BUN 28, creatinine 1.0, K+ 5.9, Hct 58이었다. 의식은 명료하며 지난 이틀간 소량의 액체류만 섭취할 수 있었다고 할 때 예상되는 상황은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성신부전</li>
+    <li>만성신부전</li>
+    <li>탈수</li>
+    <li>급성세뇨관괴사</li>
+    <li>급성사구체신염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q40">
+  <h3><span class="num">문 40</span> <span class="en">고칼륨혈증 ECG 변화</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고칼륨혈증에서 나타나는 심전도의 변화는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>넓어진 QRS 폭, ST 상승, 넓어진 PR 간격</li>
+    <li>QT 지연, 서맥</li>
+    <li>U파 출현, ST 하강, 심실빈맥</li>
+    <li>빈맥, 심실부정맥</li>
+    <li>넓어진 T파, ST 하강, 좁아진 PR 간격</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q41">
+  <h3><span class="num">문 41</span> <span class="en">erythropoietin 생성부위</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>적혈구생성 촉진인자(erythropoietin)의 약 90%가 만들어지는 곳은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>골수</li>
+    <li>신장</li>
+    <li>간</li>
+    <li>폐</li>
+    <li>뼈의 말단부</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q42">
+  <h3><span class="num">문 42</span> <span class="en">SIRS vs sepsis</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>전신성 염증반응증후군(Systemic Inflammatory Response Syndrome; SIRS)과 패혈증(sepsis)의 차이를 가장 잘 설명한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>감염이 동반되면 SIRS이다.</li>
+    <li>맥박과 호흡이 낮아지면 sepsis이다.</li>
+    <li>체온상승은 SIRS에서만 나타난다.</li>
+    <li>빈맥은 sepsis에서만 나타난다.</li>
+    <li>혈액배양검사에서 양성이면 sepsis이다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q43">
+  <h3><span class="num">문 43</span> <span class="en">신부전 대사성 산증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신부전 환자의 ABGA 검사 결과 pH 7.32, PaCO₂ 35, HCO₃ 18로 나왔다. 이러한 산염기 불균형이 초래된 이유는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>호흡을 통한 이산화탄소의 배출 저하</li>
+    <li>신장을 통한 중탄산이온의 배출 저하</li>
+    <li>신장을 통한 칼슘이온의 배출 증가</li>
+    <li>호흡을 통한 나트륨이온의 배출 증가</li>
+    <li>신장을 통한 대사성 산물인 산의 배출 저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q44">
+  <h3><span class="num">문 44</span> <span class="en">고칼륨혈증 응급중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 혈청 K 수치가 8.8 mEq/L이며, 심전도에서 QRS가 넓어지고 서맥을 보일 때 가장 적절한 응급 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Kayexalate 관장</li>
+    <li>Calcium gluconate, glucose, insulin 정맥투여</li>
+    <li>sorbitol 구강투여</li>
+    <li>혈액투석</li>
+    <li>Furosemide 투여</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q45-46">
+  <h3><span class="num">문 45–46</span> <span class="en">HIT (공유지문)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>58세 여자가 심부정맥혈전증(DVT)과 폐색전으로 내원하였다. 환자는 헤파린 bolus를 투여 받고 지속적인 헤파린 주입치료를 받고 있다. 다음날 헤파린에 의한 혈소판감소증이 나타났고 헤파린 주입이 중단되었다.</p></div></div>
+  <div class="field"><div class="label">문 45</div><div class="body"><p>다음 중 헤파린에 의한 혈소판감소증이 의심되는 상황은?</p><ol>
+    <li>정맥주사 주입부위 주변 출혈</li>
+    <li>PTT 50 secs</li>
+    <li>맥박소실, INR 5</li>
+    <li>점상출혈, 혈소판 수치 50,000/mm³</li>
+    <li>의식수준의 변화, bilirubin 7 mg/dL</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 46</div><div class="body"><p>이 환자가 추후 색전의 위험으로부터 폐를 보호하기 위해 이틀 후에 Greenfield 필터 주입이 예정되어 있다. 사전검사 결과 혈소판 수치가 20,000/mm³이었다면 가장 적절한 중재는?</p><ol>
+    <li>추가처방을 위해 주치의에게 검사결과를 보고함</li>
+    <li>굵은 사이즈로 여분의 IV line을 확보함</li>
+    <li>신경학적 상태를 주의 깊게 관찰함</li>
+    <li>항응고제 argatroban을 중단함</li>
+    <li>배뇨상태를 주의 깊게 관찰함</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q47">
+  <h3><span class="num">문 47</span> <span class="en">DIC 의심 소견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>패혈성쇼크가 있는 환자에게 나타난 다음 상황에서 파종성혈관내응고(DIC)가 생긴 것으로 의심되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>ELISA 양성</li>
+    <li>혈소판 수치 감소</li>
+    <li>지연된 PR, PTT, bleeding time</li>
+    <li>감소된 hemoglobin과 hematocrit</li>
+    <li>섬유소분해산물과 D-dimer의 증가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q48">
+  <h3><span class="num">문 48</span> <span class="en">중독 환자 초기중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>약물의 종류에 상관없이 중독 환자에게 제공되는 초기 중재의 목적은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>약물의 배출을 증가</li>
+    <li>적절한 때에 해독제를 투여</li>
+    <li>추가적인 약물의 흡수를 방지</li>
+    <li>환자의 기도확보와 적절한 호흡을 유지</li>
+    <li>환자의 의식사정과 지남력 유지</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q49">
+  <h3><span class="num">문 49</span> <span class="en">헤파린→와파린 전환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>과응고장애(hypercoagulation disorder)를 진단받은 환자에게 헤파린을 정맥투여하고 있다. 와파린 치료를 시작할 예정이라면 헤파린 주입을 중단하는 시점은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>환자가 퇴원할 때</li>
+    <li>ICU에서 일반병실로 이동할 때</li>
+    <li>와파린 치료를 받으면서 치료적 INR에 이를 때</li>
+    <li>와파린 경구투여가 시작되었을 때</li>
+    <li>경구섭취가 가능하여 영양섭취를 보충할 수 있을 때</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q50">
+  <h3><span class="num">문 50</span> <span class="en">젖산농도 상승 해석</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>입원 후 환자의 젖산농도가 8시간 동안 2 mmol/L에서 6 mmol/L로 상승했다면 어떤 상황이라고 판단되는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>적절한 수액치료가 진행 중이다.</li>
+    <li>TPN 요법을 즉시 시작할 필요가 있다.</li>
+    <li>조직관류가 부적절한 상태이다.</li>
+    <li>신선동결혈장 20 units을 즉시 수혈해야 한다.</li>
+    <li>알부민을 즉시 보충할 필요가 있다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q51">
+  <h3><span class="num">문 51</span> <span class="en">Coumadin 과량 출혈</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>복부 수술 후 Coumadin을 처방받아 퇴원한 60세 환자가 혈뇨가 보인다며 응급실로 내원하였다. INR 2.1, Hgb 9.5, Hct 29%일 때 다음 중 초기치료로 적용될 수 있는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>FFP 주입</li>
+    <li>동결혈장수혈</li>
+    <li>혈소판 수혈</li>
+    <li>비타민 K 주입</li>
+    <li>전혈 수혈</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q52">
+  <h3><span class="num">문 52</span> <span class="en">혈소판감소증 기여요인</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>55세 남자가 지난 5일간 선홍색 토혈을 하고 어제부터는 검은 변이 나온다고 호소하여 내원하였다. 과거에는 출혈병력이 없었다고 한다. 제2형 당뇨를 진단받았고 관절염이 있다. 매일 2~4정의 아스피린을 관절염 통증조절을 위해 복용한다고 하였다. 매일 맥주를 8병에서 10병정도 마시며 이전에 알코올중독으로 진단받은 적이 있다. 신체검진 결과 창백하고 피부긴장도가 감소하였으며 상지와 허벅지 부분에 반상출혈이 관찰되었다. 심장과 폐, 복부검진결과는 정상이다. 초기 혈액검사에서 hemoglobin 7.0 g/dL, hematocrit 20%, platelet 75,000/mm³, INR 2.0, PT 18.0, PTT 50이었다.</p></div></div>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 지문의 사정요소 중 환자에게 발생한 혈소판감소증의 기여요인으로 생각되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>남성</li>
+    <li>제2형 당뇨</li>
+    <li>관절염</li>
+    <li>알코올중독</li>
+    <li>아스피린의 습관적 복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q53">
+  <h3><span class="num">문 53</span> <span class="en">DIC 즉각조치 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파종성혈관내응고증(DIC)이 있는 환자에게 즉각적인 조치가 필요한 검사 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>International Normalized Ratio (INR) 2.0</li>
+    <li>혈소판 8,000</li>
+    <li>aPTT 60초</li>
+    <li>fibrinogen 300 mg/dL</li>
+    <li>PTT 40초</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q54">
+  <h3><span class="num">문 54</span> <span class="en">이식증(pica)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>32세 여자가 먼지나 테이프 등 먹을 수 없는 것들을 먹고 싶은 이상 충동증세를 보이고 있다. 다음 중 이런 행동을 유발할 가능성이 가장 높은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>파종성혈관내응고</li>
+    <li>혈소판감소증</li>
+    <li>철분결핍성 빈혈</li>
+    <li>겸상적혈구 빈혈</li>
+    <li>백혈구감소증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q55">
+  <h3><span class="num">문 55</span> <span class="en">DIC 즉각관리 상태</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 파종성혈관내응고증을 진단받은 환자에게 즉각적인 관리가 필요한 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>체온이 39℃일 때</li>
+    <li>짙은 색 소변을 보일 때</li>
+    <li>환자의 의식이 저하될 때</li>
+    <li>환자가 침상 밖으로 나오길 원할 때</li>
+    <li>환자가 손발 저림을 호소할 때</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q56">
+  <h3><span class="num">문 56</span> <span class="en">DIC 섬유소용해능 사정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>파종성혈관내응고증을 가진 환자의 섬유소 용해능(fibrinolytic activity)을 사정할 때 다음 중 주의 깊게 관찰해야 하는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>혈소판</li>
+    <li>헤모글로빈과 헤마토크릿</li>
+    <li>프로트롬빈 시간과 INR</li>
+    <li>피브린 분해산물</li>
+    <li>적혈구 수치</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q57">
+  <h3><span class="num">문 57</span> <span class="en">혈우병 수혈 성분</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>혈우병과 같은 응고인자결핍이 있는 환자가 다음 중 어떤 성분을 수혈 받는 것이 도움이 되는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>농축적혈구(packed red blood cells)</li>
+    <li>전혈</li>
+    <li>신선한 동결혈장</li>
+    <li>혈소판</li>
+    <li>백혈구</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q58">
+  <h3><span class="num">문 58</span> <span class="en">횡문근융해증 즉각처치</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>횡문근융해증을 진단받은 환자의 검사결과 중 즉각적인 처치가 요구되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>BUN 50 mg/dL</li>
+    <li>creatinine 2.0 mg/dL</li>
+    <li>potassium 6.9 mEq/L</li>
+    <li>calcium 7.5 mg/dL</li>
+    <li>sodium 138 mEq/L</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q59">
+  <h3><span class="num">문 59</span> <span class="en">혈소판감소증 수혈성분</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 혈소판감소증 시 투여되어야 하는 혈액성분으로 가장 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>전혈</li>
+    <li>신선한 동결혈장</li>
+    <li>혈소판</li>
+    <li>적혈구</li>
+    <li>백혈구</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q60">
+  <h3><span class="num">문 60</span> <span class="en">혈액세포 전구체</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>모든 혈액세포의 기본적인 전구체는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>거핵세포(megakaryocyte)</li>
+    <li>망상적혈구(reticulocyte)</li>
+    <li>줄기세포(stem cell)</li>
+    <li>과립구(granulocyte)</li>
+    <li>원시세포(archaeocytes)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q61">
+  <h3><span class="num">문 61</span> <span class="en">만성질환 빈혈 기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성 질환으로 염증반응을 보이는 노인 환자에게 빈혈이 발생되는 주요 기전은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>식욕부진에 의한 철, 칼슘, 비타민 C의 부족</li>
+    <li>위장관계 잠행성 출혈로 인한 만성 철분 부족</li>
+    <li>복합질환에 의한 염증성 시토카인의 증가</li>
+    <li>조절되지 않는 당뇨와 이에 따른 신장질환</li>
+    <li>침상안정과 부동으로 인한 대사작용 저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q62">
+  <h3><span class="num">문 62</span> <span class="en">AB형 혈액형</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>AB형 혈액형을 가진 환자에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>A형 또는 B형 혈액의 항원을 갖고 있다.</li>
+    <li>A형과 B형 혈액에 대한 항체를 갖고 있다.</li>
+    <li>A형 혈액을 가진 사람에게 혈액을 공여할 수 있다.</li>
+    <li>모든 혈액형으로부터 수혈 받을 수 있다.</li>
+    <li>O형 혈액형을 가진 사람에게 혈액을 공여할 수 있다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q63">
+  <h3><span class="num">문 63</span> <span class="en">아나필락시스 응급중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항생제를 정맥투여한 직후 환자가 천명음을 동반한 짧은 호흡, 두드러기, 저혈압을 보이고 있다. 이 경우 환자안전을 위해 가장 즉각적으로 수행해야 하는 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비재호흡마스크(non-rebreather mask)를 통한 산소공급</li>
+    <li>에피네프린 피하투여</li>
+    <li>교질용액 bolus 투입</li>
+    <li>알레르기원의 제거</li>
+    <li>주입속도를 줄임</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q64">
+  <h3><span class="num">문 64</span> <span class="en">히스타민 방출세포</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 염증반응을 자극하는 히스타민을 방출하는 세포는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비만세포</li>
+    <li>T cells</li>
+    <li>B cells</li>
+    <li>단핵구</li>
+    <li>B helper cells</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q65">
+  <h3><span class="num">문 65</span> <span class="en">AIDS 호전 지표</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Antiretroviral therapy를 받고 있는 후천성 면역결핍질환(AIDS) 환자의 상태가 호전되었다고 판단할 수 있는 상황은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>CD4+ T cell 수 감소</li>
+    <li>aminotransferase 수치의 증가</li>
+    <li>약물 저항력 증가</li>
+    <li>Viral load의 감소</li>
+    <li>Wasting syndrome의 발현</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q66">
+  <h3><span class="num">문 66</span> <span class="en">HLA 항체 연관질환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 인체조직적합항원(HLA) 항체의 역할과 밀접하게 연관되어 있는 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Malignancies</li>
+    <li>Infectious disease</li>
+    <li>Neurologic disease</li>
+    <li>Autoimmune disorders</li>
+    <li>Gastrointestinal disease</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q67">
+  <h3><span class="num">문 67</span> <span class="en">HIV 양성 해석</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>25세 여자가 최근 체중감소, 원인모를 설사, 전신피로감, 발열의 증상으로 내원 후 HIV assay를 실시한 결과 HIV 항체 양성, CD4 T cell이 500 cells/μL로 나타났다. 이 상황에 대한 적절한 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>AIDS라고 확진할 수 있다.</li>
+    <li>AIDS에 대한 면역력을 가지고 있다고 볼 수 있다.</li>
+    <li>감염을 전파시킬 위험이 있다.</li>
+    <li>정확한 진단을 위해 성병검사를 추가로 실시해야 한다.</li>
+    <li>Antiretroviral therapy를 통해 완치될 수 있는 가능성이 높다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q68">
+  <h3><span class="num">문 68</span> <span class="en">2차 면역반응 항체</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>한번 노출된 경험이 있는 항원에 다시 재차 노출되었을 때 급격히 증가하는 면역글로불린은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>IgA</li>
+    <li>IgM</li>
+    <li>IgE</li>
+    <li>IgG</li>
+    <li>IgD</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q69">
+  <h3><span class="num">문 69</span> <span class="en">이식 전 면역검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>이식수술 전 수행해야 하는 수여자와 공여자 간의 면역검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>ABO 적합성만 평가</li>
+    <li>ABO 및 HLA 적합성 모두</li>
+    <li>HLA 적합성만 평가</li>
+    <li>ABO, Rh, HLA 적합성 모두 평가</li>
+    <li>Rh, HLA 적합성 평가</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q70">
+  <h3><span class="num">문 70</span> <span class="en">신장이식 거부반응</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신장이식술 후 중환자실에서 치료 중인 56세 여자에게 거부반응이 의심되는 검사 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>소변량 증가</li>
+    <li>BUN과 creatinine 비율의 감소</li>
+    <li>creatinine의 증가</li>
+    <li>혈소판 수치의 증가</li>
+    <li>혈압의 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q71">
+  <h3><span class="num">문 71</span> <span class="en">욕창 예방 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>장기간 입원하여 침상안정 상태에 있는 70세 노인에게 욕창 예방을 위해 제공되는 가장 효과적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>둔부에 방수포를 깔아준다.</li>
+    <li>1~2시간마다 환자의 체위를 변경해준다.</li>
+    <li>매주 정해진 시간에 압박부위를 모니터한다.</li>
+    <li>고탄수화물, 고지방식이를 제공한다.</li>
+    <li>압박 부위를 하루 2번 알코올로 마사지해 준다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q72">
+  <h3><span class="num">문 72</span> <span class="en">화상 부종 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 여자가 오른 팔에 2도 화상을 입고 내원하였다. 화상으로 인한 부종을 가라앉히는 가장 효과적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>냉찜질</li>
+    <li>석고붕대</li>
+    <li>압박 드레싱</li>
+    <li>국소적 항생제 연고</li>
+    <li>팔을 상승시키고 조기 이상</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q73">
+  <h3><span class="num">문 73</span> <span class="en">화상 체표면적</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 남자가 앉은 자세에서 끓는 물이 담긴 보온통이 쏟아져 오른쪽 다리에 화상을 입고 내원하였다. 검진 결과 오른쪽 다리의 앞 표면이 붉어져 있고 접촉 시 통증을 호소하였다. 화상을 입은 추정 신체표면적은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>5%</li>
+    <li>9%</li>
+    <li>13%</li>
+    <li>18%</li>
+    <li>27%</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p204.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.204 원문(그림 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q74">
+  <h3><span class="num">문 74</span> <span class="en">화상 감염예방 약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>오른손 세 손가락에 열화상을 입고 내원한 30세 여자에게 화상부위의 상처 감염을 예방하기 위해 처방하는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>topical corticosteroid</li>
+    <li>topical silver sulfadiazine</li>
+    <li>oral erythromycin</li>
+    <li>oral moxifloxacin</li>
+    <li>parenteral cephalosporin</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q75">
+  <h3><span class="num">문 75</span> <span class="en">화상 초기대응</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>30세 여자가 오른손에 열화상을 입고 응급실에 내원하였다. 손가락에 수포가 보이며 통증을 호소할 때 가장 적절한 초기대응 방안은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>화상특화병원(병동)으로 의뢰한다.</li>
+    <li>예방적 항생제를 복용하도록 한다.</li>
+    <li>화상부위에 마취연고(anesthetic cream)를 바르고 수포를 터뜨린다.</li>
+    <li>화상부위를 느슨하게 드레싱으로 감은 후 진통제를 처방해 준다.</li>
+    <li>화상부위에 silver sulfadiazine cream(Silvadene)을 바르고 두껍게 드레싱을 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q76">
+  <h3><span class="num">문 76</span> <span class="en">수포 용어</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>손에 2도 화상을 입어 내원한 환자의 피부를 관찰한 결과 2~3 cm 정도 맑은 액체가 들어 있는 병변이 관찰되었다면 이 병변을 칭하는 용어는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>vesicles</li>
+    <li>bullae</li>
+    <li>cysts</li>
+    <li>wheals</li>
+    <li>urticaria</li>
+  </ol></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 근골격계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 근골격계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">근골격계 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 근골격계 (CHAPTER 8).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q01">문 01</a></li>
+  <li><a href="#q02">문 02</a></li>
+  <li><a href="#q03">문 03</a></li>
+  <li><a href="#q04">문 04</a></li>
+  <li><a href="#q05">문 05</a></li>
+  <li><a href="#q06">문 06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13">문 13</a></li>
+  <li><a href="#q14">문 14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19">문 19</a></li>
+  <li><a href="#q20">문 20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+  <li><a href="#q34">문 34</a></li>
+  <li><a href="#q35">문 35</a></li>
+  <li><a href="#q36">문 36</a></li>
+  <li><a href="#q37">문 37</a></li>
+  <li><a href="#q38">문 38</a></li>
+  <li><a href="#q39">문 39</a></li>
+  <li><a href="#q40">문 40</a></li>
+  <li><a href="#q41">문 41</a></li>
+  <li><a href="#q42">문 42</a></li>
+  <li><a href="#q43">문 43</a></li>
+  <li><a href="#q44">문 44</a></li>
+  <li><a href="#q45">문 45</a></li>
+  <li><a href="#q46">문 46</a></li>
+  <li><a href="#q47">문 47</a></li>
+  <li><a href="#q48">문 48</a></li>
+  <li><a href="#q49">문 49</a></li>
+  <li><a href="#q50">문 50</a></li>
+  <li><a href="#q51">문 51</a></li>
+  <li><a href="#q52">문 52</a></li>
+  <li><a href="#q53">문 53</a></li>
+  <li><a href="#q54">문 54</a></li>
+</ul></nav>
+
+<section class="card" id="q01">
+  <h3><span class="num">문 01</span> <span class="en">고관절 관절염 진단검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>75세 여자의 오른쪽 고관절에 관절염이 의심될 때 예상되는 진단검사 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>골밀도가 증가되어 있음</li>
+    <li>척주의 추간판이 파열됨</li>
+    <li>오른쪽 고관절의 관절강이 좁아져 있음</li>
+    <li>대퇴골두(femoral head)에 압박골절이 보임</li>
+    <li>오른쪽 고관절의 골두에 석회화가 보임</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q02">
+  <h3><span class="num">문 02</span> <span class="en">콜히친 부작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 통풍을 진단받은 75세 남자에게 콜히친(colchicine) 정맥투여를 한 후 관찰해야 하는 부작용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>설사</li>
+    <li>실신</li>
+    <li>고열</li>
+    <li>심정지</li>
+    <li>골수억제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q03">
+  <h3><span class="num">문 03</span> <span class="en">구획증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>75세 남자가 대퇴골 골절로 입원하여 골절정복 수술을 하고 오른쪽 다리에 전체 석고붕대를 적용하고 있다. 수술 후 6시간이 경과하였을 때 통증조절을 위해 모르핀이 정맥투여되고 있음에도 석고붕대를 한 다리에 통증이 여전히 심하고 발이 바늘로 찌르는 듯 따끔거린다고 호소한다. 오른쪽 족배동맥의 맥박이 촉지되지 않으며 발톱의 모세혈관 재충전검사에서 지연된 충전반응을 보이고 발에 부종이 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>구획증후군</li>
+    <li>말초혈관염</li>
+    <li>수술부위 감염</li>
+    <li>급성 폐색전증</li>
+    <li>급성 심부정맥 혈전증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q04">
+  <h3><span class="num">문 04</span> <span class="en">류마티스 관절염 진단기준</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>손목관절의 통증을 호소하여 내원한 45세 여자에게 류마티스 관절염(rheumatoid arthritis; RA)이 의심되었다. 다음 건강력 문진내용 중 RA 진단기준에 해당하는 내용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>반점이 최근 심해졌어요.</li>
+    <li>다리를 구부릴 때마다 소리가 납니다.</li>
+    <li>양쪽 관절에 통증이 두 달 이상 지속됩니다.</li>
+    <li>오후가 되면 관절이 뻣뻣하고 움직이기 힘들어요.</li>
+    <li>지난주부터 팔목 관절에 증상이 시작되었어요.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q05">
+  <h3><span class="num">문 05</span> <span class="en">고관절 전치환술 후 금기자세</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>75세 여자가 고관절 전치환술(total hip replacement; THR)을 받고 퇴원하였다. THR 부위가 이탈되는 위험이 있어 피해야 할 자세는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>복위</li>
+    <li>앙와위</li>
+    <li>고관절 굴곡</li>
+    <li>무릎의 신전</li>
+    <li>고관절의 외회전</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q06">
+  <h3><span class="num">문 06</span> <span class="en">근력 사정(2점)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>근골격계 신체검진으로 근력을 사정하고 있다. 손상된 손의 근력이 2점이었다면 어떤 상태인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일상 활동을 하기에 충분함</li>
+    <li>근육의 수축이 전혀 느껴지지 않음</li>
+    <li>중력에 거슬러 손을 들어 올릴 수 있음</li>
+    <li>근육이 약간 수축하는 것이 느껴지나 움직임이 거의 없음</li>
+    <li>몸 가까이 손을 끌어당길 수 있으나 들어 올릴 수 없음</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">골관절염 초기 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>72세 여자가 6개월 전부터 손가락 말단 지골간 관절이 붓고 통증이 심해져서 내원하여 골관절염을 진단받았다. 미국 류마티스학회에서 권장하는 골관절염 환자의 초기 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>운동과 체중감소</li>
+    <li>조기 관절 치환술</li>
+    <li>고용량 스테로이드</li>
+    <li>비스테로이드성 항염제(NSAIDs)</li>
+    <li>철저한 진단검사가 완료된 후 치료시작</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">류마티스 관절염 통증조절</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 류마티스 관절염 환자의 통증을 지속적으로 조절하기 위해 가장 효과적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>냉찜질</li>
+    <li>규칙적 운동</li>
+    <li>고용량 스테로이드</li>
+    <li>심부 열패드 적용</li>
+    <li>경피적 전기신경자극(TENS)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">급성 요통 신경학적 장애</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 요통을 호소하는 환자의 건강사정 결과 신경학적 장애가 의심되는 내용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>방광 기능장애를 보임</li>
+    <li>심각한 외상 병력이 있음</li>
+    <li>앙와위에서 통증이 있음</li>
+    <li>하지의 반사, 근력, 감각이 저하됨</li>
+    <li>양쪽 발목에 대칭적인 부종이 관찰됨</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">팔렌검사 / 수근관증후군</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>56세 여자가 손등을 90도로 맞대고 60초를 버티게 하는 팔렌검사(Phalen test) 시 통증을 호소하였다면 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>ulnar tunnel syndrome</li>
+    <li>carpal tunnel syndrome</li>
+    <li>tarsal tunnel syndrome</li>
+    <li>radial tunnel syndrome</li>
+    <li>myofascial pain syndrome</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">발목 염좌 초기 48시간</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>발목 염좌로 인한 손상이 있는 환자에게 첫 48시간 동안 제공되어야 할 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>저항성 발목 운동</li>
+    <li>휴식과 발목 상승</li>
+    <li>발목의 저강도 스트레칭</li>
+    <li>열과 냉찜질 교환요법</li>
+    <li>방사선 촬영 후 정형외과 의뢰</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">대퇴골 스트레스 골절 초기 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>대퇴골에 스트레스 골절이 나타난 환자에게 제공되는 초기 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>일상활동을 지속하도록 한다.</li>
+    <li>수술을 통해 골절정복을 한다.</li>
+    <li>활동을 한 후에는 얼음찜질을 한다.</li>
+    <li>매일 수동적인 관절범위운동을 시행한다.</li>
+    <li>뼈에 추가적인 부담을 주지 않기 위해 휴식한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13">
+  <h3><span class="num">문 13</span> <span class="en">전신홍반루푸스 진단검사(ANA)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 양성이 나올 때 전신홍반루푸스(systemic lupus erythematosus)의 진단기준에 포함되는 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>HLA-B27</li>
+    <li>rheumatoid factor (RF)</li>
+    <li>anti-nuclear antibody (ANA)</li>
+    <li>Erythrocyte sedimentation rate (ESR)</li>
+    <li>High sensitivity C-reactive protein (HS-CRP)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q14">
+  <h3><span class="num">문 14</span> <span class="en">급성 통풍 치료에 부적절한 약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Hydrochlorothiazide를 복용하고 있는 고혈압 환자에게 엄지발가락의 극심한 통증이 발생하여 통풍으로 진단받았다. 다음 중 급성 통풍을 치료하기 위해 적절하지 않은 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Allopurinol</li>
+    <li>Prednisone</li>
+    <li>Colchicine</li>
+    <li>Indomethacin</li>
+    <li>Naproxen</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">요통 영상진단 시점</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>2주 전 뒷마당에서 나무를 심다가 발생한 요통을 호소하여 50세 남자가 내원하였다. 허리의 통증은 오른쪽 다리로 가끔 방사되며 통증이 있으면 ibuprofen을 먹었다고 한다. 특별히 건강상 문제는 없으며 건강한 편이었다. 이 환자의 통증이 어느 정도 지속된 후 영상진단검사가 요구되는가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>통증 발생 2주 후</li>
+    <li>통증 발생 4주 후</li>
+    <li>통증 발생 6주 후</li>
+    <li>통증 발생 8주 후</li>
+    <li>영상진단검사가 요구되지 않음</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">골다공증 골밀도검사 대상자</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 골다공증의 위험군으로 판단되어 골밀도검사 스크리닝이 요구되는 대상자는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>몸집이 작고 과체중인 30대 여자</li>
+    <li>주 1회 음주하는 40세 아시아 여자</li>
+    <li>골절된 적이 없는 55세 폐경 후 여자</li>
+    <li>비교적 건강한 편인 65세 남자</li>
+    <li>류마티스 관절염이 있는 60세 남자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">요추좌상 활동 교육</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>40세 남자가 무거운 책상을 들다가 발생한 요통이 있어 내원하여 요추좌상(lumbar strain)으로 진단받았다. 걷기만 해도 요통이 심해진다고 하여 일상활동을 하기가 두렵다고 호소하는 환자에게 할 수 있는 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상안정을 하시면 요통이 완화됩니다.</li>
+    <li>일상활동은 하시더라도 걷는 것은 피하세요.</li>
+    <li>앞으로 3일간 모든 일상활동을 중지하세요.</li>
+    <li>일상활동을 하다가 통증이 나타나면 침상안정합니다.</li>
+    <li>일상활동과 함께 걷기를 견딜 수 있는 만큼 조금씩 늘려가세요.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">족저근막염 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>평소 건강하던 45세 남자가 등산을 다녀온 후 왼쪽 발 뒤꿈치에 심한 통증이 있어 내원하였다. 아침에 일어나서 발을 디딜 때 극심한 통증을 느낀다고 하며 외상 병력은 없다고 한다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>항생제</li>
+    <li>휴식과 얼음찜질</li>
+    <li>고용량 스테로이드 정맥투여</li>
+    <li>5km/hr 속도로 매일 1시간 걷기</li>
+    <li>비스테로이드성 항염제(NSAIDs) 장기복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19">
+  <h3><span class="num">문 19</span> <span class="en">골관절염 1차 치료약물</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>골관절염이 있는 65세 환자가 비약물적 치료중재를 받은 후에도 통증이 지속되고 있다. 미국 류마티스학회에서 권장하는 통증완화를 위한 1차 치료약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Naproxen</li>
+    <li>Steroid</li>
+    <li>Ibuprofen</li>
+    <li>Tramadol</li>
+    <li>Acetaminophen</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q20">
+  <h3><span class="num">문 20</span> <span class="en">골관절염 통증 미완화 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>75세 여자가 오른쪽 무릎에 경증의 골관절염을 진단받았다. 비교적 건강한 편으로 다른 만성질환은 없으며, 무릎 통증으로 acetaminophen 2000 mg을 매일 투약하고 있는데 통증이 완화되지 않는다고 한다. 이 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>NSAIDs로 처방을 변경한다.</li>
+    <li>acetaminophen을 하루 4000 mg으로 증량한다.</li>
+    <li>acetaminophen 현재 용량을 유지하면서 물리치료를 병행한다.</li>
+    <li>acetaminophen 현재 용량을 유지하면서 수술여부를 고려한다.</li>
+    <li>48시간 침상안정을 한 후 일상활동에서 통증유발 활동을 피하도록 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">어깨 외상 초기 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 남자가 사다리를 타고 작업을 하다 떨어져 벽에 오른쪽 어깨를 부딪친 후 심한 통증이 있어 내원하였다. 통증 강도는 10점 척도에서 7점 정도라고 하며, 통증이 어깨로부터 팔까지 방사된다고 한다. 초기 중재로 적절한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>진통제를 정맥투여 한다.</li>
+    <li>물리치료를 받도록 의뢰한다.</li>
+    <li>오른쪽 어깨와 팔에 방사선 촬영을 요청한다.</li>
+    <li>오른쪽 어깨를 3일간 고정하여 움직이지 않도록 한다.</li>
+    <li>휴식을 취하고 얼음찜질과 함께 진통제(naproxen)를 1주일간 처방한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">경골 스트레스 골절 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>장거리 마라톤에 참가했던 60세 남자가 다리통증으로 응급실에 내원하여 경골에 스트레스 골절(tibial stress fracture)을 진단받았다. 앞으로의 치료단계를 묻는 환자에게 적절한 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>2주간 휴식 후 치료를 시작합니다.</li>
+    <li>진통제는 회복을 지연시키므로 금합니다.</li>
+    <li>방사선 촬영을 하여 진단을 확인하게 됩니다.</li>
+    <li>휴식과 함께 다양한 대체운동이 처방됩니다.</li>
+    <li>일상생활을 하면서 목발을 사용하게 됩니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">통풍 위험요소</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 통풍성 관절염을 진단받은 환자가 자신이 왜 질병에 걸렸는지 문의하였다. 다음 중 통풍의 위험요소에 해당하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>비만</li>
+    <li>여자</li>
+    <li>흡연</li>
+    <li>관절의 외상</li>
+    <li>류마티스 관절염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">골관절염 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>골관절염 환자가 호소하는 증상을 가장 잘 설명한 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>얼굴의 홍조</li>
+    <li>휴식 시 나타나는 요통</li>
+    <li>피부병변이 동반되는 곤봉형 손가락</li>
+    <li>체중 부하관절에 오후부터 심해지는 통증</li>
+    <li>이른 아침 관절에 대칭적으로 나타나는 뻣뻣함</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">골관절염 혈액검사 결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>골관절염이 의심되는 환자의 혈액검사에서 예상되는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>만성적 염증상태</li>
+    <li>C반응 단백(CRP) 수준 상승</li>
+    <li>검사결과 특이사항 없음</li>
+    <li>antinuclear antibody(ANA) titer 상승</li>
+    <li>Rheumatoid factor 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">류마티스 관절염 사망원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>류마티스 관절염 환자의 대표적인 사망원인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>감염</li>
+    <li>심근경색</li>
+    <li>종양</li>
+    <li>신부전</li>
+    <li>패혈증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">SLE와 임신</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>26세 여자가 피로와 관절통증이 있어 내원하여 전신홍반루푸스(SLE)를 진단받고 치료 중이다. 증상이 호전되면서 퇴원을 앞두고 있을 때 환자는 간호사에게 곧 아기를 가지려고 계획하고 있다고 말하였다. 이 환자에게 할 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>SLE 환자는 임신 가능성이 없습니다.</li>
+    <li>SLE 환자는 유산의 위험이 높습니다.</li>
+    <li>SLE의 증상이 조절되면 임신이 가능합니다.</li>
+    <li>임신이 되면 SLE 치료는 중단되어야 합니다.</li>
+    <li>SLE 환자가 임신하면 태아에게도 루프스가 나타납니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">드퀘르뱅 건초염(그림)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>사무직으로 일하던 20대 여자가 주먹을 쥐거나 손목을 돌릴 때 통증이 있어 내원하였다. 최근 보고서 작성이 많아 늦게까지 컴퓨터 작업을 했다고 한다. 다음 그림과 같이 손목을 돌릴 때 급성의 심한 통증을 호소한다면 다음 중 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>방아쇠 수지(trigger finger)</li>
+    <li>드퀘르뱅 건초염(DeQuervain tenosynovitis)</li>
+    <li>뒤퓌트렌 구축(Dupuytren's contracture)</li>
+    <li>요골신경 손상(radial nerve injury)</li>
+    <li>수근관증후군(carpal tunnel syndrome)</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p163.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.163 원문(그림 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">골다공증에 도움되는 항고혈압제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항고혈압제를 복용 중인 75세 여자가 골다공증으로 진단받았다. 이 환자의 항고혈압제 중 골다공증에도 도움이 되는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>이뇨제</li>
+    <li>베타차단제</li>
+    <li>칼슘통로차단제</li>
+    <li>안지오텐신 II 수용체 길항제</li>
+    <li>안지오텐신 전환효소(ACE) 억제제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">임신부 진통제 선택</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>현재 임신 3개월인 30세 여자가 아들과 놀이동산에 다녀온 후 오른쪽 무릎에 통증이 심해 밤에 잠을 잘 수 없어 내원하였다. 진통효과를 위해 임신부가 선택할 수 있는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Prednisone (Sterapred)</li>
+    <li>Acetaminophen (Tylenol)</li>
+    <li>Naproxen sodium (Aleve)</li>
+    <li>Baby aspirin (Bayer)</li>
+    <li>저용량 Ibuprofen (Advil)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">무릎 Grade II 염좌 초기 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 남자가 아침에 조깅을 하다가 발을 헛디뎌 무릎이 뒤틀린 후 통증이 심해져 내원하였다. 무릎이 심하게 부어 있고 만지면 통증을 호소한다. Grade II 염좌로 진단받았을 때 환자에게 설명하는 적절한 초기 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>손상된 무릎에 방수드레싱을 부착한 후 온수 샤워를 한다.</li>
+    <li>첫 24시간동안 냉찜질을 하다가 이후 온찜질을 지속한다.</li>
+    <li>2시간마다 침상밖으로 나와 목발로 지지하여 가볍게 걷게 한다.</li>
+    <li>24시간 후 무릎의 관절범위 운동을 다시 확인하여 등척성 운동을 시작한다.</li>
+    <li>지금부터 48시간 동안 냉찜질을 간헐적으로 적용하고 손상된 다리를 상승시킨다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">NSAIDs 위장장애 기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>류마티스 관절염을 진단받고 장기간 비스테로이드성 항염제(NSAIDs)를 복용하던 70세 여자가 위장장애가 있어 내원하였다. 관절염 약을 복용하는데 왜 위장장애가 생기냐고 묻는 환자에게 할 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>약물이 직접 위 점막을 자극하므로</li>
+    <li>프로스타글란딘 합성을 강화시키므로</li>
+    <li>약물의 효과로 위장관 운동이 감소하므로</li>
+    <li>위장관 점막을 보호하는 물질의 합성을 억제하므로</li>
+    <li>류마티스 관절염 진통효과를 위해 고용량이 처방되므로</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">NSAIDs 위병변 고위험 환자</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 비스테로이드성 항염제(NSAIDs)에 의한 위병변이 발생할 위험이 가장 높은 환자는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>오랜 기간 하루에 4번씩 아스피린을 복용하는 72세 관절염 환자</li>
+    <li>현재 흡연하고 있으며 월경통이 심하여 매달 월경 기간에 naproxen을 6번 복용하는 40세 여자</li>
+    <li>요통이 있으면 ketoprofen을 주당 1~2회 복용하는 43세 확장성 심근병증 환자</li>
+    <li>발목염좌로 지난주 ibuprofen을 복용하였고 주말에는 4~6캔의 맥주를 마신 28세 남자</li>
+    <li>계절이 바뀔 때마다 편두통이 나타나면 아스피린을 최대용량으로 복용하는 18세 여자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q34">
+  <h3><span class="num">문 34</span> <span class="en">섬유근육통 추가교육 필요</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>섬유근육통을 진단받은 환자에게 퇴원교육을 하였다. 환자가 말한 내용 중 추가교육이 필요하다고 생각되는 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>커피는 한잔으로 줄여보겠습니다.</li>
+    <li>짜고 기름진 음식은 피하고 건강식으로 먹으려고요.</li>
+    <li>생활하면서 스트레스를 받지 않으려고 노력할게요.</li>
+    <li>유연성 강화를 위해 스트레칭 프로그램에 참가할 거예요.</li>
+    <li>통증관리를 위해 매일 아침 조깅을 시작하려고 합니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q35">
+  <h3><span class="num">문 35</span> <span class="en">골관절염 주 치료목표</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>골관절염의 주 치료목표는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>관절기능을 보존한다.</li>
+    <li>연골의 파괴를 예방한다.</li>
+    <li>연골의 생성을 촉진시킨다.</li>
+    <li>일상활동을 최대수준으로 향상시킨다.</li>
+    <li>통증 없이 매일 뛸 수 있게 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q36">
+  <h3><span class="num">문 36</span> <span class="en">급성 통풍발작 주요 요인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>통풍 환자에게 급성 통풍발작을 초래하는 주요 요인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>활동과다</li>
+    <li>고도 비만</li>
+    <li>고요산혈증</li>
+    <li>알코올 과다섭취</li>
+    <li>퓨린 함유 음식의 과다섭취</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q37">
+  <h3><span class="num">문 37</span> <span class="en">통풍에 이뇨제 금기 이유</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>통풍 환자에게 이뇨제 처방을 금하는 이유는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>급성 통풍발작을 초래하므로</li>
+    <li>혈장 용량을 변화시키기 때문에</li>
+    <li>전해질 불균형이 초래되므로</li>
+    <li>사구체여과율을 감소시키므로</li>
+    <li>신장에서 요산이 배설되는 것을 감소시키므로</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q38">
+  <h3><span class="num">문 38</span> <span class="en">DVT 위험이 가장 낮은 경우</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 심부정맥 혈전증(DVT)의 발생 위험이 가장 낮은 경우는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>무릎 전치환술을 받은 70세 여자</li>
+    <li>담낭절제술을 받은 건강한 35세 여자</li>
+    <li>복부동맥류 수술을 받은 60세 남자</li>
+    <li>고관절 전치환술을 받은 건강한 80세 여자</li>
+    <li>관상동맥조영술을 받은 비만인 50세 남자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q39">
+  <h3><span class="num">문 39</span> <span class="en">류마티스 관절염 중증도 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>류마티스 관절염을 진단받은 35세 여자가 자신의 엄마도 이 질환으로 고생하는 것을 보았다며 어느 정도 심각한 질병인지 물었다. 이에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심각한 질병이 아니고 정상에 가까운 생활을 유지하실 수 있습니다.</li>
+    <li>심각한 전신질환으로 5년 생존율이 4기 호지킨병이나 3혈관 관상동맥질환과 유사합니다.</li>
+    <li>질병의 진행속도가 빠르지 않아 이전에 비해 덜 심각한 단계로 분류하고 있습니다.</li>
+    <li>Epstein-Barr 바이러스에 의해 노출되어 발생하는 질환으로 치료가 가능합니다.</li>
+    <li>침범된 국소 부위만 기능소실을 가져오므로 일상활동에 미미한 장애가 예상됩니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q40">
+  <h3><span class="num">문 40</span> <span class="en">여성 운동선수 3징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>정기 신체검진을 하러 고등학교 여자 배구팀이 내원하였다. 이들을 검진하면서 나타난 다음 징후 중 여자 운동선수들에게 신체손상을 초래하는 세 징후(female athlete triad)에 포함되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>높은 불안감</li>
+    <li>낮은 자존감</li>
+    <li>서맥</li>
+    <li>섭식장애</li>
+    <li>족저근막염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q41">
+  <h3><span class="num">문 41</span> <span class="en">골다공증 교육(약물 거부)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>골다공증을 진단받은 62세 여자가 호르몬 대치요법을 포함하여 골밀도를 높이는 어떤 약도 복용하지 않겠다고 거부하였다. 이 환자의 건강관리를 위해 효과적인 교육내용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>관절전치술에 대한 정보</li>
+    <li>매년 골밀도 사정을 해야하는 이유</li>
+    <li>칼슘섭취와 함께 체중부하운동을 하는 효과</li>
+    <li>칼슘배설을 촉진시키는 음식종류</li>
+    <li>호르몬대치요법의 장단점</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q42">
+  <h3><span class="num">문 42</span> <span class="en">혈우병(혈관절증)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>생후 8개월의 남아가 양쪽 무릎에 혈관절증(hemarthrosis)과 혈뇨가 있어 내원하였다. 외상 병력은 없으나 부모는 아이가 항상 멍이 잘 들곤 했다고 말하였다. 이 환아에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>가정 폭력</li>
+    <li>백혈병</li>
+    <li>혈우병</li>
+    <li>특발성 혈소판감소증</li>
+    <li>류마티스 관절염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q43">
+  <h3><span class="num">문 43</span> <span class="en">무릎 전치환술 흔한 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>무릎 전치환술을 받고 입원 중인 환자에게 가장 흔히 나타나는 합병증은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>욕창</li>
+    <li>패혈증</li>
+    <li>지방색전증</li>
+    <li>신전근 기능장애</li>
+    <li>심부정맥혈전증(DVT)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q44">
+  <h3><span class="num">문 44</span> <span class="en">욕창 설명</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>요양원에서 장기간 침상생활을 하는 85세 남자에게 발생한 욕창에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>욕창 치료에서는 항생제를 사용할 수 없다.</li>
+    <li>연쇄상 구균이 패혈성 욕창을 발생시키는 주요 균이다.</li>
+    <li>노인의 영양상태를 향상시키면 욕창의 위험이 줄어든다.</li>
+    <li>갑상선 저하증은 노인에게 욕창 발생을 촉진시킨다.</li>
+    <li>둔부에 적용하는 패드는 욕창 발생을 촉진시킨다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q45">
+  <h3><span class="num">문 45</span> <span class="en">노인 변비 요인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>노인에게 변비를 초래하는 대표적인 요인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>부동</li>
+    <li>불안</li>
+    <li>이뇨제</li>
+    <li>고단백식이</li>
+    <li>다량의 수분섭취</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q46">
+  <h3><span class="num">문 46</span> <span class="en">강직성 척주염 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>강직성 척주염을 진단받은 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>침상안정</li>
+    <li>금염(gold salts)</li>
+    <li>스테로이드 경구투여</li>
+    <li>스테로이드 관절내 주입</li>
+    <li>비스테로이드성 항염제(NSAIDs) 처방</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q47">
+  <h3><span class="num">문 47</span> <span class="en">고관절 THR 후 DVT 근거</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>오른쪽 고관절 전치환술을 받은 80세 여자가 수술 후 3일째인 오늘 아침 왼쪽 다리의 부종과 통증이 있으며 신체검진 시 Homan 징후가 양성이다. 심부정맥 혈전증(DVT)을 의심하는 근거에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>고관절 수술 후 DVT는 주로 80세 이상에서 나타난다.</li>
+    <li>수술 후 항응고제 투여가 금기이므로 DVT 위험이 높아진다.</li>
+    <li>고관절 전치환술 후 50% 이상의 환자에게 DVT가 발생한다.</li>
+    <li>DVT 환자의 대부분은 Homan 징후가 양성이다.</li>
+    <li>고관절 전치환술의 경우 압박스타킹이 금기이므로 DVT 발생이 높아진다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q48">
+  <h3><span class="num">문 48</span> <span class="en">DVT 가장 심각한 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심부정맥 혈전증(DVT)의 가장 심각한 합병증은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>뇌색전</li>
+    <li>폐색전증</li>
+    <li>심근경색</li>
+    <li>말초혈관염</li>
+    <li>말초혈관색전</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q49">
+  <h3><span class="num">문 49</span> <span class="en">지방색전증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>교통사고로 내원한 40세 여자가 골반 골절을 진단받고 입원하였다. 입원 2일째 호흡곤란과 고열(39℃)이 있으며 의식의 혼돈을 보인다. 신체검진에서 Homan 징후는 음성이었으며 양쪽 폐 하엽에 수포음이 들리고 흉부 방사선에서 폐 전반적으로 폐포 충만성 병변(alveolar filling pattern)이 보이며 동맥혈가스분석에서 저산소증이 있다. 이 환자에게 가장 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>폐색전증</li>
+    <li>지방색전증</li>
+    <li>수술후 무기폐</li>
+    <li>흡인 폐렴</li>
+    <li>수술부위 감염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q50">
+  <h3><span class="num">문 50</span> <span class="en">경추 신경근증 / 추간판탈출 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 여자가 급성 경추 신경근증과 흉추 5번의 추간판탈출증을 진단받았다. 이 환자에게 가장 효과적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>경추 견인</li>
+    <li>능동적 저항운동</li>
+    <li>스테로이드 정맥투여</li>
+    <li>수동적 관절범위 운동</li>
+    <li>경추 칼라(cervical collar)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q51">
+  <h3><span class="num">문 51</span> <span class="en">고관절 외전근 평가검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 골반의 안정성을 위한 고관절 외전근의 능력을 평가하기 위한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>Phalen's test</li>
+    <li>Tinel's sign</li>
+    <li>Trendelenburg test</li>
+    <li>Kernig's sign</li>
+    <li>Homan's sign</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q52">
+  <h3><span class="num">문 52</span> <span class="en">요통 감별진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심한 요통이 있는 환자의 감별진단으로 고려되어야 하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>간염</li>
+    <li>담석증</li>
+    <li>골수염</li>
+    <li>심근경색</li>
+    <li>소화성 궤양</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q53">
+  <h3><span class="num">문 53</span> <span class="en">대퇴골두 무혈관성 괴사 요인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>걸을 때 통증이 있어 절뚝거리게 되어 내원한 40세 남자가 대퇴골두의 무혈관성 괴사를 진단받았다. 무혈관성 괴사를 초래하는 가장 흔한 요인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>외상</li>
+    <li>알코올 중독</li>
+    <li>고지혈증</li>
+    <li>류마티스 관절염</li>
+    <li>스테로이드 복용</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q54">
+  <h3><span class="num">문 54</span> <span class="en">장기 스테로이드 복용자 수술 전 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>류마티스 관절염으로 장기간 스테로이드를 복용하고 있는 50대 여자가 일반 마취로 담낭절제술을 받기로 예정되어 있을 때 수술 전 시행해야 할 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+    <li>심전도</li>
+    <li>심초음파</li>
+    <li>흉부 방사선촬영</li>
+    <li>스트레스 검사</li>
+    <li>경추방사선촬영</li>
+  </ol></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

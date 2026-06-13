@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>순환기계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>순환기계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: 국시 정리</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">순환기계</h2>
+<p class="sys-desc">관상동맥질환(협심증·심근경색), 부정맥, 심부전, 판막질환, 염증성 심질환, 고혈압, 혈관질환과 순환기 신체검진·혈역학 모니터링을 다루는 계통.</p>
+
+<nav class="toc"><strong>이 계통의 질환·주제</strong>
+<ul>
+  <li><a href="#d1">협심증</a></li>
+  <li><a href="#d2">심근경색</a></li>
+  <li><a href="#d3">관상동맥질환의 진단·치료</a></li>
+  <li><a href="#d4">부정맥</a></li>
+  <li><a href="#d5">항부정맥제·항응고제·심율동전환/제세동·pacemaker</a></li>
+  <li><a href="#d6">심부전</a></li>
+  <li><a href="#d7">심근병증(DCMP/SCMP/HCMP/ICMP)</a></li>
+  <li><a href="#d8">판막질환</a></li>
+  <li><a href="#d9">염증성 심질환(류마티스성·심내막염·심근염·심낭염)</a></li>
+  <li><a href="#d10">고혈압</a></li>
+  <li><a href="#d11">말초혈관·혈관 신체검진(ABI/Allen/Homan's)</a></li>
+  <li><a href="#d12">대동맥류·대동맥박리</a></li>
+  <li><a href="#d13">DVT·폐색전증</a></li>
+  <li><a href="#d14">이상지질혈증</a></li>
+  <li><a href="#d15">순환기 신체검진(심음 S1~S4·맥박결손)</a></li>
+  <li><a href="#d16">12 lead EKG·ECG 판독</a></li>
+  <li><a href="#d17">혈역학 모니터링·IABP·ECMO·심장재활</a></li>
+</ul></nav>
+
+<section class="card" id="d1">
+  <h3><span class="num">1</span> 협심증 <span class="en">Angina pectoris</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>하나 이상의 관상동맥이 좁아지거나 막혀서 생기는 심장질환으로, 일과성·가역성 심근허혈에 의한 간헐적 가슴 통증.</p></div></div>
+  <div class="field"><div class="label">원인·위험</div><div class="body"><p>관상동맥 내 죽상경화성 병변.</p>
+  <p><b>죽상경화증 발병 기전</b>: 내피세포 손상 부위에 콜레스테롤(지질)이 침착·산화되면서 염증반응 시작 → 부착분자 발현, 단핵구가 지질침착부위로 이동해 대식세포로 분화 → 만성 염증으로 평활근세포 증식·섬유판 형성 → 섬유판이 약화되어 조직·지방이 혈액으로 노출되면 응고인자 활성화·혈소판 응집으로 <mark>혈전 생성</mark> → 급성 경색 유발.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><p>전 흉부의 짓누르는 듯한 통증·압박감. 흉통이 왼쪽 목·턱·어깨·팔로 방사. 오심·구토·어지러움 동반 가능. 쉬거나 <mark>NG(니트로글리세린) 복용 시 5분 이내 완화</mark>.</p></div></div>
+  <div class="field"><div class="label">분류</div><div class="body">
+  <table class="cmp"><caption>안정형 vs 불안정형 vs 변이형 협심증 (가장 큰 차이는 흉통 양상)</caption>
+  <thead><tr><th></th><th>안정형</th><th>불안정형</th><th>변이형(Prinzmetal/variant)</th></tr></thead>
+  <tbody>
+  <tr><th>유발</th><td>운동·심근 산소요구 증가(열·불안·빈맥·고혈압) 시. 고정된 죽상경화판</td><td>활동 시뿐 아니라 안정 시에도 발생, 갑작스럽게 발생</td><td>휴식 시 죽상경화판 근처 심장동맥의 일시적 경련</td></tr>
+  <tr><th>특징</th><td>가만히 있을 때 큰 불편함 없을 수 있음</td><td>증상이 잦아지고 심해짐. 최근 1개월 내 새로 생긴 통증. NG 미투여 시 20분 이상 지속. 심근경색 이환 위험</td><td>죽상경화판 파괴에 따른 부분적 혈전·색전·혈관경련으로 심각한 허혈 가능</td></tr>
+  <tr><th>ECG</th><td>정상일 수 있음</td><td>ST 분절 하강, T파 역전 가능</td><td>—</td></tr>
+  <tr><th>진단·치료</th><td>운동부하검사 유용</td><td>—</td><td>진단은 CAG로 경련유발검사(에르고노빈·아세틸콜린). 치료: 금연, CCB 선호, 심실빈맥 시 ICD 삽입, CAG상 협착 소견 시 PCI 고려</td></tr>
+  </tbody></table>
+  <p>전부하를 감소시키는 약물은 <mark>isosorbide dinitrate</mark>(Nitrate 계열): 정맥혈관을 확장하여 심장으로 들어오는 혈액을 감소시켜 전부하를 감소.</p></div></div>
+  <div class="warn"><b>주의</b> · 치명적 흉통 시 원인 감별: 급성심근경색, 급성 대동맥박리, 급성 폐색전증, 긴장성 기흉, 식도 파열, 심장압전(tamponade).</div>
+</section>
+
+<section class="card" id="d2">
+  <h3><span class="num">2</span> 심근경색 <span class="en">MI · STEMI / NSTEMI</span></h3>
+  <div class="field"><div class="label">정의</div><div class="body"><p>관상동맥의 혈액 공급 감소·중단으로 심근이 괴사된 질환. 주로 죽상경화판 붕괴로 혈전이 생성되어 심근세포 손상이 일어남.</p>
+  <table class="cmp"><caption>STEMI vs NSTEMI vs 불안정형 협심증</caption>
+  <thead><tr><th></th><th>STEMI</th><th>NSTEMI</th><th>불안정형 협심증</th></tr></thead>
+  <tbody>
+  <tr><th>폐색</th><td>관상동맥 혈류를 갑작스럽게 완전 폐색</td><td>부분적 폐색 + 심근효소 유리</td><td>부분적 폐색, 심근효소 유리 안 됨</td></tr>
+  <tr><th>ECG</th><td>ST 분절 상승</td><td>ST 분절 하강 또는 T파 역전</td><td>ST 하강·T파 역전 가능</td></tr>
+  </tbody></table></div></div>
+  <div class="field"><div class="label">병태생리</div><div class="body"><p>죽상혈전이 관상동맥을 폐색 → 심근세포 손상. 손상 심근은 처음 12~18시간은 정상 형태, 1~5일째 연화·붕괴, 괴사조직 주변 염증반응 → 육아조직 형성·collagen 침착 → 응고괴사 형태로 단단해짐.</p>
+  <p><b>심근허혈 시 시간경과에 따른 변화 순서</b>: 이완기능장애 → 수축기능장애 → 심전도 변화 → 흉통.</p></div></div>
+  <div class="field"><div class="label">증상</div><div class="body"><p>전형적 짓누르는 듯한 왼쪽 가슴 통증. 비전형적으로 소화불량·속쓰림으로 나타나거나 통증이 없을 수도 있음. 심장효소 수치 상승, 체온 상승, 백혈구 증가증, 부정맥 발생 가능.</p>
+  <p><b>하벽 심근경색(Inferior wall MI)</b>: 상복부통증이나 GI 증상(오심) 동반. NG 투약 먼저 후 혈청 Troponin 검사 필요. 복통으로 발현되는 경우가 흔하므로 ECG로 감별.</p></div></div>
+  <div class="field"><div class="label">심전도</div><div class="body"><p>급성기 ST 분절 상승 → 발생 6~16시간 후 병리적 Q wave 출현 → 이후 T파 역전.</p>
+  <figure class="scan"><img src="images/guksi/p007.png" alt="STEMI/NSTEMI 심전도 변화" loading="lazy"><figcaption>p.7 원문</figcaption></figure></div></div>
+  <div class="field"><div class="label">합병증</div><div class="body"><ul>
+  <li>부정맥(심실세동 등). 가장 많이 발생하는 부정맥은 <mark>PVC(심실조기박동)</mark></li>
+  <li>심부전, 괴사조직 연화 시기 심근 파열, 심실류, 심내막 혈전</li>
+  <li><b>심실중격파열(ventricular septal rupture)</b>: AMI 후 갑작스런 큰 수축기 잡음 + 좌심부전 증상 시 시사. 즉각 혈관이완제와 IABP로 LV 후부하 감소</li>
+  <li><b>Dressler syndrome(post-MI syndrome)</b>: MI 후 심막염. 발열·흉통·피로·호흡곤란·관절통·빈맥, 청진상 pericardial friction rub. 흉막삼출, ESR·CRP·CK·Troponin 상승 동반 가능</li>
+  </ul></div></div>
+  <div class="warn"><b>주의</b> · 심근경색 + 저혈압·빈백·빈호흡 → 심인성 shock. 즉각적 수액 공급 필요, 재관류가 필요한 응급상황. 항혈소판제 병합요법 시행, 서맥·방실차단·Vtach 같은 부정맥 발생에 유의. · MI 발생 후 4주 이내 steroid·NSAIDs 사용 시 경색부위 회복 방해. · MI 48시간 이후 Vtach 지속·Vfib 발생 시 퇴원 전 ICD 삽입 필요.</div>
+</section>
+
+<section class="card" id="d3">
+  <h3><span class="num">3</span> 관상동맥질환의 진단·치료 <span class="en">cardiac marker · CAG · PCI · CABG</span></h3>
+  <div class="field"><div class="label">진단·검사</div><div class="body"><ul>
+  <li><b>병력청취 + 심전도</b>: 특히 ST 분절 상승 유무를 반드시 감별</li>
+  <li><b>운동부하검사</b>: 안정형 협심증에 유용. 완전좌각차단(LBBB)이 보이면 약물 유발 핵의학검사 선호. 불가능하면 스트레스영상검사 고려</li>
+  <li><b>심초음파</b>: 도부타민 심초음파(약물 부하)로 심근 벽운동장애 관찰</li>
+  <li><b>혈액검사</b>: 지질검사, 심근효소. 심근효소 상승은 급성심근경색 진단에 필수</li>
+  <li><b>관상동맥조영술(CAG)</b>: 관상동맥질환의 <mark>확진 검사</mark>. 조영제 사용하므로 신기능 평가 중요</li>
+  <li><b>심근관류스캔</b>: 운동/약물부하로 시행, 혈류 감소 정도 평가</li>
+  </ul>
+  <p><b>cardiac marker</b> (심근 허혈 시 세포막 손상으로 심근세포질 물질이 혈중 유리):</p>
+  <table class="cmp"><caption>심근효소(cardiac marker) 비교</caption>
+  <thead><tr><th>표지자</th><th>상승 시작/특성</th></tr></thead>
+  <tbody>
+  <tr><th>Myoglobin</th><td>허혈 후 1시간 후 상승 시작, 가장 빨리 알 수 있는 지표이나 골격근·신장장애에서도 배출되어 위양성 가능성 높음</td></tr>
+  <tr><th>CK</th><td>허혈 후 3~4시간 뒤 상승. 상승 정도가 괴사량과 관계. 골격근장애·갑상선기능저하에서도 위양성 가능</td></tr>
+  <tr><th>CK-MB</th><td>심근 손상 시 유출. 전체 CK 중 CK-MB가 4%보다 많으면 심근 손상 의심</td></tr>
+  <tr><th>Troponin</th><td>수축조절단백, 상승 시 급성 심근경색 의미. <mark>높은 특이도</mark>. 심근손상 후 7~10일 증가 지속</td></tr>
+  <tr><th>pro-BNP</th><td>심장 부하 시 심실에서 분비되는 호르몬. 모든 심부전에서 증가. 신기능 영향받음, 확진 검사는 아님. 호흡곤란 시 진단에 유용</td></tr>
+  </tbody></table>
+  <p><b>급성심근경색 진단 기준</b>: Troponin-I 증가 + 다음 중 하나 — ① 심근허혈 증상 ② 새로운 허혈성 ECG 변화·병리적 Q wave ③ SPECT/Chest CT상 병변 ④ CAG상 관상동맥 내 혈전.</p></div></div>
+  <div class="field"><div class="label">치료(약물)</div><div class="body"><ul>
+  <li>ST 분절 상승 시 r/o AMI로 보고 빨리 <mark>ASA + PLX(clopidogrel)</mark> 투약 후 혈관재개통술 시행</li>
+  <li><b>BB</b>: 베타1 수용체 봉쇄로 심장흥분·심박출량 감소, 산소요구량 감소. 모든 급성기 AMI 환자에서 투여해야 하는 약물. 재개통술 후 V/S 안정 시 저용량부터, SBP 90 이하면 보류. COPD 동반 시 베타1 선택적 차단제(atenolol)</li>
+  <li><b>CCB</b>: 칼슘통로 차단으로 말초혈관저항 감소. DHP 계열(nifedipine·amlodipine)은 협심증·고혈압에 사용하나 맥박수 조절 안 함. non-DHP(verapamil·diltiazem)은 심장·혈관 평활근 모두 작용, diltiazem이 verapamil보다 심장수축 억제작용 작음. 천식·당뇨·말초혈관질환 동반 고혈압에 유용. 단, 급성심근경색 이차예방에는 도움 안 됨</li>
+  <li><b>ACEi</b>: 안지오텐신 I→II 전환 차단, 세동맥 확장·말초저항 감소·알도스테론 분비 감소. AMI에서 좌심부전 있으면 ACEi 사용. Captopril·enalapril·ramipril. 부작용: 마른 기침, 혈관부종, 고칼륨혈증</li>
+  <li><b>ARB</b>: 안지오텐신 II의 수용체 결합 차단. 기침·혈관부종 있는 환자에서 ACEi 대용. Candesartan·irbesartan·losartan</li>
+  <li><b>statin</b> 계열 지질강하제, <b>항혈소판제</b>(아스피린·clopidogrel; P2Y12 작용 약물 clopidogrel·prasugrel; eptifibatide는 혈소판응집억제제), <b>항응고제</b>(와파린·NOAC·LMWH), 진통제</li>
+  </ul></div></div>
+  <div class="field"><div class="label">치료(시술)</div><div class="body"><ul>
+  <li><b>PCI(풍선확장술·스텐트)</b>: STEMI 환자에서 반드시 필요. 시행 후 6개월 이상 항혈소판제 병합요법(ASA+PLX). 성공 지표: 통증 감소, ST elevation 감소, CK/Troponin 감소(ST가 baseline 회복되어야 관류 회복 의미)</li>
+  <li><b>CABG(관상동맥우회술)</b>: 여러 혈관 침범·심한 석회화로 스텐트 어려운 경우 고려. CABG 전 clopidogrel은 5일 전 중단. 후 시간당 200ml 이상 흉관배액은 재수술 필요. 술후 1~3일째 가장 잘 나타나는 부정맥은 <mark>심방세동</mark>(디곡신·BB·아미오다론·Mg 투약)</li>
+  <li>약물방출스텐트는 일반금속스텐트보다 재협착은 감소시키나 스텐트혈전증 위험. 어떤 스텐트든 이중 항혈소판요법 시행</li>
+  <li>PCI는 CABG 대비 major adverse cardiac event·repeat revascularization이 더 많고 stroke는 더 적음</li>
+  </ul></div></div>
+  <div class="field"><div class="label">간호중재·교육</div><div class="body"><p>약물 투여, 산소 공급, 침상 머리 상승, 침상 안정, 통증 양상 사정. 생활습관 교정(고혈압·고지혈증·당뇨 관리, 금연, 적절한 운동, 스트레스 감소). 처방약 매일 정확히 복용, 흉통·가슴답답함 등 증상 변화 시 즉시 병원 방문 교육.</p>
+  <p><b>CAG 후 관리</b>: sheath 제거 시 혈관미주신경 반응 시 아트로핀 주사(서맥 없이 저혈압만 있으면 NS 주입). 후복막출혈 시 등·서혜부 통증, Hb·Hct 확인. 관상동맥경련 예방 위해 NG CIV.</p></div></div>
+  <div class="warn"><b>주의</b> · PCI 준비 중 저혈압 교정에 수액치료 필요할 수 있고, NG·이뇨제·모르핀은 전부하 감소로 저혈압을 악화시킬 수 있음. · 흉통과 저혈압 동반 시 저혈압부터 우선 중재(호흡음 깨끗하면 수액 다량 가능) → 아스피린 → ECG. · 좌심도자술 후 혈전이 뇌동맥으로 이동해 뇌졸중 가능.</div>
+</section>
+
+<section class="card" id="d4">
+  <h3><span class="num">4</span> 부정맥 <span class="en">Arrhythmia · SVT/AF/Aflutter/VT/VF</span></h3>
+  <div class="field"><div class="label">발생 기전</div><div class="body"><ul>
+  <li><b>자극형성장애</b>: 동결절이 아닌 다른 부위에서 전기자극 형성</li>
+  <li><b>자극전도장애</b>: 동결절 자극이 다음 단계로 전도되지 못함</li>
+  <li><b>혼합형성장애</b>: 전도 차단 + 비정상 박동 혼합</li>
+  </ul></div></div>
+  <div class="field"><div class="label">서맥·방실차단·각차단</div><div class="body">
+  <p><b>서맥</b>: 동결절 전기자극 60회 미만, 리듬 규칙적·파형 정상. 의식저하·실신·저혈압 시 아트로핀 투여 또는 심박동조율기 사용.</p>
+  <p><b>WPW 증후군</b>(Wolff-Parkinson-White): 심방·심실 사이 비정상 전기교통로를 가진 선천성 이상(심실조기흥분증후군). 델타파, 짧은 PR(0.12초 이상), 넓은 QRS 특징.</p>
+  <table class="cmp"><caption>방실차단(AV block)</caption>
+  <thead><tr><th></th><th>특징</th></tr></thead>
+  <tbody>
+  <tr><th>1도</th><td>PR 간격 0.2초 이상 지연, 리듬 규칙적·QRS 정상. 혈압에 문제 없으면 중재 불필요. 저혈압·의식변화 시 atropine</td></tr>
+  <tr><th>2도 Mobitz I</th><td>PR이 점점 연장되다가 QRS 탈락. P·QRS 모양 정상</td></tr>
+  <tr><th>2도 Mobitz II</th><td>PR 일정하다가 급작스레 QRS 탈락. QRS는 종종 넓은 비정상</td></tr>
+  <tr><th>3도(완전)</th><td>심방 자극이 심실로 전혀 전달 안 됨, 심방·심실 각각 박동. PR 측정 불가. 서맥, P와 QRS가 따로 노는 양상</td></tr>
+  </tbody></table>
+  <p><b>RBBB</b>: 임상적으로 큰 의미 없음(LBB에서 뒤늦게 전기 공급). V1에서 QRS가 위로 올라가고 파형이 큼. <b>LBBB</b>: 임상적으로 중요(심부전 환자 20~30%). MI 환자에서 갑작스런 LBBB는 STEMI 전조증상.</p>
+  <figure class="scan"><img src="images/guksi/p017.png" alt="1~3도 방실차단 심전도" loading="lazy"><figcaption>p.17 원문</figcaption></figure></div></div>
+  <div class="field"><div class="label">빈맥형 부정맥 — 심실성</div><div class="body">
+  <table class="cmp"><caption>VT vs VF</caption>
+  <thead><tr><th></th><th>Vtach(심실빈맥)</th><th>Vfib(심실세동)</th></tr></thead>
+  <tbody>
+  <tr><th>리듬·맥박</th><td>규칙/불규칙, 분당 100~250회, 맥박 촉지될 수도 안 될 수도</td><td>불규칙, 분당 400~600회, 맥박 촉지 안 됨</td></tr>
+  <tr><th>파형</th><td>QRS 0.12초 이상 넓고 비정상, P파 가려져 측정 불가 많음</td><td>심실세동파만 있고 QRS·P파 없음</td></tr>
+  <tr><th>약물</th><td>lidocaine(비활성 Na채널 차단), 재발·저항 시 amiodarone</td><td>—</td></tr>
+  </tbody></table>
+  <p>심실성 부정맥을 야기할 위험이 가장 큰 전해질 불균형은 <mark>저칼륨혈증</mark>.</p></div></div>
+  <div class="field"><div class="label">빈맥형 부정맥 — 상심실성</div><div class="body">
+  <table class="cmp"><caption>SVT vs 심방조동(Aflutter) vs 심방세동(AF)</caption>
+  <thead><tr><th></th><th>SVT</th><th>Aflutter(심방조동)</th><th>AF(심방세동)</th></tr></thead>
+  <tbody>
+  <tr><th>리듬·맥박</th><td>규칙적, 분당 170~250회</td><td>빠른 규칙적, 분당 150~170회(실제 심방 250~300bpm)</td><td>불규칙, 분당 150회 이상(실제 심방 350~600bpm)</td></tr>
+  <tr><th>파형</th><td>P:QRS 1:1, QRS 좁음. 갑작스런 SVT는 PSVT</td><td>톱니바퀴(sawtooth) 모양 P파, QRS 좁거나 정상</td><td>P파 구분 어렵고 RR 불규칙, QRS 좁음, P:QRS 1:1 매칭 안 됨</td></tr>
+  <tr><th>치료</th><td>adenosine. 의식 저하·호흡곤란 등 전신증상 시 cardioversion 우선</td><td>심방세동처럼 항응고요법 시행</td><td>심박수 조절 즉시(주로 diltiazem). 약물 무반응·저혈압·전신증상 불안정 시 cardioversion</td></tr>
+  </tbody></table>
+  <p>AF 분류: <b>paroxysmal AF</b>(수초~몇시간 내 자연 소실), <b>persistent AF</b>(1주 이상 지속, 약물·cardioversion으로만 소실). AF은 실신·심계항진·흉통 유발, 혈전으로 뇌졸중·심부전 유발. 갑상선기능항진·전해질불균형(K·Ca·Mg) 시 유발 가능. 심방성 빈맥에서는 CCB·adenosine 투여 고려.</p>
+  <figure class="scan"><img src="images/guksi/p019.png" alt="PSVT·심방조동·심방세동 심전도" loading="lazy"><figcaption>p.19 원문</figcaption></figure></div></div>
+  <div class="tip"><b>시험 포인트</b> · sinus tachy는 특별한 치료 불필요, 원인을 찾는 것이 필요. · 어지러움·실신 주호소 + ECG상 서맥, QRS 앞 P 없고 P·QRS 따로 노는 경우 → 3도 방실차단.</div>
+</section>
+
+<section class="card" id="d5">
+  <h3><span class="num">5</span> 항부정맥제·항응고제·심율동전환/제세동·pacemaker</h3>
+  <div class="field"><div class="label">항부정맥제(Vaughan-Williams 분류)</div><div class="body">
+  <table class="cmp"><caption>항부정맥제 class I~IV</caption>
+  <thead><tr><th>Class</th><th>기전·약물</th></tr></thead>
+  <tbody>
+  <tr><th>I</th><td>나트륨 통로 차단약. QRS·QT 간격 늘림. lidocaine, procainamide</td></tr>
+  <tr><th>II</th><td>베타 차단제. 맥박 감소·PR 간격 증가. propranolol, esmolol</td></tr>
+  <tr><th>III</th><td>칼륨 통로 차단약. 활동전위 연장·QT 간격 늘림. amiodarone, sotalol, ibutilide</td></tr>
+  <tr><th>IV</th><td>칼슘 통로 차단제. 맥박 감소·PR 간격 증가. verapamil, diltiazem</td></tr>
+  </tbody></table>
+  <p>그 외 PSVT 치료에 adenosine, digitalis 유발 부정맥에 magnesium·potassium.</p></div></div>
+  <div class="field"><div class="label">Torsade de pointes(TdP)</div><div class="body"><p>amiodarone은 QT 간격 연장으로 TdP 초래 가능. TdP 발생 기전은 조기 후탈분극(early afterdepolarization). QT는 선행 RR의 1/2을 넘지 않아야 함. Long QT로 유발된 TdP 심정지에서는 혈역학적 불안정 시 제세동, 안정 시 Mg sulfate 투여(저마그네슘혈증 아니어도). <mark>TdP에서 amiodarone은 투여 금기</mark>.</p></div></div>
+  <div class="field"><div class="label">항응고제</div><div class="body"><p>AF 등 혈전 발생 가능성 높은 부정맥에서 와파린·NOAC·LMWH·Heparin 사용. 보통 NOAC을 많이 쓰나, <mark>판막질환·기계판막 환자는 무조건 와파린</mark>.</p>
+  <table class="cmp"><caption>주요 항응고제 비교</caption>
+  <thead><tr><th></th><th>Warfarin</th><th>NOAC</th><th>Heparin / LMWH</th></tr></thead>
+  <tbody>
+  <tr><th>기전</th><td>Vit.K 억제 → 간 합성 응고인자 억제</td><td>활성화 Xa 또는 thrombin 직접 억제(Pradaxa·Xarelto·Eliquis)</td><td>antithrombin 활성화, Factor Xa·thrombin 억제</td></tr>
+  <tr><th>모니터링</th><td>PT INR 필요(치료적 INR 2~3)</td><td>INR 모니터링 불필요, Vit.K 영향 적음</td><td>비분획 heparin은 aPTT(1.5~2.5배), LMWH는 모니터링 불필요</td></tr>
+  <tr><th>해독제</th><td>Vit.K</td><td>—</td><td>protamine sulfate</td></tr>
+  <tr><th>임산부</th><td>금기(유산·출산결함)</td><td>—</td><td>heparin은 태반 통과 못해 사용 가능</td></tr>
+  </tbody></table>
+  <p>검사 정상범위: PT 11.4~15.4초(외인성 경로, 치료범위 1.2~1.5배), INR 0.8~1.3(치료 2~3), aPTT 25~45초(내인성 경로, heparin 환자 1.5~2.5배). INR 4 이상 출혈 위험↑, 출혈 없는 INR 5 이하는 와파린 일시 중단, 출혈/고위험 시 Vit.K 투여. 직접트롬빈억제제: lepirudin·bivalirudin.</p>
+  <p><b>tPA</b>(alteplase·reteplase): plasminogen→plasmin 전환으로 fibrin 분해. 조절 안 되는 고혈압, AMI 증상 발생 3시간 이상 경과 시 금기.</p></div></div>
+  <div class="field"><div class="label">심율동전환 vs 제세동</div><div class="body">
+  <table class="cmp"><caption>Cardioversion vs Defibrillation</caption>
+  <thead><tr><th></th><th>심율동전환(cardioversion)</th><th>제세동(defibrillation)</th></tr></thead>
+  <tbody>
+  <tr><th>방식</th><td>QRS와 전기충격 일치(synchronization), 회귀회로 차단. QRS 정상 리듬에서만</td><td>흥분 주기와 상관없이 강력한 충격</td></tr>
+  <tr><th>적용</th><td>심방성 부정맥, SVT, V-tach with pulse</td><td>pulseless V-tach, V-fib</td></tr>
+  <tr><th>에너지/손상</th><td>낮은 에너지, 심근 손상 덜함</td><td>높은 에너지, 심근 손상 더 발생</td></tr>
+  </tbody></table>
+  <p>제세동 금기: 디지털리스 중독 부정맥, 심장 이외 질병에 의한 빈맥, 심방·심실 혈전 형성. 뇌색전 위험 높으면 생명 위급 제외하고 2~3주 항응고제 투여 후 실시하고 이후에도 2~3주 항응고제 사용. Pacemaker 환자는 최소 12cm 떨어진 부위에서 제세동.</p></div></div>
+  <div class="field"><div class="label">Pacemaker / ICD</div><div class="body"><p>인공심박동기는 심한 서맥성 부정맥 치료 위해 좌측 가슴에 삽입, generator + lead로 구성. 일시적(외부 발생기, temporary pacing wire)·영구적(경정맥형·경흉부형)으로 구분.</p>
+  <p><b>DDD mode</b>는 AV block에서 주로 사용. ECG에서 QRS 앞 spike 있으면 ventricle pacing, 자발적 QRS 시 pacing 안 하면 inhibit 모드. pacing spike 직후 wide QRS는 ventricular sensing·pacing 의미.</p>
+  <p><b>ICD vs PM</b>: ICD는 빈맥형 부정맥 회복, PM은 서맥형 부정맥 교정. 흉부 X-ray상 ICD는 ICD coil이 보임.</p>
+  <figure class="scan"><img src="images/guksi/p025.png" alt="Pacemaker mode 선택·심전도" loading="lazy"><figcaption>p.25 원문</figcaption></figure></div></div>
+  <div class="warn"><b>주의/교육</b> · 시술부위 감염(열감·통증·분비물) 시 내원. 천공으로 pericardial effusion/tamponade, 정맥 천자 시 혈흉·기흉 가능. 기계 결함·배터리 점검 위해 주기적 병원 방문. 강한 전기·자기장(특히 MRI) 회피, 박동기 ID 카드 제시로 금속 탐지기 회피.</div>
+</section>
+
+<section class="card" id="d6">
+  <h3><span class="num">6</span> 심부전 <span class="en">Heart failure · CHF</span></h3>
+  <div class="field"><div class="label">원인·위험</div><div class="body"><ul>
+  <li>유전적 소인, 흡연, 비만</li>
+  <li>고혈압·관상동맥질환(후부하 증가), 심방세동, 갑상선 질환, 빈혈, 신장질환</li>
+  <li>갑상선기능저하/항진은 급성심부전 악화요인</li>
+  <li>악화 약물: NSAIDs, steroid, 심독성 항암제, 알코올, nifedipine(CCB)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">병태생리</div><div class="body"><p>울혈성 심부전: 심장이 돌아온 혈액을 효과적으로 박출하지 못해 조직 관류 장애·정맥 울혈 초래. 두 가지 기능장애 — <b>이완기 기능장애</b>(높은 후부하에 적응 능력 저하, 심실 충만 지연, 일회 박출량 감소)와 <b>수축기 기능장애</b>(심근경색 등 손상으로 수축 불가, 일회 박출량 감소·전부하 증가·심실 확대). 동일 비율로 발생.</p></div></div>
+  <div class="field"><div class="label">좌·우심부전 비교</div><div class="body">
+  <table class="cmp"><caption>좌심부전 vs 우심부전</caption>
+  <thead><tr><th></th><th>좌심부전</th><th>우심부전</th></tr></thead>
+  <tbody>
+  <tr><th>주원인</th><td>허혈성 심장병, 전신 고혈압, 승모판/대동맥판막 질환, 원발성 심근병</td><td>좌심기능상실, 원발성 폐질환</td></tr>
+  <tr><th>기전</th><td>혈액이 폐로 역류 → 폐정맥압 상승·폐포 체액 삼출</td><td>혈류가 체내 저류 → 정맥압 증가</td></tr>
+  <tr><th>증상</th><td>호흡곤란·기좌호흡, 기침, crackle, blood-tinged sputum, 피로, 말단 청색증, 경정맥 팽대, 다리 부종, 수축기 심잡음, EF 감소</td><td>경정맥 확장, 간·비장 비대, 다리·발목 부종, 복수, 체중증가, 오심·구토</td></tr>
+  </tbody></table>
+  <p>좌심부전: 심박출계수↓, CVP·폐모세혈관쐐기압·말초혈관저항·좌심실확장기압↑.</p></div></div>
+  <div class="field"><div class="label">진단·검사</div><div class="body"><p>흉부 X-ray로 심비대 확인. 혈액검사 pro-BNP. 심초음파로 <mark>EF</mark> 확인 — 60% 이상 정상, 40~50% 경계성 심부전, 40% 미만 심기능 약화. 혈중 노르에피네프린 등 교감신경 활성 수치 상승. EF가 정상인 심부전은 HFpEF(고령·고혈압·여성·당뇨·비만에 흔함, ACEi·ARB·BB 생존율 향상 미증명, 전체의 50% 차지).</p></div></div>
+  <div class="field"><div class="label">치료(약물)</div><div class="body"><ul>
+  <li><b>ACEi/ARB</b>: 안지오텐신 차단으로 혈관 확장(후부하 감소), 나트륨·수분 배출(이뇨작용)</li>
+  <li><b>BB</b>: 교감신경 차단으로 혈압·맥박 감소(당뇨 환자에게는 사용 안 함)</li>
+  <li><b>강심제(디곡신)</b>: 심근수축력 증가·심박동 안정화. ACEi·BB·이뇨제 사용에도 악화 시 사용. 도파민·도부타민 같은 수축 촉진제 사용</li>
+  <li><b>이뇨제</b>: 수분·나트륨 배설. Lasix(loop)는 전신순환혈액량 감소로 전부하 감소. 단독 사용 안 함, 주로 loop 이뇨제</li>
+  <li><b>Ivabradine</b>: 동결절 작용, 수축력 영향 없이 맥박수만 감소</li>
+  <li>혈관확장제(nitrate, Nesiritide; SBP 90 미만이면 중단), nitroglycerin(급성심부전, 가장 흔한 유해반응 두통), 항부정맥제(amiodarone), 항응고제</li>
+  </ul>
+  <p><b>도부타민</b>: 심박동수 증가 없이 심박출량 증가. 응급실 내원 급성심부전 환자에게 즉각 투여 예상 약물.</p>
+  <p><b>Digoxin</b>: Na+/K+ATPase 억제로 심근수축력 증가. 부작용 피로감·서맥·오심·식욕부진. 디곡신 농도 2ng/ml 초과 금지. 치명적 부작용은 부정맥·저칼륨혈증. 칼륨과 이온 결합부위 경쟁이므로 칼륨 수치 확인하며 투여(thiazide·loop 이뇨제 병용 시 주의). 디지털리스 중독: 식욕부진·오심·구토·혼돈·환각·섬망·시력장애·방실차단. 독성으로 HR 100회 이상 방실접합부빈맥 시 sinus 회복까지 디곡신 중단.</p></div></div>
+  <div class="field"><div class="label">치료(외과·기구)</div><div class="body"><ul>
+  <li>판막 기능 이상 → 판막치환술, 관상동맥 협착 → PCI·CABG, 부정맥 → PM·ICD</li>
+  <li><b>심장재동기화치료(CRT)</b>: 좌우심실에 유도선 삽입, 동시 수축하도록 전기자극</li>
+  <li><b>LVAD/VAD</b>: 대부분 심장이식 전까지 사용, portable VAD는 퇴원 가능. 혈전방지 위해 항응고제 투여. 합병증: 감염·출혈·뇌졸중·기계관련. 심장이식술 고려</li>
+  </ul></div></div>
+  <div class="field"><div class="label">간호사정·중재</div><div class="body"><p>활력징후·심장모니터·맥박양상·호흡상태·폐음(기저부 crackle)·심음(S3 심부전 초기, S4)·경정맥 팽창·복부·부종·활동 내구성·소변량 평가. 산소요구량 감소 위해 신체적·심리적 휴식, 산소 제공, 침상머리 상승, 폐음·심음·소변량·체중·복부둘레 측정. 퇴원교육: 저나트륨 식이, 식사 후 바로 활동 안 함, 점진적 운동 프로그램.</p></div></div>
+  <div class="warn"><b>주의</b> · 이뇨제 투약 중이라도 수포음 있어도 수액 보충 필요할 수 있음 — Hct 상승, BUN/Cr 비율 20:1 이상 저혈량증 상태에서는 수액 보충.</div>
+</section>
+
+<section class="card" id="d7">
+  <h3><span class="num">7</span> 심근병증 <span class="en">DCMP · SCMP · HCMP · ICMP</span></h3>
+  <div class="field"><div class="label">분류</div><div class="body">
+  <table class="cmp"><caption>심근병증 유형</caption>
+  <thead><tr><th>유형</th><th>특징</th></tr></thead>
+  <tbody>
+  <tr><th>DCMP(확장성)</th><td>심실 수축기능 장애로 심장 확장·심부전 동반. 전체 심부전의 약 25%. 심근염·독성물질 대사장애로 발생 가능</td></tr>
+  <tr><th>SCMP(스트레스성)</th><td>시상하부 카테콜라민 과다 분비로 심장이 지속 흥분상태가 되며 순환 문제 발생</td></tr>
+  <tr><th>HCMP(비후성)</th><td>뚜렷한 원인 없이 심근 비후. 심실 내강이 좁아지고 수축기능 정상이나 이완능력 저하. CAG상 spade 모양 특징</td></tr>
+  <tr><th>ICMP(허혈성)</th><td>심근허혈 반복으로 DCMP 유사 벽운동저하. EF 저하 시 양심실 박동조율기 삽입 필요</td></tr>
+  </tbody></table></div></div>
+</section>
+
+<section class="card" id="d8">
+  <h3><span class="num">8</span> 판막질환 <span class="en">Valvular heart disease</span></h3>
+  <div class="field"><div class="label">정의·분류</div><div class="body">
+  <table class="cmp"><caption>판막질환별 특징</caption>
+  <thead><tr><th>판막</th><th>협착(stenosis)</th><th>역류(regurgitation)</th></tr></thead>
+  <tbody>
+  <tr><th>대동맥판(AS/AR)</th><td>좌심실 혈액이 대동맥으로 박출 안 됨 → 좌심실 후부하 증가·비대 → 좌심부전. 잡음은 경동맥으로 방사, 다이아몬드형(crescendo-decrescendo) 잡음, 오른쪽 2번째 늑간 청진. 증상: 실신·협심통·호흡곤란·심부전(부종은 일반적이지 않음)</td><td>판막 폐쇄기능부전으로 혈액이 좌심실로 역류 → 좌심실 비대·좌심부전. 경동맥 박동성 느려짐, 수축기 심잡음, 저혈압, 동성서맥·좌심실비대</td></tr>
+  <tr><th>폐동맥판(PS/PR)</th><td>우심실 혈류가 폐동맥으로 박출 안 됨 → 우심실 압력 증가·비대 → 우심부전. 주로 선천성, 성인 드묾(아동 청색증)</td><td>혈류가 우심실로 역류 → 우심실 확장·폐동맥압 증가 → 우심부전. 진행 시 폐동맥고혈압 증상</td></tr>
+  <tr><th>승모판(MS/MR)</th><td colspan="2">좌심방→좌심실 혈류 이동 부족·역류 → 좌심방 비대·압력 증가 → 폐정맥 울혈·폐부종·가스교환장애. 증상: 호흡곤란·흉통·피로·기침·객혈·쉰목소리. MS 가장 흔한 원인은 류마티스열(40%), 제1심음 증가·약간 지연, 마차 구르는 듯한 이완기 심잡음(왼쪽 쇄골중간선 제5늑간 청진). 승모판탈출증은 수축기말 잡음·수축기 클릭</td></tr>
+  <tr><th>삼첨판(TS/TR)</th><td colspan="2">우심방→우심실 혈류 부족·역류 → 우심방 비대·정맥압 상승 → 경정맥 울혈·복수·말초부종·피로. TR 환자에 폐동맥카테터 삽입 시 중심정맥압 왜곡 가능</td></tr>
+  </tbody></table></div></div>
+  <div class="field"><div class="label">진단·검사</div><div class="body"><p>흉부 X-ray로 심실 비대 확인. 협착은 CT·MRI로 석회화 판막 확인, 역류는 CT로 비정상 판막엽 확인. ECG상 상승된 P파(심방 수축 진행)·늘어진 QRS. 심초음파 color doppler로 역류를 1~4단계 확인.</p></div></div>
+  <div class="field"><div class="label">치료</div><div class="body"><ul>
+  <li><b>약물</b>: ACEi로 혈관 확장, 이뇨제로 심부담·폐울혈 감소, 항고혈압제로 후부하·역류 감소. 염증성 심질환 원인 시 항생제(예방적 항생제는 적응증 아님). Afib 동반 시 항부정맥제. 판막 시술·수술 후, 뇌경색·Afib 동반 시 항응고제</li>
+  <li><b>수술</b>: 대동맥판막치환술(개흉술 대신 경피적 TAVI — 대퇴동맥 접근). 인공판막은 조직판막(7~15년 수명, 항응고제 수술 후 약 3개월만)과 기계판막(영구 사용, 평생 항응고제, clicking noise). 폐동맥판막협착은 balloon valvuloplasty. chordoplasty·annuloplasty. 심부전 심하면 심장이식술</li>
+  </ul></div></div>
+  <div class="warn"><b>주의</b> · 대동맥판막치환술 후 MAP·혈압 저하 시 NE 투여(volume 대량 주입·도부타민은 부적절). · 승모판대치술 후 우심부전 발생 가능, 적절한 output 위해 NS 주입. · 유두근 파열 동반 급성심근경색으로 심장성 쇼크 시 즉각 개심술, 불가 시 PCI+IABP 후 이송.</div>
+</section>
+
+<section class="card" id="d9">
+  <h3><span class="num">9</span> 염증성 심질환 <span class="en">Rheumatic / Endocarditis / Myocarditis / Pericarditis</span></h3>
+  <div class="field"><div class="label">류마티스성 심질환</div><div class="body"><p>A군 베타 용혈성 연쇄상구균 인후염 후 면역반응으로 항체가 심장 조직을 공격하는 자가면역질환. 심근염·관절염 유발, 반복 시 심부전·감염성 심내막염·판막 기형(특히 이첨판 손상) 유발. 예방 중요 — 인후염 시 페니실린 등 항생제 치료, 효과 없으면 스테로이드 병행, 판막 손상 심하면 인공판막대치술.</p></div></div>
+  <div class="field"><div class="label">심내막염</div><div class="body"><p>심내막·판막에 박테리아 염증. 혈류 불규칙 → 심내막 손상 → 혈소판·혈전 축적(혈전성 심내막염) → 세균 증식. 원인: 류마티스성/선천성 심질환에 의한 판막 손상, 박테리아 감염, 정맥용 약물 사용. 증상: <mark>발열이 가장 흔함</mark>, 심잡음, 혈액배양 양성, 색전, 점상출혈, 8주 이상 지속되는 고열·오한·권태감, 확장기 잡음. 치료: 경험적 항생제(베타락탐계 + aminoglycoside, 과민반응 시 vancomycin). 치료 지연·균혈증 지속·만성 심부전·색전 시 판막수술. <b>예방</b>: 심장질환 환자는 수술·치과치료 전 예방적 항생제(페니실린, 알러지 시 azithromycin).</p></div></div>
+  <div class="field"><div class="label">심근염</div><div class="body"><p>심장근육 염증으로 심근 손상. 바이러스(특히 콕사키)·세균·진균·기생충. 심근 약화·수축력 감소·확장성 심근병증 유발 가능. 경할 경우 대증치료·휴식으로 회복. 부정맥·심부전 유발 시 스테로이드·베타차단제·ACEi·이뇨제, 항바이러스제·고용량 감마글로불린. 심할 경우 LVAD·ECMO·심장이식. 흉통 호소 시 <mark>Morphine이 가장 효과적</mark>(NG는 무효 — 관상동맥혈류와 무관).</p></div></div>
+  <div class="field"><div class="label">심낭염</div><div class="body"><p>심낭 염증으로 삼출물이 차고 심장기능 장애 초래, 대부분 바이러스성. 동반 질환 확인·치료 병행. 발열·흉통·염증반응 완화 위해 ASA·NSAIDs·colchicine(위장부작용 예방 위해 PPI 병용). 호전 없으면 스테로이드. 삼출물 급격 증가 시 심낭절개술·심낭천자술.</p>
+  <table class="cmp"><caption>급성 심낭염 vs 급성 심근경색 (ECG)</caption>
+  <thead><tr><th></th><th>급성 심낭염</th><th>급성 심근경색</th></tr></thead>
+  <tbody>
+  <tr><th>ST 상승</th><td>U자 모양으로 위로 올라감</td><td>U를 거꾸로 한 비석 같은 모양</td></tr>
+  <tr><th>QRS</th><td>별 변화 없음</td><td>변화 있음</td></tr>
+  <tr><th>T파 역전</th><td>ST 정상화되고 수일 후</td><td>ST 정상화 전에 나타남</td></tr>
+  </tbody></table></div></div>
+</section>
+
+<section class="card" id="d10">
+  <h3><span class="num">10</span> 고혈압 <span class="en">Hypertension</span></h3>
+  <div class="field"><div class="label">정의·분류</div><div class="body"><p>혈압은 심박출량과 말초혈관저항으로 유지. <b>원발성(본태성)</b>은 원인 불명, <b>속발성(이차성)</b>은 원인을 아는 고혈압(신장질환, 쿠싱증후군의 안지오텐시노겐 분비 촉진, 갑상선기능항진, 경구피임제·교감신경흥분제 등 약물).</p>
+  <p><b>레닌-안지오텐신-알도스테론계(RAAS)</b>: 혈류량 부족 시 신장 juxtaglomerular apparatus에서 renin 분비 → 안지오텐신 → 안지오텐신 I → 폐·신장 ACE에 의해 안지오텐신 II 전환. 안지오텐신 II는 ① 교감신경 활성화(혈관수축·심근수축력·혈압 증가) ② 세뇨관에서 Na·Cl 재흡수·K 배출 ③ 부신 알도스테론 분비 ④ 소동맥 수축 ⑤ 뇌하수체 후엽 ADH 분비.</p></div></div>
+  <div class="field"><div class="label">약물요법</div><div class="body">
+  <table class="cmp"><caption>고혈압 약물 분류</caption>
+  <thead><tr><th>분류</th><th>기전·약물·특징</th></tr></thead>
+  <tbody>
+  <tr><th>CCB</th><td>칼슘통로 차단→말초혈관저항 감소. 초기치료제. DHP(nifedipine·amlodipine, 두통·안면홍조·빈맥·기립성저혈압), non-DHP(verapamil·diltiazem, 심박수 감소). 천식·당뇨·말초혈관질환 동반 시 유용</td></tr>
+  <tr><th>BB</th><td>베타1 봉쇄로 심장흥분 억제·심박출량 감소, renin 분비 억제. 천식·기관지질환에는 CCB가 일차. propranolol(베타1,2 차단, 천식 금기), atenolol. 방실차단 시 중단</td></tr>
+  <tr><th>알파차단제</th><td>알파 수용체 차단→말초혈관 확장. 첫 투약 후 체위성 저혈압(첫 용량 1/3 또는 취침 전). prazosin·doxazosin. 전립선비대증 증상 개선. clonidine은 뇌 알파2 흥분으로 교감신경 억제. labetalol은 알파·베타 모두 차단(고혈압위기·빈맥·협심증 동반 시 효과적)</td></tr>
+  <tr><th>ACEi</th><td>안지오텐신 I→II 차단, 세동맥 확장·알도스테론 감소. 당뇨병성 신증에도 사용. captopril·enalapril·ramipril. 부작용: 마른기침·혈관부종·고칼륨혈증. 신동맥 협착 환자는 급격한 신손상 가능</td></tr>
+  <tr><th>ARB</th><td>안지오텐신 II 수용체 결합 차단. ACE의 브라디키닌 분해 차단 안 하므로 마른기침 적음. candesartan·irbesartan·losartan</td></tr>
+  <tr><th>레닌억제제</th><td>직접 renin 억제. aliskiren. 임신 중 금기, 고용량에서 설사</td></tr>
+  <tr><th>혈관확장제</th><td>NO 유리로 혈관 확장. hydralazine(임신성 고혈압 단독요법)·minoxidil(털과다증). 이뇨제·베타차단제와 병용</td></tr>
+  <tr><th>이뇨제</th><td>thiazide(원위세뇨관 Na·K 배설↑·칼슘 재흡수, 저칼륨혈증·요산축적/통풍 가능, 신장결석 환자에 유용), loop(헨레고리 상행각, 급성 폐부종 응급, furosemide, 전부하 감소, 저칼륨혈증·고요산혈증·이독성), 칼륨보존이뇨제(집합관, 여성유방증·생리불순), 탄산탈수소효소억제제(녹내장 안압), 삼투이뇨제(mannitol, 뇌압)</td></tr>
+  </tbody></table>
+  <p>DM 동반 시 ACEi·ARB·CCB·BB·이뇨제 모두 가능. 2018 가이드라인 — 동반질환 없는 노인은 ACEi·ARB·CCB·이뇨제 1차약제. <b>고혈압 위기</b> 시 SBP 목표는 2시간에 걸쳐 25~30%씩 감소.</p></div></div>
+  <div class="field"><div class="label">간호중재·교육</div><div class="body"><ul>
+  <li><b>식이</b>: 소금 하루 6g 이하, 채소·과일·저지방 유제품. <mark>DASH 식이</mark>(칼륨·칼슘·마그네슘·식이섬유 늘리고 나트륨·지방 줄임, 수축기·이완기 혈압 감소 효과)</li>
+  <li><b>생활습관</b>: 절주·금연, 매일 일정 시간 가정혈압 측정(측정 전 30분 이내 흡연·음주·카페인 금지)</li>
+  <li><b>운동</b>: 하루 30분 이상 중등도 강도, 주 5회 이상</li>
+  <li><b>약물 복용 이행</b>: 매일 일정 시간 복용, 타병원 내원 시 복용약 알림</li>
+  </ul></div></div>
+</section>
+
+<section class="card" id="d11">
+  <h3><span class="num">11</span> 말초혈관·혈관 신체검진 <span class="en">ABI · Allen test · Homan's sign</span></h3>
+  <div class="field"><div class="label">ABI (ankle-brachial index)</div><div class="body"><p>말초동맥 폐색 확인 검사. 발목 수축기 혈압 ÷ 팔 수축기 혈압. 정상 <mark>0.9~1.3</mark>, 낮으면 말초동맥 폐색·혈류 저하. 트레드밀 5분 운동 후 휴식 시보다 수치가 낮아도 말초동맥 폐색. capillary refill time은 2초 이내 정상(혈류 감소·추운 곳에서 지연).</p></div></div>
+  <div class="field"><div class="label">Allen test</div><div class="body"><p>요골동맥·척골동맥 순환 평가. 일반적으로 혈류 복귀 5~10초, 더 오래 걸리면 측부순환 폐쇄 의미. ABGA 동맥혈 채혈 또는 CABG 대체혈관으로 radial artery 사용 가능 여부 판단 시 사용.</p></div></div>
+  <div class="field"><div class="label">Homan's sign</div><div class="body"><p>혈전성 정맥염·심부정맥혈전증 의심 환자 사정법. 무릎을 약간 구부리고 발을 발등 쪽으로 굴곡 → 종아리·무릎 뒤 오금에 통증 호소 시 양성. DVT 없는 사람도 종종 양성이므로 확진 불가, 추가 검사 필요.</p></div></div>
+</section>
+
+<section class="card" id="d12">
+  <h3><span class="num">12</span> 대동맥류·대동맥박리 <span class="en">Aortic aneurysm · Aortic dissection</span></h3>
+  <div class="field"><div class="label">대동맥류</div><div class="body"><p>대부분 무증상, 간혹 누우면 복부에서 박동이 느껴짐. <mark>Back pain 시 파열 의심</mark>. 흉부대동맥류 진전 확인은 chest CT, 혈압 조절이 가장 중요(SBP &lt;120 이하). 가성동맥류는 대퇴동맥 접근 시술(관상동맥중재술 등) 후 발생 가능 — 서혜부 통증·혈관잡음 청진 시 의심.</p></div></div>
+  <div class="field"><div class="label">대동맥 박리</div><div class="body"><p>대동맥 내막의 미세 파열로 중막이 세로로 찢어지며 혈관 분리. 극심한 흉통·혈압 상승·빈맥·흉골하 심잡음·종격동 확장 시 의심. 90% 이상에서 죽을 것 같은 통증, 통증 위치가 박리 위치 예측에 도움.</p>
+  <table class="cmp"><caption>Stanford 분류</caption>
+  <thead><tr><th></th><th>type A</th><th>type B</th></tr></thead>
+  <tbody>
+  <tr><th>침범</th><td>상행대동맥 침범(상행~하행 병변)</td><td>상행대동맥 침범 안 함</td></tr>
+  <tr><th>치료</th><td>수술적 치료</td><td>내과적 치료</td></tr>
+  </tbody></table></div></div>
+  <div class="warn"><b>주의</b> · 대동맥 박리는 즉각적 수술이 원칙. 혈압·맥박 감소 위해 sodium nitroprusside + esmolol 투여, MAP 70mmHg·HR 70회 유지 목표. · 복부대동맥 수술 후 hypoperfusion·hypovolemia로 허혈성 결장염 가능(저혈압·빈맥·복부팽만·설사).</div>
+</section>
+
+<section class="card" id="d13">
+  <h3><span class="num">13</span> DVT·폐색전증 <span class="en">DVT · PTE</span></h3>
+  <div class="field"><div class="label">위험요인(Virchow 삼요소)</div><div class="body"><ul>
+  <li><b>과다응고</b>: 탈수, 경구 피임제, 흡연, 급성 감염</li>
+  <li><b>혈액정체</b>: 부동, 비만, 임신, 노화, 심부전</li>
+  <li><b>혈관내벽 손상</b>: 외상, 수술, 정맥판막질환, 죽상경화증</li>
+  </ul></div></div>
+  <div class="field"><div class="label">증상·감별</div><div class="body"><p>젊은 여성에서 하지부종·통증·발열·불편감·발적 시 DVT 의심. Afib은 동맥 혈전색전증과 관련이 더 높고 DVT와는 관련성 크지 않음. 대퇴골 손상 후 움직임 장애 환자에서 흉통·호흡곤란 갑자기 발생 시 <mark>PTE(폐동맥색전증)</mark> 예상 — CT상 양측 폐동맥혈전증.</p></div></div>
+</section>
+
+<section class="card" id="d14">
+  <h3><span class="num">14</span> 이상지질혈증 <span class="en">Dyslipidemia</span></h3>
+  <div class="field"><div class="label">진단·검사</div><div class="body"><p>총콜레스테롤 수치가 높을 때 LDL·HDL·중성지방 평가 필요. 지질검사 정상범위:</p>
+  <table class="cmp"><caption>지질검사 정상범위</caption>
+  <thead><tr><th>항목</th><th>정상범위</th></tr></thead>
+  <tbody>
+  <tr><th>Total cholesterol</th><td>&lt;200 mg/dL</td></tr>
+  <tr><th>HDL</th><td>&gt;40 mg/dL</td></tr>
+  <tr><th>LDL</th><td>&lt;130 mg/dL</td></tr>
+  <tr><th>Triglycerides</th><td>&lt;150 mg/dL</td></tr>
+  </tbody></table></div></div>
+</section>
+
+<section class="card" id="d15">
+  <h3><span class="num">15</span> 순환기 신체검진(심음·맥박결손) <span class="en">Heart sounds S1~S4</span></h3>
+  <div class="field"><div class="label">심음</div><div class="body">
+  <table class="cmp"><caption>심음 S1~S4</caption>
+  <thead><tr><th>심음</th><th>내용</th></tr></thead>
+  <tbody>
+  <tr><th>S1</th><td>삼첨판·이첨판이 닫히는 소리, 수축기의 시작</td></tr>
+  <tr><th>S2</th><td>대동맥판막·폐동맥판막이 닫히는 소리, 수축기의 끝·확장기 시작</td></tr>
+  <tr><th>S3</th><td>심실 확장기 시초 심방 유입 혈액으로 심실벽·이첨판 진동, 저음·지속 짧아 청취 어려움. 오른쪽 S3는 흡기 시, 왼쪽 S3는 호기 시 증가</td></tr>
+  <tr><th>S4</th><td>확장기 말에 심실이 채워지는 소리</td></tr>
+  </tbody></table>
+  <p>고령 환자에서 S3 심음은 정상소견이 아님. 좌·우심실 부전 시 제3심음 청진 가능. 심방중격결손은 일정한 S2 분열음, 심실중격결손은 새로운 범수축기 잡음(holosystolic murmur)과 저혈압. 심근경색 시 심음이 잘 안 들리고, 초기 감염성 심내막염은 심음 정상, 심낭염 시 심낭마찰음.</p></div></div>
+  <div class="field"><div class="label">맥박결손·말단 냉감</div><div class="body"><p>맥박결손 확인: 심첨맥박과 요골동맥 맥박을 차례로 확인하여 차이를 봄 — 심첨맥박 후 요골맥박이 존재해야 하므로 심첨맥박을 먼저 확인 후 요골동맥 맥박을 확인하여 차이가 벌어지면 맥박결손. 한쪽 손 온도가 더 낮게 측진될 때 우선 손등으로 전박 온도를 측정(냉기 확장 확인) 후 맥박 측정.</p></div></div>
+</section>
+
+<section class="card" id="d16">
+  <h3><span class="num">16</span> 12 lead EKG·ECG 판독</h3>
+  <div class="field"><div class="label">유도·판독</div><div class="body"><ul>
+  <li>사지유도 6개 (I·II, augmented bipolar; aVR·aVL·aVF, augmented unipolar), 흉부유도 6개 (V1~V6)</li>
+  <li>II·aVF의 ST elevation은 하벽부 심근경색 관련. V1~V4에서 3mm ST 분절 상승 시 MI 의심·혈전용해치료 적응증</li>
+  <li>EKG 1칸 = 0.2초. 맥박수 구하기: 300-150-100-75-60-50</li>
+  <li>Tall and Peaked T wave + 소변량 감소 → hyperkalemia with AKI 의심</li>
+  </ul>
+  <p><b>QT prolonged 원인</b>: 전해질 이상(저칼륨혈증·저칼슘혈증·저마그네슘혈증), amiodarone 등 항부정맥제(class I·III), NP약(phenothiazine 계), 항생제(ampicillin·erythromycin), 뇌출혈, 허혈성심질환, 심근염, 심한 서맥.</p></div></div>
+</section>
+
+<section class="card" id="d17">
+  <h3><span class="num">17</span> 혈역학 모니터링·IABP·ECMO·심장재활</h3>
+  <div class="field"><div class="label">혈역학 모니터링(PCWP 등)</div><div class="body"><ul>
+  <li><b>저혈량성 쇼크</b>: RA(중심정맥압)·PAOP(폐쇄기압)·BP 낮고 SVR 상승. 수액치료 적절성 지표는 CO·SvO2·SVR (정상 CO 4~8L/min, SvO2 60~80%, SVR 800~1200). 가장 적절한 정맥주사 용액은 정상 혈청 알부민. 저혈량 자료: HR 증가, PAOP 감소, CVP 감소</li>
+  <li><b>전부하 증가</b>: RAP·PAOP·PAP 상승 → 수포음 동반 시 폐부종 의심, 이뇨제 사용. 용적 과부하 시사 정보는 RAP·PAOP, PAP는 폐동맥고혈압 관련</li>
+  <li><b>pericardial tamponade</b>: 혈압 감소·CVP 증가·종격동 튜브 배액량 안 보임·심음 감소 → 종격동 튜브 추가 삽입으로 배액</li>
+  <li><b>PCWP</b>(폐모세혈관쐐기압, 정상 4~12mmHg): 대퇴전치환술 등 수술 후 출혈은 PCWP 급격 감소 초래, 가장 적절한 중재는 수혈</li>
+  <li><b>혈관수축제</b>: 가장 빨리 혈압 올리는 것은 NE(알파-아드레날린성, 좌심실 수축력 증가·말초혈관 수축). 도파민은 SBP 최소 70 이상일 때 효과적, 도부타민은 SBP 70~100·쇼크 증상 없는 폐울혈에 사용. 심장성 쇼크 치료 목표는 MAP 상승(MAP 60 이상이어야 뇌관류 제공)</li>
+  </ul></div></div>
+  <div class="field"><div class="label">IABP</div><div class="body"><p>intra-aortic balloon pump — 이완기 동안 풍선을 팽창시켜 관상동맥 혈류 증가로 심근 산소공급 증가. 목적은 <mark>후부하 감소와 관상동맥혈류 상승</mark>. 카테터는 좌측 쇄골하동맥보다 2cm 가량 낮은 위치까지 삽입(CXR에서 풍선 끝은 제2늑간). 제거 시 카테터 주변 혈전 가능성으로 즉시 지혈 안 함. 제거 조건: CVP &lt;10~15, CI &gt;2.0, IABP 1:3 or 1:4, SBP &gt;100, 강심제 사용 최소화.</p></div></div>
+  <div class="field"><div class="label">ECMO</div><div class="body"><ul>
+  <li><b>VA type</b>: 정맥관 배액→동맥혈 관류, 순환보조. 높은 SVR 시 nitroprusside 투여</li>
+  <li><b>VV type</b>: 정맥관-정맥관, 인공호흡기 무반응 단독 호흡부전에 사용</li>
+  </ul>
+  <p>PEA 시 추정 원인: cardiac tamponade, tension pneumothorax. CPB(체외순환)는 혈전형성·혈액응고·염증반응으로 ARDS 등 장기합병증 초래.</p></div></div>
+  <div class="field"><div class="label">심장재활·기타</div><div class="body"><p>심장재활 3단계: 1단계(입원 중), 2단계(퇴원·외래), 3단계(가정 평생 예방). 심장이식 후 거부반응 확진 검사는 심근생검(급성거부반응 시 methylPd 500mg~1g 3일간 IV). 저체온요법(목표체온유지치료)은 ROSC 후 12~24시간 권고, 중심체온 32~34도. 부루가다증후군은 V1 특징적 ST elevation, 실신·심실부정맥 시 ICD. 심장돌연사의 80%는 급성관상동맥증후군. GRACE score는 급성관상동맥증후군 위험도(6개월 사망률) 평가.</p></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

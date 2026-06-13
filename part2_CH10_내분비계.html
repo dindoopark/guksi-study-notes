@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 내분비계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 내분비계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">내분비계 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 내분비계 (CHAPTER 10).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q01">문 01</a></li>
+  <li><a href="#q02">문 02</a></li>
+  <li><a href="#q03">문 03</a></li>
+  <li><a href="#q04">문 04</a></li>
+  <li><a href="#q05">문 05</a></li>
+  <li><a href="#q06">문 06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13">문 13</a></li>
+  <li><a href="#q14">문 14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19-20">문 19–20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+  <li><a href="#q34">문 34</a></li>
+  <li><a href="#q35">문 35</a></li>
+  <li><a href="#q36">문 36</a></li>
+  <li><a href="#q37">문 37</a></li>
+</ul></nav>
+
+<section class="card" id="q01">
+  <h3><span class="num">문 01</span> <span class="en">당뇨성 케톤산증(DKA) · ABG</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨성 케톤산증(DKA) 환자의 동맥혈가스분석(ABG) 결과가 다음과 같을 때 적절한 간호중재는?</p>
+  <p>pH 6.8 / PaO₂ 92 mmHg / PCO₂ 35 mmHg / HCO₃ 15 mEq/L</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>비강캐뉼라로 산소 2 L/min를 적용한다.</li>
+     <li>매 시간마다 간이혈당검사를 시행한다.</li>
+     <li>생리식염수 200 mL에 중탄산나트륨 100 mEq을 투여한다.</li>
+     <li>두 시간 후에 ABG를 다시 확인한다.</li>
+     <li>분당 18회 미만의 과소호흡을 유도한다.</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p179.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.179 원문(검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q02">
+  <h3><span class="num">문 02</span> <span class="en">DKA · 인슐린 정맥→피하 전환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨성 케톤산증 환자의 인슐린 정맥주사를 인슐린 피하주사로 전환할 때 우선적으로 고려해야 하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>인슐린 피하주사를 시작한 후 1~2시간 동안 정맥주사 인슐린을 유지한다.</li>
+     <li>24시간 동안 30분마다 혈당을 확인한다.</li>
+     <li>인슐린 피하주사를 투여하자마자 인슐린 정맥주입을 중단한다.</li>
+     <li>환자의 경련 징후를 면밀히 모니터한다.</li>
+     <li>포도당 용액을 정맥으로 유지한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q03">
+  <h3><span class="num">문 03</span> <span class="en">중증 저혈당 · 의식저하</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>심한 저혈당으로 의식이 저하되어 반응이 없는 환자에게 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>물 25 mL에 50 % 포도당 용액을 정맥주사 하고 한 시간 후 재사정한다.</li>
+     <li>치즈와 크래커를 제공하고 15분 후에 재사정한다.</li>
+     <li>물 50 mL에 25 % 포도당 용액을 정맥주사하고 30분 후 재사정한다.</li>
+     <li>젤리 10개를 제공하고 6분 후 재사정한다.</li>
+     <li>30분간 지켜보다가 재사정한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q04">
+  <h3><span class="num">문 04</span> <span class="en">요붕증(DI) 감별</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌종양을 진단받고 중환자실에 입원한 30세 여자가 물을 지나치게 많이 섭취하는 것이 관찰되었다. 간호사는 환자의 물병을 6시간 동안 8번이나 채웠으며, 지난 24시간의 섭취량 및 배설량 상에서 환자의 배뇨량은 20L를 초과하였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>탈수</li>
+     <li>요붕증(diabetes insipidus)</li>
+     <li>항이뇨호르몬분비이상증후군(SIADH)</li>
+     <li>급성 부신기능부전증(acute adrenal insufficiency)</li>
+     <li>고혈당성고삼투압증후군</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q05">
+  <h3><span class="num">문 05</span> <span class="en">고혈당성고삼투압증후군(HHS) 소견</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고혈당성고삼투압증후군(HHS) 환자에서 고혈당 이외에 다음 중 HHS와 관련 있는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>케톤뇨증 없음</li>
+     <li>혈청 삼투압 감소</li>
+     <li>아세톤 호흡</li>
+     <li>신경학적 변화 없음</li>
+     <li>소변량 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q06">
+  <h3><span class="num">문 06</span> <span class="en">악성 폐암 · 위험 질환</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>최근 항암치료를 시작한 악성 폐암 환자에게 현재의 건강 상태와 치료요법으로 인해 나타날 위험이 높은 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>쿠싱증후군(Cushing syndrome)</li>
+     <li>항이뇨호르몬분비이상증후군(SIADH)</li>
+     <li>애디슨 병(Addison disease)</li>
+     <li>갑상선 중독증(thyroid storm)</li>
+     <li>요붕증(DI)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">SIADH 치료·간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항이뇨호르몬분비이상증후군(SIADH) 환자의 치료 및 간호로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>식이섭취량을 면밀히 모니터한다.</li>
+     <li>Democlocycline, lithium, dilantin을 투여한다.</li>
+     <li>수분 정체를 위해서 저장성 식염수를 주입한다.</li>
+     <li>BUN과 Creatinine 수치를 모니터한다.</li>
+     <li>바소프레신을 투여한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">SIADH · ADH 과다분비 결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>항이뇨호르몬분비이상증후군(SIADH)에서 ADH의 과다 분비로 인해 나타나는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>저혈량증(hypovolemia)</li>
+     <li>고혈량증(hypervolemia)</li>
+     <li>저칼슘혈증(hypocalcemia)</li>
+     <li>고요산혈증(hyperuricemia)</li>
+     <li>고나트륨혈증(hypernatremia)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">HHS 징후</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>고혈당성고삼투압증후군(HHS)이 있는 환자에게 나타나는 징후는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>과다호흡</li>
+     <li>저체온</li>
+     <li>말초부종</li>
+     <li>빈맥</li>
+     <li>고혈압</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">당뇨신장병 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨신장병(diabetic nephropathy)을 확인하는 가장 적절한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>크레아티닌청소율(creatinine clearance)과 사구체여과율(eGFR)</li>
+     <li>소변의 알부민과 크레아티닌 비율과 사구체여과율</li>
+     <li>미세알부민뇨(microalbuminuria)</li>
+     <li>혈청 크레아티닌</li>
+     <li>혈청 알부민</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">갑상선기능 · 검사수치 해석</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>신경과민과 체중감소를 호소하는 38세 여자의 혈액검사 결과가 다음과 같다. 식이 섭취량이나 운동 수준은 변화가 없다고 한다. 다음 중 가장 의심되는 상태는?</p>
+  <p>TSH: 0.01 mIU/L (Normal values 0.4–3.8 mIU/L)<br>Free T4: 6 ng/dL (Normal values 0.8–2.8 ng/dL)<br>Free T3: 205 ng/dL (Normal values 70–205 ng/dL)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>갑상선기능저하증</li>
+     <li>갑상선기능항진증</li>
+     <li>무증상 갑상선기능항진증</li>
+     <li>무증상 갑상선기능저하증</li>
+     <li>갑상선중독증</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p181.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.181 원문(검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">공복혈당 해석</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>주 2회 측정한 공복혈당수치가 각각 121 mg/dL, 136 mg/dL인 환자가 이것이 어떤 의미인지 묻는다면 가장 적절한 설명은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>혈당수치가 정상입니다.</li>
+     <li>1형 당뇨병입니다.</li>
+     <li>2형 당뇨병입니다.</li>
+     <li>혈당수치가 비정상적입니다.</li>
+     <li>진단을 위해 당화혈색소(HbA1C) 검사가 요구됩니다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13">
+  <h3><span class="num">문 13</span> <span class="en">지질·HbA1C 관계</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨병이 있는 55세 여자의 공복 지질과 HbA1C 결과가 다음과 같다. 이 환자의 지질수치와 HbA1C의 관계에 대한 설명으로 옳은 것은?</p>
+  <p>LDL Cholesterol: 120 mg/dL / HDL Cholesterol: 45 mg/dL / Total Cholesterol: 200 mg/dL / Triglycerides: 309 mg/dL / Glycosylated Hemoglobin (HbA1C): 9.2%</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>특별한 관련이 없다.</li>
+     <li>LDL은 HbA1C가 증가함에 따라 증가할 것이다.</li>
+     <li>HbA1C가 감소됨에 따라 triglycerides가 감소한다.</li>
+     <li>HDL이 증가함에 따라 HbA1C가 감소할 것이다.</li>
+     <li>HbA1C가 증가함에 따라 Total cholesterol이 감소한다.</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p182.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.182 원문(검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q14">
+  <h3><span class="num">문 14</span> <span class="en">2형 당뇨 조기 진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>2형 당뇨병을 가장 빨리 진단할 수 있는 혈당 이상은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>식후 혈당수치 상승</li>
+     <li>야간 고혈당</li>
+     <li>공복혈당 상승</li>
+     <li>비정상적인 HbA1C 수치</li>
+     <li>새벽 저혈당</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">갑상선기능저하 · levothyroxine</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>levothyroxine을 복용 중인 45세 갑상선기능저하증 환자의 검사결과가 다음과 같다. 이 때 적절한 중재는?</p>
+  <p>TSH: 32.7 mIU/L (Normal values: 0.4–3.8 mIU/L)<br>Free T4: 0.09 ng/dL (Normal values: 0.8–2.8 ng/dL)<br>Total Cholesterol: 260 mg/dL / LDL Cholesterol: 190 mg/dL / HDL Cholesterol: 37 mg/dL / Triglyceride: 140 mg/dL</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>스타틴 치료(statin therapy)를 시작한다.</li>
+     <li>levothyroxine 용량을 조절한다.</li>
+     <li>식습관 개선을 격려한다.</li>
+     <li>생활습관 변화를 격려한다.</li>
+     <li>매일 규칙적으로 혈당을 측정하도록 한다.</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p183.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.183 원문(검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">갑상선 검사수치 진단</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>환자의 검사 결과가 다음과 같다면 예상되는 진단은?</p>
+  <p>TSH: 14 mIU/L (정상치: 0.4~3.8 mIU/L)<br>Free T4: 0.1 ng/dL (정상치: 0.8~2.8 ng/dL)</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>갑상선기능저하증</li>
+     <li>갑상선기능항진증</li>
+     <li>무증상의 갑상선기능항진증</li>
+     <li>무증상의 갑상선기능저하증</li>
+     <li>점액수종</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p183.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.183 원문(검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">피로·체중증가 · TSH</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>45세 여자가 지난 3개월 동안 피로감을 느끼고 체중이 약 4.5 Kg 증가하였다. 이전에는 약 30일 주기로 규칙적으로 생리를 하였으나 지난 3개월 동안에는 30~45일로 다양하였다. 갑상선자극호르몬(TSH) 수치는 13 mIU/L (정상치: 0.4~3.8 mIU/L)이었으며 1주일 후에 재검사 시 15 mIU/L였다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>갑상선기능항진증</li>
+     <li>갑상선기능저하증</li>
+     <li>뇌하수체기능저하증</li>
+     <li>폐경전후증후군</li>
+     <li>갑상선 중독증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">원발성 갑상선기능저하 선별검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>원발성 갑상선기능저하증을 선별하고 확인하는 데 가장 민감한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>TSH(Thyroid-stimulating hormone)</li>
+     <li>TSH(Thyroid-stimulating hormone), T4</li>
+     <li>TSH(Thyroid-stimulating hormone), T4, T3</li>
+     <li>TSH(Thyroid-stimulating hormone), TRH(thyrotropin-releasing hormone)</li>
+     <li>Troponin</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19-20">
+  <h3><span class="num">문 19–20</span> <span class="en">개두술 후 요붕증(공유 지문)</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>다음 지문을 읽고 질문에 답하시오(문제 19–20).</p>
+  <p>개두술 환자를 사정한 결과가 다음과 같다.<br>시간당 소변량 400~500 mL / 혈청 포도당 100 mg/dL / 혈압 100/68 mmHg / 맥박수 102회/분 / 호흡수 22회/분</p></div></div>
+  <div class="field"><div class="label">문 19</div><div class="body"><p>이 환자에게 예상되는 검사 결과는?</p>
+  <ol>
+     <li>혈청 삼투압 265 mOsm/Kg, 혈청 나트륨 151 mEq/L, 요비중 1.030</li>
+     <li>혈청 삼투압 280 mOsm/Kg, 혈청 나트륨 151 mEq/L, 요비중 1.001</li>
+     <li>혈청 삼투압 330 mOsm/Kg</li>
+  </ol></div></div>
+  <div class="field"><div class="label">문 20</div><div class="body"><p>이 환자에게 가장 적절한 정맥주입 수액은?</p>
+  <ol>
+     <li>lactated Ringer's</li>
+     <li>5% dextrose in water</li>
+     <li>Normal saline</li>
+     <li>10% dextrose in water</li>
+     <li>3% Saline</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p184.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.184 원문(공유 지문·검사수치 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">HHS 검사결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 고혈당성고삼투압증후군(HHS) 환자에게 예상되는 검사결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>pH 7.15</li>
+     <li>요비중 1.030</li>
+     <li>혈청 칼륨 6.1 mEq/L</li>
+     <li>혈청 삼투압 270 mOsm/Kg</li>
+     <li>혈당 180 mg/dL</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">metformin 작용기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>metformin (Glucophage)의 작용 기전은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>인슐린 생산 추진</li>
+     <li>sulfonylureas 작용과 동일</li>
+     <li>말초 조직에서 인슐린 작용 증가와 간내 포도당 생성 감소</li>
+     <li>신장의 포도당 배설 추진</li>
+     <li>포도당 신생 억제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">Sulfonylureas 작용기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Sulfonylureas의 작용 기전은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>인슐린 수용체 활성화의 길항제</li>
+     <li>인슐린 분비를 증진하는 약물</li>
+     <li>신장 포도당 배설 촉진제</li>
+     <li>간내 포도당 생산을 감소시키는 약물</li>
+     <li>포도당 흡수 억제</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">당뇨·고혈압·단백뇨 항고혈압제</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨병과 고혈압을 진단받았고, 지속적인 단백뇨가 있는 환자에게 투여할 수 있는 항고혈압제는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>furosemide</li>
+     <li>methyldopa</li>
+     <li>fosinopril</li>
+     <li>nifedipine</li>
+     <li>spironolactone</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">biguanide(Metformin) 추적검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>biguanide (Metformin)를 사용할 때 주기적으로 검사해야 하는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>creatine kinase (CK)</li>
+     <li>alkaline phosphatase (ALP)</li>
+     <li>alanine aminotransferase (ALT)</li>
+     <li>creatinine (Cr)</li>
+     <li>neutrophil</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">meglitinide analogues</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>2형 당뇨병에서 meglitinide analogues는 특히 어떠한 위험을 최소화하는 데 유용한가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>공복 저혈당</li>
+     <li>야행성 고혈당</li>
+     <li>식후 고혈당</li>
+     <li>식후 저혈당</li>
+     <li>식전 고혈당</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">alpha-glucosidase inhibitor 부작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>당뇨병 환자가 복용하는 alpha-glucosidase inhibitor의 가장 흔한 부작용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>위장 장애</li>
+     <li>간독성</li>
+     <li>신장 기능 장애</li>
+     <li>증상이 있는 저혈당</li>
+     <li>이명</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">위마비증 · 금기 혈당약</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>2형 당뇨병을 진단받은 75세 남자에게 위마비증이 있을 때 투여할 수 없는 혈당조절 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>insulin glargine (Toujeo; Lantus)</li>
+     <li>insulin aspart (NovoLog)</li>
+     <li>glimepiride (Amaryl)</li>
+     <li>liraglutide (Victoza)</li>
+     <li>metformin (Glucophage)</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">Metformin 수술 전후 중단 이유</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Metformin을 수술 후 48시간까지 중단해야 하는 이유는 다음 중 이 약물이 어떤 위험을 증가시키기 때문인가?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>감염</li>
+     <li>저혈당</li>
+     <li>간손상</li>
+     <li>젖산혈증</li>
+     <li>마취효과 과다</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">Graves병 · 방사성 요오드</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Graves' disease 치료 시 방사성 요오드를 사용하는 목적은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>고활동성 갑상선 조직 파괴</li>
+     <li>TSH 생성 감소</li>
+     <li>갑상선 대사율 변경</li>
+     <li>증가된 갑상선 크기로 인한 고통 완화</li>
+     <li>갑상선 호르몬 생산 추진</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">갑상선기능항진 · 떨림/빈맥 완화</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 갑상선기능항진증 환자의 떨림 및 빈맥의 완화에 효과가 있는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>propranolol</li>
+     <li>diazepam</li>
+     <li>carbamazepine</li>
+     <li>verapamil</li>
+     <li>furosemide</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">노인 levothyroxine 주의사항</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>노인 환자에게 levothyroxine를 사용할 때 주의사항에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>고령자는 levothyroxine 치료를 빨리 시작하는 것이 필요하다.</li>
+     <li>용량 조정 후 약 2일 정도 TSH를 확인해야 한다.</li>
+     <li>노인에게는 성인 용량의 75% 이하로 처방한다.</li>
+     <li>TSH는 검출 불가능한 수준으로 억제되어야 한다.</li>
+     <li>칼슘과 함께 투여해야 한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">levothyroxine 과다 부작용</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>levothyroxine을 과다 사용했을 때 초래될 수 있는 부작용은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>변비</li>
+     <li>피로감</li>
+     <li>신부전</li>
+     <li>골다공증</li>
+     <li>범혈구감소증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q34">
+  <h3><span class="num">문 34</span> <span class="en">Addison병 확진 검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>34세 여자가 점진적 심약, 피로감, 식욕부진, 체중감소 등을 호소하며, 손가락·팔꿈치·무릎을 중심으로 과다 색소침착이 있어 Addison's disease가 의심된다. 이 질환의 확진을 위해 필요한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>calcium</li>
+     <li>TSH</li>
+     <li>cortisol</li>
+     <li>folate</li>
+     <li>catecholamine</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q35">
+  <h3><span class="num">문 35</span> <span class="en">이차성 부신기능부전 기관</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 기능장애가 있을 때 이차적 부신기능부전을 초래하는 기관은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>뇌하수체</li>
+     <li>갑상선</li>
+     <li>췌장</li>
+     <li>시상하부</li>
+     <li>부갑상선</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q36">
+  <h3><span class="num">문 36</span> <span class="en">뇌하수체절제술 후 부신위기</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>뇌하수체절제술(hypophysectomy)을 받은 43세 남자가 저혈압, 심한 오심과 구토가 있으며, 청색증과 함께 혼동 증상을 보인다. 이 환자에게 투여할 가장 적절한 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>epinephrine</li>
+     <li>insulin</li>
+     <li>adrenaline</li>
+     <li>hydrocortisone</li>
+     <li>glucose</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q37">
+  <h3><span class="num">문 37</span> <span class="en">쿠싱증후군 · 우선 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>56세 여자가 과거 2년 동안 류마티스 관절염 치료를 위해 경구 스테로이드제를 복용했으며, 현재 쿠싱증후군이 의심된다. 이 환자에게 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>스테로이드제 사용을 점차적으로 줄인다.</li>
+     <li>수술을 의뢰한다.</li>
+     <li>방사선 치료를 고려한다.</li>
+     <li>mifepristone을 처방한다.</li>
+     <li>이뇨제를 투여한다.</li>
+  </ol></div></div>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>

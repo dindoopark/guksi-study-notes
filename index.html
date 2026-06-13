@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>임상전문간호사 국가시험 대비 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+.hero{background:linear-gradient(135deg,#2f6fb3,#0f8a6b); color:#fff; border-radius:14px; padding:28px 26px; margin:8px 0 22px;}
+.hero h1{margin:0 0 6px; font-size:26px;}
+.hero p{margin:0; opacity:.95;}
+.book{margin:26px 0;}
+.book > h2{font-size:21px; border-bottom:3px solid var(--accent); padding-bottom:6px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-top:14px;}
+.tile{display:block; background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+  text-decoration:none; color:var(--ink); box-shadow:0 1px 3px rgba(20,30,60,.05); transition:.12s;}
+.tile:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:0 4px 12px rgba(20,30,60,.1);}
+.tile .t{font-size:17px; font-weight:700; color:var(--accent);}
+.tile .m{font-size:13px; color:var(--muted); margin-top:4px;}
+.tile.q .t{color:var(--accent2);}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="hero">
+<h1>임상전문간호사 국가시험 대비 학습노트</h1>
+<p>OCR 기반 자동 정리 · 계통별 핵심 요약 + 전문실무영역 문제집</p>
+</div>
+
+<section class="book">
+<h2>① 국시 정리 — 계통별 핵심 요약</h2>
+<p class="sys-desc">질환별 카드(정의·원인·증상·진단·검사·치료·간호·합병증)와 비교표로 구성.</p>
+<div class="grid">
+<a class="tile" href="guksi_01_순환기계.html"><div class="t">순환기계</div><div class="m">17개 카드</div></a>
+<a class="tile" href="guksi_02_호흡기계.html"><div class="t">호흡기계</div><div class="m">17개 카드</div></a>
+<a class="tile" href="guksi_03_신경계.html"><div class="t">신경계</div><div class="m">23개 카드</div></a>
+<a class="tile" href="guksi_04_근골격계.html"><div class="t">근골격계</div><div class="m">11개 카드</div></a>
+<a class="tile" href="guksi_05_소화기계.html"><div class="t">소화기계</div><div class="m">20개 카드</div></a>
+<a class="tile" href="guksi_06_신장비뇨생식기계.html"><div class="t">신장·비뇨·생식기계</div><div class="m">20개 카드</div></a>
+<a class="tile" href="guksi_07_내분비계.html"><div class="t">내분비계</div><div class="m">11개 카드</div></a>
+<a class="tile" href="guksi_08_혈액면역.html"><div class="t">혈액·면역</div><div class="m">12개 카드</div></a>
+<a class="tile" href="guksi_09_병태생리약리.html"><div class="t">병태생리·약리</div><div class="m">21개 카드</div></a>
+<a class="tile" href="guksi_10_간호관리보건의료.html"><div class="t">간호관리·보건의료</div><div class="m">17개 카드</div></a>
+</div>
+</section>
+
+<section class="book">
+<h2>② PART II 전문실무영역 — 계통별 문제집</h2>
+<p class="sys-desc">CHAPTER(계통)별 객관식 문항을 문제 카드로 정리(그림 의존 문항은 원문 스캔 포함). 정답은 원문에 없어 표기하지 않았습니다.</p>
+<div class="grid">
+<a class="tile q" href="part2_CH05_순환기계.html"><div class="t">순환기계</div><div class="m">187개 문항 카드</div></a>
+<a class="tile q" href="part2_CH06_호흡기계.html"><div class="t">호흡기계</div><div class="m">200개 문항 카드</div></a>
+<a class="tile q" href="part2_CH07_신경계.html"><div class="t">신경계</div><div class="m">176개 문항 카드</div></a>
+<a class="tile q" href="part2_CH08_근골격계.html"><div class="t">근골격계</div><div class="m">54개 문항 카드</div></a>
+<a class="tile q" href="part2_CH09_소화기계.html"><div class="t">소화기계</div><div class="m">28개 문항 카드</div></a>
+<a class="tile q" href="part2_CH10_내분비계.html"><div class="t">내분비계</div><div class="m">36개 문항 카드</div></a>
+<a class="tile q" href="part2_CH11_신장혈액면역기타.html"><div class="t">신장·혈액·면역·기타</div><div class="m">72개 문항 카드</div></a>
+</div>
+</section>
+
+<footer class="note">
+원본 PDF(<code>국시 정리.pdf</code>, <code>02_PART_II_전문실무영역.pdf</code>)를 300dpi 렌더링 후 한국어 OCR(EasyOCR ko+en)로 추출하고, 의학용어 기준으로 교정·재구성했습니다.
+OCR 특성상 일부 수치·표기 오차가 있을 수 있으니 중요한 내용은 원문과 교차 확인하세요. 페이지 스캔 이미지는 <code>images/</code> 폴더에 있습니다.
+</footer>
+</main>
+</body>
+</html>

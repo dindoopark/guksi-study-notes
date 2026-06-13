@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[문제] 소화기계 · 임상전문간호사 국시 학습노트</title>
+<style>
+/* ===== 임상전문간호사 국시 학습노트 공통 스타일 ===== */
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2430; --muted:#5b6472;
+  --line:#e3e7ee; --accent:#2f6fb3; --accent2:#0f8a6b;
+  --warn:#c0392b; --warnbg:#fdecec; --tipbg:#eef6ff; --tag:#eef2f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:24px 20px 80px;}
+header.page-head{
+  position:sticky; top:0; z-index:10; background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));
+  border-bottom:2px solid var(--accent); padding:14px 20px; backdrop-filter:blur(4px);
+}
+header.page-head .inner{max-width:1040px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+header.page-head h1{font-size:20px; margin:0; color:var(--accent);}
+header.page-head .crumb{font-size:13px; color:var(--muted);}
+header.page-head a{color:var(--accent); text-decoration:none;}
+h2.sys{font-size:24px; margin:34px 0 6px; padding-bottom:6px; border-bottom:3px solid var(--accent);}
+.sys-desc{color:var(--muted); margin:0 0 16px;}
+
+/* 질환 카드 */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(20,30,60,.05);
+}
+.card > h3{
+  margin:0 0 12px; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.card > h3 .num{
+  background:var(--accent); color:#fff; font-size:13px; font-weight:700;
+  border-radius:6px; padding:2px 9px; flex:none;
+}
+.card > h3 .en{font-size:14px; color:var(--muted); font-weight:500;}
+
+/* 라벨-내용 행 */
+.field{display:grid; grid-template-columns:88px 1fr; gap:10px; padding:7px 0; border-top:1px dashed var(--line);}
+.field:first-of-type{border-top:none;}
+.field .label{
+  font-weight:700; color:var(--accent2); font-size:14px; padding-top:2px;
+}
+.field .label.tx{color:var(--accent);}
+.field .label.cx{color:#8a5a00;}
+.field .label.cmp{color:var(--warn);}
+.field .body{margin:0;}
+.field .body ul{margin:0; padding-left:18px;}
+.field .body li{margin:2px 0;}
+.field .body p{margin:0 0 6px;}
+
+/* 강조 박스 */
+.tip,.warn{border-radius:8px; padding:10px 14px; margin:10px 0; font-size:15px;}
+.tip{background:var(--tipbg); border-left:4px solid var(--accent);}
+.warn{background:var(--warnbg); border-left:4px solid var(--warn);}
+.tip b,.warn b{color:inherit;}
+mark{background:#fff3bf; padding:0 2px; border-radius:3px;}
+
+/* 비교 표 */
+table.cmp{width:100%; border-collapse:collapse; margin:12px 0; font-size:15px;}
+table.cmp caption{text-align:left; font-weight:700; color:var(--accent); padding:4px 0;}
+table.cmp th,table.cmp td{border:1px solid var(--line); padding:8px 10px; vertical-align:top; text-align:left;}
+table.cmp thead th{background:var(--accent); color:#fff;}
+table.cmp tbody th{background:var(--tag); width:130px;}
+table.cmp tr:nth-child(even) td{background:#fafbfc;}
+
+/* 태그 */
+.tags{margin:6px 0 0;}
+.tags .tag{display:inline-block; background:var(--tag); color:var(--muted);
+  border-radius:20px; padding:2px 10px; font-size:12px; margin:2px 4px 2px 0;}
+
+/* 그림 */
+figure.scan{margin:12px 0; text-align:center;}
+figure.scan img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+figure.scan figcaption{font-size:12px; color:var(--muted); margin-top:4px;}
+
+/* 목차(섹션 내) */
+nav.toc{background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0;}
+nav.toc strong{display:block; margin-bottom:6px; color:var(--accent);}
+nav.toc ul{margin:0; padding-left:18px; columns:2; column-gap:28px;}
+nav.toc a{color:var(--ink); text-decoration:none;}
+nav.toc a:hover{color:var(--accent); text-decoration:underline;}
+
+footer.note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted);}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff; font-size:11.5pt;}
+  header.page-head{position:static; backdrop-filter:none;}
+  .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+  nav.toc{break-inside:avoid;}
+  a{color:#000; text-decoration:none;}
+  .topbtn{display:none;}
+}
+.topbtn{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#fff;
+  border:none; border-radius:50%; width:46px; height:46px; font-size:20px; cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.2); opacity:.85;}
+.topbtn:hover{opacity:1;}
+
+</style>
+</head>
+<body>
+<header class="page-head"><div class="inner">
+<a href="index.html">&larr; 목차</a>
+<h1>[문제] 소화기계</h1>
+<span class="crumb">임상전문간호사 국가시험 대비 · 출처: PART II 전문실무영역</span>
+</div></header>
+<main class="wrap">
+<h2 class="sys" id="top">소화기계 문제</h2>
+<p class="sys-desc">전문간호사 자격시험 대비 문제집 — 소화기계 (CHAPTER 9).</p>
+
+<nav class="toc"><strong>문항 바로가기</strong>
+<ul>
+  <li><a href="#q1-6">문 01–06</a></li>
+  <li><a href="#q07">문 07</a></li>
+  <li><a href="#q08">문 08</a></li>
+  <li><a href="#q09">문 09</a></li>
+  <li><a href="#q10">문 10</a></li>
+  <li><a href="#q11">문 11</a></li>
+  <li><a href="#q12">문 12</a></li>
+  <li><a href="#q13">문 13</a></li>
+  <li><a href="#q14">문 14</a></li>
+  <li><a href="#q15">문 15</a></li>
+  <li><a href="#q16">문 16</a></li>
+  <li><a href="#q17">문 17</a></li>
+  <li><a href="#q18">문 18</a></li>
+  <li><a href="#q19">문 19</a></li>
+  <li><a href="#q20">문 20</a></li>
+  <li><a href="#q21">문 21</a></li>
+  <li><a href="#q22">문 22</a></li>
+  <li><a href="#q23">문 23</a></li>
+  <li><a href="#q24">문 24</a></li>
+  <li><a href="#q25">문 25</a></li>
+  <li><a href="#q26">문 26</a></li>
+  <li><a href="#q27">문 27</a></li>
+  <li><a href="#q28">문 28</a></li>
+  <li><a href="#q29">문 29</a></li>
+  <li><a href="#q30">문 30</a></li>
+  <li><a href="#q31">문 31</a></li>
+  <li><a href="#q32">문 32</a></li>
+  <li><a href="#q33">문 33</a></li>
+</ul></nav>
+
+<section class="card" id="q1-6">
+  <h3><span class="num">문 01–06</span> <span class="en">급성 복부 둔상 · 급성 췌장염 공유 지문</span></h3>
+  <div class="field"><div class="label">지문</div><div class="body"><p>다음 지문을 읽고 질문에 답하시오(문제 1–6). 최근 6시간 이내에 복부와 몸통에 둔둥이로 구타를 당한 환자가 응급실을 통해 중환자실로 입원하였다. 중환자실 입실 직후 기관내삽관을 시행하였고, 활력징후는 혈압 80/42 mmHg, 맥박 132회/분, 체온 36.6℃이다. 환자는 몸에 여러 군데 타박상이 있고 Cullen 징후와 Gray Turner 징후가 관찰된다. 과거력으로 알코올 남용, 당뇨병, 고혈압이 있다.</p></div></div>
+
+  <div class="field"><div class="label">문 01 · 문항</div><div class="body"><p>다음 중 급성 복부 둔상의 병인에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">문 01 · 보기</div><div class="body"><ol>
+     <li>복부 둔상은 낙상, 폭행 또는 스포츠에 의해 발생할 수 있다.</li>
+     <li>둔상으로 인한 복부 상해는 24~48시간 동안 나타나지 않는다.</li>
+     <li>소장은 복부 둔상에 의해 가장 영향을 많이 받는 기관이다.</li>
+     <li>복부 둔상은 일반적으로 생명을 위협하지 않는다.</li>
+     <li>복부 출혈이 동반되는 경우 Cullen 징후는 나타나지 않는다.</li>
+  </ol></div></div>
+
+  <div class="field"><div class="label">문 02 · 문항</div><div class="body"><p>중환자실에서 환자에게 위 감압을 위하여 비위관을 적용하였음에도 불구하고 복부가 더 단단해졌다면 의심되는 원인은?</p></div></div>
+  <div class="field"><div class="label">문 02 · 보기</div><div class="body"><ol>
+     <li>탈장</li>
+     <li>장 파열</li>
+     <li>대량 내출혈</li>
+     <li>복벽의 연조직 부종</li>
+     <li>알코올 남용으로 인한 정상적인 복부하수(pendulous abdomen)</li>
+  </ol></div></div>
+
+  <div class="field"><div class="label">문 03 · 문항</div><div class="body"><p>중환자실로 환자를 이송하기 전에 응급실에서 급속 수액요법(rapid fluid resuscitation)을 수행하였음에도 불구하고 저혈압이 지속되고 있다면 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">문 03 · 보기</div><div class="body"><ol>
+     <li>승압제 투여를 준비한다.</li>
+     <li>수혈을 위해 혈액형과 교차적합검사(cross matching)를 시행한다.</li>
+     <li>혈색소와 적혈구용적률 검사를 수행한다.</li>
+     <li>급속 주입기로 환자가 정상혈압에 도달할 때까지 고장성 용액을 대체한다.</li>
+     <li>동맥혈가스검사를 실시한다.</li>
+  </ol></div></div>
+
+  <div class="field"><div class="label">문 04 · 문항</div><div class="body"><p>환자에게 삽입한 비위관에서 검붉은색 혈액이 지속적으로 나오는 것을 발견하여 응급 수술을 준비하고 있다. 이 출혈의 원인은?</p></div></div>
+  <div class="field"><div class="label">문 04 · 보기</div><div class="body"><ol>
+     <li>복막염(peritonitis)</li>
+     <li>하부 위장관 폐쇄</li>
+     <li>식도정맥류(esophageal varices)</li>
+     <li>종양(neoplasm)</li>
+     <li>위식도 역류</li>
+  </ol></div></div>
+
+  <div class="field"><div class="label">문 05 · 문항</div><div class="body"><p>환자의 피부와 결막에 황달이 있는 것을 발견하였다면 황달의 가장 큰 원인은?</p></div></div>
+  <div class="field"><div class="label">문 05 · 보기</div><div class="body"><ol>
+     <li>췌장염(pancreatitis)</li>
+     <li>간부전(hepatic failure)</li>
+     <li>담석(gallstones)</li>
+     <li>부신기능부전(adrenal insufficiency)</li>
+     <li>당뇨병</li>
+  </ol></div></div>
+
+  <div class="field"><div class="label">문 06 · 문항</div><div class="body"><p>급성 췌장염의 주요 병태생리학적 특징은?</p></div></div>
+  <div class="field"><div class="label">문 06 · 보기</div><div class="body"><ol>
+     <li>췌장 전체 괴사</li>
+     <li>췌장 효소 결핍</li>
+     <li>췌장의 자가소화(autodigestion)</li>
+     <li>췌장의 다발성 종양</li>
+     <li>췌장의 인슐린 분비 증가</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p171.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.171 원문</figcaption></figure>
+  <figure class="scan"><img src="images/part2/p172.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.172 원문</figcaption></figure>
+</section>
+
+<section class="card" id="q07">
+  <h3><span class="num">문 07</span> <span class="en">간성 뇌증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>만성 알코올 남용과 정신상태 변화로 입원한 환자가 있다. 간호사는 환자의 필적이 초기 입원 이후 변화함을 발견하였다. 이 환자에게 의심되는 질환은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>치매</li>
+     <li>췌장염</li>
+     <li>요붕증</li>
+     <li>간성 뇌증</li>
+     <li>만성 신부전증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q08">
+  <h3><span class="num">문 08</span> <span class="en">급성 췌장염 · 저혈압 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 췌장염을 진단받은 환자의 혈압이 87/54 mmHg일 때 가장 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>침상머리를 올린 상태로 유지한다.</li>
+     <li>구강으로 췌장효소를 제공한다.</li>
+     <li>비위관(nasogastric tube)을 삽입한다.</li>
+     <li>생리식염수를 정맥주입한다.</li>
+     <li>상체를 다리보다 높게 유지한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q09">
+  <h3><span class="num">문 09</span> <span class="en">간염 혈청검사 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>약 4달 전에 C형 간염에 노출될 가능성이 있다고 걱정하는 43세 여자의 검사결과가 다음과 같다. 이 환자의 상태에 대한 설명으로 옳은 것은?</p>
+  <table>
+    <thead><tr><th>HBsAg</th><th>anti-HBc</th><th>anti-HBs</th><th>anti-HCV</th><th>HCV RNA</th></tr></thead>
+    <tbody><tr><td>Negative</td><td>Negative</td><td>Positive</td><td>Nonreactive</td><td>Not detectable</td></tr></tbody>
+  </table></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>환자는 B형 간염과 C형 간염이다.</li>
+     <li>환자는 C형 간염은 아니지만 B형 간염 항체를 가지고 있다.</li>
+     <li>환자는 B형 간염은 아니지만 C형 간염일 수 있다.</li>
+     <li>환자의 B형 간염 상태를 확정하기 위한 추가 검사가 필요하다.</li>
+     <li>간염의 위험이 전혀 없다.</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p173.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.173 원문(검사결과표 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q10">
+  <h3><span class="num">문 10</span> <span class="en">서혜부 탈장 검진 자세</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>서혜부 탈장이 의심되는 환자를 검진하려고 한다. 이 환자가 취하게 할 자세는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>선 자세</li>
+     <li>엎드린 자세</li>
+     <li>옆으로 누운 자세</li>
+     <li>쪼그리고 앉은 자세</li>
+     <li>똑바로 누운 자세</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q11">
+  <h3><span class="num">문 11</span> <span class="en">B형 간염 혈청검사 판독</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음은 환자의 검사 결과이다. 이 환자의 상태에 대한 설명으로 옳은 것은?</p>
+  <table>
+    <thead><tr><th>HBsAg</th><th>anti-HBc IgM</th><th>anti-HBc</th><th>anti-HBs</th></tr></thead>
+    <tbody><tr><td>Positive</td><td>Positive</td><td>Positive</td><td>Negative</td></tr></tbody>
+  </table></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>급성 B형 간염이다.</li>
+     <li>B형 간염의 면역이 있다.</li>
+     <li>B형 간염의 면역이 없다.</li>
+     <li>B형 간염 보균자이다.</li>
+     <li>추가적인 자료가 필요하다.</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p173.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.173 원문(검사결과표 포함)</figcaption></figure>
+</section>
+
+<section class="card" id="q12">
+  <h3><span class="num">문 12</span> <span class="en">급성 담낭염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 담낭염 환자에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>검사대에서 좌우로 구른다.</li>
+     <li>아파보이고 열이 난다.</li>
+     <li>고령 환자는 Murphy's sign이 나타날 가능성이 더 높다.</li>
+     <li>대부분 담석이 담관을 막을 때까지 무증상이다.</li>
+     <li>소변량이 감소한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q13">
+  <h3><span class="num">문 13</span> <span class="en">만성 변비 약물 원인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>85세 여자가 만성 변비가 있으며 건강사정 결과가 다음과 같다. 이 환자의 변비를 초래한 대표적 원인은?</p>
+  <p>과거력: 고혈압, 골다공증, 골관절염, 과민성 방광<br>
+  현재 복용 약물: amlodipine 5 mg, Oxybutynin 2.5 mg, naproxen 375 mg, Prevacid 30 mg, calcium and vitamin D 보충제</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>부적절한 수분 섭취</li>
+     <li>고령으로 활동저하</li>
+     <li>복용약물</li>
+     <li>부적절한 섬유소 섭취</li>
+     <li>방광 팽만</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q14">
+  <h3><span class="num">문 14</span> <span class="en">장폐색 급성기 간호</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>장폐색 환자의 급성기 간호에서 가장 주의해야 할 사항은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>흡인(aspiration)</li>
+     <li>고칼륨혈증(hyperkalemia)</li>
+     <li>저혈량증(hypovolemia)</li>
+     <li>대사성 알칼리증(metabolic alkalosis)</li>
+     <li>고체온증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q15">
+  <h3><span class="num">문 15</span> <span class="en">복막염(반동 압통) 우선 중재</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>50세 남자가 복통을 호소하여 내원하였다. 내원 당시 미열과 함께 둔탁하고 약한 장음이 들렸다. 입원 후 통증이 더 심해지고 움직임이 약화되었으며, 장음이 들리지 않고 복부 강직이 있으며, 복부를 누를 때보다 손을 뗄 때 통증이 더 심하다. 이 환자에게 우선적인 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>마약성 진통제(opiate) 용량 증량</li>
+     <li>수술 준비</li>
+     <li>비위관 삽관</li>
+     <li>항생제 치료</li>
+     <li>복막천자</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q16">
+  <h3><span class="num">문 16</span> <span class="en">치질 직장출혈 양상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>치질과 관련된 직장출혈에 대한 일반적인 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>닦을 때 혈액이 묻어남</li>
+     <li>소량의 적갈색 출혈</li>
+     <li>많은 양의 활동성 선홍빛 출혈</li>
+     <li>변에 많은 혈전과 점액이 섞임</li>
+     <li>짙은 갈색에서 검은 색으로 정상적인 변과 섞여 있음</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q17">
+  <h3><span class="num">문 17</span> <span class="en">직장출혈 · 소적혈구성 저색소성 빈혈</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>62세 남자가 최근 며칠 동안에 검붉은 피가 조금씩 보여 내원하였다. 신체검진에서 직장 종양이 아닌 외치질이 있고 검진 손가락에 짙은 갈색의 변이 약간 보였다. 잠혈 검사는 양성이고 혈액검사 상 소적혈구성 저색소성 빈혈(microcytic hypochromic anemia)이 있었다. 이 환자에게 가장 적절한 중재는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>항문경 검사를 시행한다.</li>
+     <li>환자에게 장운동 후 좌욕을 하도록 권한다.</li>
+     <li>대장내시경을 통해 소화기질환을 치료한다.</li>
+     <li>이중조영바륨관장을 지시한다.</li>
+     <li>육류를 제한한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q18">
+  <h3><span class="num">문 18</span> <span class="en">충수염 사정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>72세 여자가 지난 24시간 동안 복부 경련과 구토를 보여 내원하였다. 충수염이 의심되는 환자를 사정하면서 고려해야 할 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>충수의 해부학적 위치에 따라 증상이 다를 수 있다.</li>
+     <li>고령 환자가 급성 복통을 호소하는 가장 흔한 질환이다.</li>
+     <li>복통이 시작되기 전의 구토는 자주 관찰된다.</li>
+     <li>증상이 골반 염증성 질환의 증상과 크게 다르다.</li>
+     <li>Turner 징후를 확인한다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q19">
+  <h3><span class="num">문 19</span> <span class="en">반동 압통 · Blumberg's sign</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>복부 옆진에서 반동 압통이 있을 때 다음 중 양성으로 나타나는 징후는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>Markle's sign</li>
+     <li>Murphy's sign</li>
+     <li>Blumberg's sign</li>
+     <li>Nikolsky's sign</li>
+     <li>Romberg's sign</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q20">
+  <h3><span class="num">문 20</span> <span class="en">우상복부 통증 · 급성 담낭염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>47세 여자가 12시간 전부터 시작된 어깨로 방사되는 우상복부 복통과 열, 오한을 호소하며 내원하였다. 환자는 과거에도 유사한 증상이 약하게 있었다고 하며, 복부 검진 시 우상복부 압통이 있다. 이 환자에게 의심되는 상태는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>간세포암</li>
+     <li>급성 담낭염</li>
+     <li>급성 간염</li>
+     <li>담석증</li>
+     <li>췌장염</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q21">
+  <h3><span class="num">문 21</span> <span class="en">급성 담낭염 검사결과</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 담낭염에서 일반적으로 볼 수 있는 검사결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>혈청 크레아티닌 증가</li>
+     <li>알칼리인산분해효소(alkaline phosphatase) 증가</li>
+     <li>백혈구 감소</li>
+     <li>AST 감소</li>
+     <li>아밀라아제 감소</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q22">
+  <h3><span class="num">문 22</span> <span class="en">담낭염 중증 합병증</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>담낭염 환자에게 나타나는 가장 흔한 중증 합병증은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>담낭의 선종(adenocarcinoma)</li>
+     <li>담낭농증(gallbladder empyema)</li>
+     <li>간부전</li>
+     <li>췌장염</li>
+     <li>담즙 과다생성</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q23">
+  <h3><span class="num">문 23</span> <span class="en">급성 담낭염 흔한 증상</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>급성 담낭염 환자에게 가장 많이 관찰되는 증상은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>발열</li>
+     <li>구토</li>
+     <li>황달</li>
+     <li>촉진되는 담낭</li>
+     <li>좌상복부 통증</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q24">
+  <h3><span class="num">문 24</span> <span class="en">결장암 위험요인</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 결장암 발병 위험을 높이는 요인은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>50세 이하</li>
+     <li>폴립증(polyposis) 가족력</li>
+     <li>BRCA 유전자</li>
+     <li>장기간 아스피린 치료</li>
+     <li>CA 19-9 상승</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q25">
+  <h3><span class="num">문 25</span> <span class="en">급성 대장게실염 진단검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>68세 남자가 급성 대장게실염이 의심된다. 이 환자의 진단을 뒷받침할 수 있는 적절한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>X-ray</li>
+     <li>초음파검사</li>
+     <li>조영제 사용 CT scan</li>
+     <li>바륨 관장</li>
+     <li>대장내시경</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q26">
+  <h3><span class="num">문 26</span> <span class="en">H2RA · 약물 상호작용(cimetidine)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 소화성궤양치료제(H2RA) 중 phenytoin 및 theophylline과 상호작용을 유발할 가능성이 가장 큰 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>cimetidine</li>
+     <li>famotidine</li>
+     <li>nizatidine</li>
+     <li>ranitidine</li>
+     <li>omeprazole</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q27">
+  <h3><span class="num">문 27</span> <span class="en">COX-1 작용기전</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>Cyclooxygenase-1(COX-1)의 작용기전에 포함되는 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>염증 반응</li>
+     <li>통증 전달</li>
+     <li>위 보호 점막층 유지</li>
+     <li>신장 소동맥 수축</li>
+     <li>위장관 운동 저하</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q28">
+  <h3><span class="num">문 28</span> <span class="en">PPI 약물(lansoprazole)</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 역류성식도염 환자에게 처방되는 프로톤펌프억제제(PPI)에 속하는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>loperamide</li>
+     <li>metoclopramide</li>
+     <li>nizatidine</li>
+     <li>lansoprazole</li>
+     <li>ranitidine</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q29">
+  <h3><span class="num">문 29</span> <span class="en">PPI 장기 사용 위험</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 위궤양치료제인 프로톤펌프억제제(PPI)를 장기간 사용했을 때 예상되는 위험은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>변비</li>
+     <li>대장출혈</li>
+     <li>오심, 구토</li>
+     <li>철분의 흡수 증가</li>
+     <li>골절</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q30">
+  <h3><span class="num">문 30</span> <span class="en">항고혈압제 · 속쓰림</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>58세 남자가 최근 항고혈압제를 복용하기 시작했는데 심한 속쓰림 증상을 호소한다. 다음 중 복용한 것으로 추정되는 약물은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>atenolol</li>
+     <li>trandolapril</li>
+     <li>amlodipine</li>
+     <li>losartan</li>
+     <li>verapamil</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q31">
+  <h3><span class="num">문 31</span> <span class="en">Barrett 식도 평가검사</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>57세 남자에게 Barrett 식도를 평가하기 위해 시행할 적절한 검사는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>H. pylori testing</li>
+     <li>CT scan</li>
+     <li>상부 위내시경 및 생검</li>
+     <li>바륨연하검사</li>
+     <li>바륨관장</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q32">
+  <h3><span class="num">문 32</span> <span class="en">C형 간염 감염</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>다음 중 C형 간염 감염에 대한 설명으로 옳은 것은?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>일반적으로 황달, 열, 심한 간비대를 나타낸다.</li>
+     <li>의료진 중 특히 간호사에게 주로 발견된다.</li>
+     <li>급성 C형 간염 환자의 적어도 50%는 만성 감염으로 진행된다.</li>
+     <li>인터페론 치료가 지속적으로 효과가 있다.</li>
+     <li>타액을 통해 전파된다.</li>
+  </ol></div></div>
+</section>
+
+<section class="card" id="q33">
+  <h3><span class="num">문 33</span> <span class="en">췌장암 사정</span></h3>
+  <div class="field"><div class="label">문항</div><div class="body"><p>췌장암이 의심되는 환자를 사정할 때 예상되는 결과는?</p></div></div>
+  <div class="field"><div class="label">보기</div><div class="body"><ol>
+     <li>Cullen's sign 양성</li>
+     <li>등 중앙 또는 등 아래부분으로 방사되는 상복부 통증</li>
+     <li>복부 정중앙에서 만져지는 덩어리</li>
+     <li>폐쇄근 징후(obturator sign)와 요근징후(psoas sign) 양성</li>
+     <li>바빈스키반사 양성</li>
+  </ol></div></div>
+  <figure class="scan"><img src="images/part2/p178.png" alt="문항 원문/그림" loading="lazy"><figcaption>p.178 원문</figcaption></figure>
+</section>
+<footer class="note">
+본 노트는 PDF를 300dpi로 렌더링 후 한국어 OCR(EasyOCR)로 추출한 텍스트를 의학용어 기준으로 교정·재구성한 자료입니다.
+OCR 특성상 일부 수치·표기에 오차가 있을 수 있으니 원문과 교차 확인하세요. 페이지 스캔 이미지는 각 항목의 [원문] 링크/그림에서 확인할 수 있습니다.
+</footer>
+</main>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">&uarr;</button>
+</body>
+</html>
