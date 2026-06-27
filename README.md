@@ -9,7 +9,8 @@
 ## PDF (인쇄·밑줄용)
 - 모든 노트를 **A4 PDF**로 변환해 [`pdf/`](pdf/) 폴더에 넣어 두었습니다. 인쇄해서 밑줄 치며 공부할 수 있어요.
 - index 페이지의 각 항목 아래 **PDF 다운로드** 버튼으로 바로 받을 수 있습니다.
-- 재생성: `node scripts/make-pdf.mjs` (Playwright/Chromium + 한국어 폰트 필요). 원본 HTML을 수정한 뒤 다시 실행하면 PDF가 갱신됩니다.
+- **PART별 전체 합본 PDF**도 제공합니다: `pdf/part1_국시정리_전체.pdf`(10개 계통), `pdf/part2_문제집_전체.pdf`(7개 계통). index 상단의 **전체 합본 PDF 다운로드** 버튼으로 받을 수 있습니다.
+- 재생성: 계통별 개별 PDF는 `node scripts/make-pdf.mjs`, 합본 PDF는 `node scripts/make-combined-pdf.mjs` (Playwright/Chromium + 한국어 폰트 필요). 원본 HTML을 수정한 뒤 다시 실행하면 PDF가 갱신됩니다.
 
 ## 구성
 - **① 국시 정리 — 계통별 핵심 요약** (질환 카드 169개): 순환기 / 호흡기 / 신경 / 근골격 / 소화기 / 신장·비뇨·생식기 / 내분비 / 혈액·면역 / 병태생리·약리 / 간호관리·보건의료
